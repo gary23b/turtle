@@ -75,6 +75,13 @@ func (s *turtle) Left(angle float64) {
 		angle *= (math.Pi / 180.0)
 	}
 	s.angle += angle
+
+	// Normaize the angle
+	if s.angle > 2*math.Pi {
+		s.angle -= 2 * math.Pi
+	} else if s.angle < -2*math.Pi {
+		s.angle += 2 * math.Pi
+	}
 }
 
 func (s *turtle) Right(angle float64) {
