@@ -44,7 +44,6 @@ func StartEbitenTurtleCanvas(params CanvasParams, drawFunc func(models.Canvas)) 
 
 // 0,0 is the center of the screen. positive X is right, positive y is up.
 func (s *ebitenTurtleCanvas) SetCartesianPixel(x, y int, c color.RGBA) {
-
 	s.SetPixel(x+s.width/2, -y+s.height/2, c)
 }
 

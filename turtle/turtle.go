@@ -109,19 +109,21 @@ func (s *turtle) EnableCompassAngleMode(in bool) {
 	s.compassEn = in
 }
 
-func (s *turtle) SetSpeed(PixelsPerSecond float64) {
-	if PixelsPerSecond < 1 {
+func (s *turtle) SetSpeed(pixelsPerSecond float64) {
+	if pixelsPerSecond < 1 {
 		return
 	}
-	s.speed = PixelsPerSecond
+	s.speed = pixelsPerSecond
 }
 
 func (s *turtle) PenUp() {
 	s.penDown = false
 }
+
 func (s *turtle) PenDown() {
 	s.penDown = true
 }
+
 func (s *turtle) PenColor(c color.RGBA) {
 	s.penColor = c
 }
@@ -136,7 +138,7 @@ func (s *turtle) PenSize(size float64) {
 // //////////////////////
 func (s *turtle) angleToRad(angle float64) float64 {
 	if s.degreesEn {
-		angle = angle * (math.Pi / 180.0)
+		angle *= (math.Pi / 180.0)
 	}
 	if s.compassEn {
 		angle = -angle + math.Pi/2
@@ -151,7 +153,7 @@ func (s *turtle) radToAngle(angle float64) float64 {
 	}
 
 	if s.degreesEn {
-		angle = angle * (180.0 / math.Pi)
+		angle *= (180.0 / math.Pi)
 	}
 
 	return angle
@@ -180,7 +182,7 @@ func (s *turtle) drawLine(x1, y1, x2, y2 int, c color.RGBA) {
 	y := float64(y1)
 
 	distance := math.Sqrt(float64(xDelta*xDelta + yDelta*yDelta))
-	timeToDraw := float64(distance) / s.speed
+	timeToDraw := distance / s.speed
 	timePerPixel := timeToDraw / float64(largerDelta)
 
 	sleepTime := time.Duration(timePerPixel * 1.0e9)
@@ -200,7 +202,7 @@ func (s *turtle) drawLine(x1, y1, x2, y2 int, c color.RGBA) {
 }
 
 func (s *turtle) drawFilledCircle(x, y, size float64, c color.RGBA) {
-	halfSize := s.penSize / 2
+	halfSize := size / 2
 	halfSizeSqrd := halfSize * halfSize
 	xMax := int(x + halfSize)
 	xMin := int(x - halfSize)
@@ -215,7 +217,6 @@ func (s *turtle) drawFilledCircle(x, y, size float64, c color.RGBA) {
 			if distanceSqrd <= halfSizeSqrd {
 				s.can.SetCartesianPixel(widthX, widthY, c)
 			}
-
 		}
 	}
 }

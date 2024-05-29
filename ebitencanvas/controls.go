@@ -9,7 +9,7 @@ import (
 
 func fillKeyStruct(input []ebiten.Key, out *models.Keys) {
 	for _, k := range input {
-		switch k {
+		switch k { //nolint:exhaustive
 		case ebiten.KeyA:
 			out.A = true
 		case ebiten.KeyB:

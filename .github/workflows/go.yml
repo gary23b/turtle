@@ -21,6 +21,10 @@ jobs:
           cache: true
           cache-dependency-path: go.sum
 
+      - name: Install dependencies
+        run: |
+          sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
+
       # Check if running "go mod tidy" changes anything. If so, the commit is dirty and needs fixed.
       - name: Tidy Check
         run: |

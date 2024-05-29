@@ -37,7 +37,7 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 
 	// ebiten.SetTPS(120)
 	// ebiten.SetVsyncEnabled(false) // For some reason, on Windows, there is quite a bit of lag.
-	//setting this to false clears it up, but also makes it run at 1000Hz...
+	// setting this to false clears it up, but also makes it run at 1000Hz...
 	ebiten.SetWindowSize(g.screenWidth, g.screenHeight)
 	ebiten.SetWindowTitle("Go Turtle Graphics")
 	return g
@@ -85,7 +85,6 @@ EatDrawCommandsLoop:
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
-
 	// screen.DrawTriangles
 
 	screen.WritePixels(g.img.Pix)
