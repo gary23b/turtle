@@ -2,7 +2,8 @@ package ebitencanvas
 
 import (
 	"image/color"
-	"worldsim/models"
+
+	"github.com/gary23b/turtle/models"
 )
 
 type drawCmd struct {

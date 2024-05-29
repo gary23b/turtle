@@ -3,9 +3,10 @@ package main
 import (
 	"math/rand"
 	"time"
-	"worldsim/ebitencanvas"
-	"worldsim/models"
-	"worldsim/turtleutil"
+
+	"github.com/gary23b/turtle/ebitencanvas"
+	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/turtleutil"
 )
 
 func main() {

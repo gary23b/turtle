@@ -5,7 +5,8 @@ import (
 	"image"
 	"image/color"
 	"log"
-	"worldsim/models"
+
+	"github.com/gary23b/turtle/models"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
