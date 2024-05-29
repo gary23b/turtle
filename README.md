@@ -1,14 +1,14 @@
 # Turtle
 
-## A Turtle Graphics system for Golang
+## A Turtle Graphics System for Golang
 
-Based on the python turtle, this Go package provides an environment to learn Go programming while getting instant feedback. The screen is updated in real time using the [Ebitengine](https://ebitengine.org/)
+Based on the python turtle, this Go package provides an environment to learn Go programming while getting instant feedback. The screen is updated in real time using the [Ebitengine](https://ebitengine.org/).
 
 ## Install
 
-Ebitengine is the main dependency. [Check here the system specific instructions](https://ebitengine.org/en/documents/install.html)
+Ebitengine is the main dependency. [Check here the system specific instructions](https://ebitengine.org/en/documents/install.html).
 
-## Examples
+## Example
 
 ```bash
 go run github.com/gary23b/turtle/examples/turtlebasic@latest
@@ -16,7 +16,7 @@ go run github.com/gary23b/turtle/examples/turtlebasic@latest
 
 ![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/turtlebasic/turtlebasic.png)
 
-## Minimum Needed Program
+## Basic Example Program
 
 ```go
 package main
