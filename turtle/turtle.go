@@ -27,10 +27,11 @@ var _ models.Turtle = &turtle{} // Force the linter to tell us if the interface 
 
 func NewTurtle(can models.Canvas) *turtle {
 	ret := &turtle{
-		can:      can,
-		penColor: turtleutil.Black,
-		speed:    75,
-		penSize:  0,
+		can:       can,
+		penColor:  turtleutil.Black,
+		speed:     75,
+		penSize:   0,
+		degreesEn: true,
 	}
 
 	return ret
@@ -40,16 +41,32 @@ func (s *turtle) Forward(distance float64) {
 	s.goAngle(s.angle, distance)
 }
 
+func (s *turtle) F(distance float64) {
+	s.Forward(distance)
+}
+
 func (s *turtle) Backward(distance float64) {
 	s.goAngle(s.angle, -distance)
+}
+
+func (s *turtle) B(distance float64) {
+	s.Backward(distance)
 }
 
 func (s *turtle) PanLeftward(distance float64) {
 	s.goAngle(s.angle+math.Pi/2.0, distance)
 }
 
+func (s *turtle) PanL(distance float64) {
+	s.PanLeftward(distance)
+}
+
 func (s *turtle) PanRightward(distance float64) {
 	s.goAngle(s.angle-math.Pi/2.0, distance)
+}
+
+func (s *turtle) PanR(distance float64) {
+	s.PanRightward(distance)
 }
 
 func (s *turtle) goAngle(angle, distance float64) {
@@ -84,8 +101,16 @@ func (s *turtle) Left(angle float64) {
 	}
 }
 
+func (s *turtle) L(angle float64) {
+	s.Left(angle)
+}
+
 func (s *turtle) Right(angle float64) {
 	s.Left(-angle)
+}
+
+func (s *turtle) R(angle float64) {
+	s.Right(angle)
 }
 
 func (s *turtle) SetAngle(angle float64) {
@@ -135,8 +160,24 @@ func (s *turtle) PenUp() {
 	s.penDown = false
 }
 
+func (s *turtle) PU() {
+	s.PenUp()
+}
+
+func (s *turtle) Off() {
+	s.PenUp()
+}
+
 func (s *turtle) PenDown() {
 	s.penDown = true
+}
+
+func (s *turtle) PD() {
+	s.PenDown()
+}
+
+func (s *turtle) On() {
+	s.PenDown()
 }
 
 func (s *turtle) PenColor(c color.RGBA) {
