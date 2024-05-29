@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_turtle_angleToRad(t *testing.T) {
+func Test_turtle_absoluteAngleToRad(t *testing.T) {
 	type args struct {
 		angle float64
 	}
@@ -84,9 +84,9 @@ func Test_turtle_angleToRad(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// require.InDelta
-			got := tt.s.angleToRad(tt.args.angle)
+			got := tt.s.absoluteAngleToRad(tt.args.angle)
 			require.Equal(t, tt.want, got)
-			got2 := tt.s.radToAngle(got)
+			got2 := tt.s.radToAbsoluteAngle(got)
 			require.Equal(t, tt.args.angle, got2)
 		})
 	}

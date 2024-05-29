@@ -2,6 +2,7 @@ package turtle
 
 import (
 	"image/color"
+	"log"
 	"math"
 	"time"
 
@@ -70,12 +71,10 @@ func (s *turtle) GetPos() (x, y float64) {
 }
 
 func (s *turtle) Left(angle float64) {
-	angle = s.angleToRad(angle)
-	if s.compassEn {
-		s.angle -= angle
-	} else {
-		s.angle += angle
+	if s.degreesEn {
+		angle *= (math.Pi / 180.0)
 	}
+	s.angle += angle
 }
 
 func (s *turtle) Right(angle float64) {
@@ -83,7 +82,7 @@ func (s *turtle) Right(angle float64) {
 }
 
 func (s *turtle) SetAngle(angle float64) {
-	angle = s.angleToRad(angle)
+	angle = s.absoluteAngleToRad(angle)
 	s.angle = angle
 }
 
@@ -94,7 +93,7 @@ func (s *turtle) PointToward(x, y float64) {
 }
 
 func (s *turtle) GetAngle() float64 {
-	return s.radToAngle(s.angle)
+	return s.radToAbsoluteAngle(s.angle)
 }
 
 func (s *turtle) SetDegreesMode() {
@@ -102,10 +101,19 @@ func (s *turtle) SetDegreesMode() {
 }
 
 func (s *turtle) SetRadianMode() {
+	if s.compassEn {
+		log.Println("ERROR: Radian mode cannot be enabled while compass mode is active.")
+		return
+	}
 	s.degreesEn = false
 }
 
+// In compass mode, North is 0 degrees, and East is 90, West is -90. Also forces Degrees mode on.
 func (s *turtle) EnableCompassAngleMode(in bool) {
+	if in {
+		s.SetDegreesMode()
+	}
+
 	s.compassEn = in
 }
 
@@ -136,7 +144,7 @@ func (s *turtle) PenSize(size float64) {
 }
 
 // //////////////////////
-func (s *turtle) angleToRad(angle float64) float64 {
+func (s *turtle) absoluteAngleToRad(angle float64) float64 {
 	if s.degreesEn {
 		angle *= (math.Pi / 180.0)
 	}
@@ -147,7 +155,7 @@ func (s *turtle) angleToRad(angle float64) float64 {
 	return angle
 }
 
-func (s *turtle) radToAngle(angle float64) float64 {
+func (s *turtle) radToAbsoluteAngle(angle float64) float64 {
 	if s.compassEn {
 		angle = -angle + math.Pi/2
 	}

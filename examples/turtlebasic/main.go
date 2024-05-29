@@ -88,4 +88,19 @@ func drawFunc(can models.Canvas) {
 			t.SetSpeed(speed)
 		}
 	}()
+
+	go func() {
+		var t models.Turtle = turtle.NewTurtle(can)
+		t.GoTo(-400, 300)
+		t.EnableCompassAngleMode(true)
+		t.PenDown()
+		t.PenColor(turtleutil.Purple)
+		t.PenSize(5)
+		t.SetSpeed(400)
+
+		for i := 0; i < 100; i++ {
+			t.Forward(250)
+			t.Right(168)
+		}
+	}()
 }
