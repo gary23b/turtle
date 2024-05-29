@@ -53,6 +53,7 @@ func drawFunc(can models.Canvas) {
 		t2.SetAngle(-math.Pi / 2)
 		t2.SetSpeed(500)
 		t2.Forward(500)
+		t2.PaintDot(40)
 	}()
 
 	go func() {

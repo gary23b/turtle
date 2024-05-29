@@ -98,5 +98,6 @@ type Turtle interface {
 	On() // Pen Down alias
 	PenColor(c color.RGBA)
 	PenSize(size float64)
+	PaintDot(size float64)
 }
 ```
