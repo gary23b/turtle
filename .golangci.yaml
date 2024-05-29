@@ -1,0 +1,63 @@
+linters:
+  fast: true
+  disable-all: true
+  enable:
+    # Defaults
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+
+    # Extras
+    - asciicheck
+    - bodyclose
+    - durationcheck
+    - errorlint
+    - exhaustive
+    - exportloopref
+    - forbidigo
+    - forcetypeassert
+    - gocritic
+    - gofumpt
+    - goimports
+    - goprintffuncname
+    - makezero
+    - misspell
+    - nakedret
+    - nilerr
+    - nolintlint
+    # - prealloc
+    - predeclared
+    # - rowserrcheck # "is disabled because of generics"
+    # - sqlclosecheck # "is disabled because of generics"
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    # - wastedassign # "is disabled because of generics"
+    - whitespace
+
+issues:
+  exclude-rules:
+    - linters:
+        - forbidigo
+      text: "Print(|f|ln)|print|println"
+
+    - path: '(.+)_test\.go'
+      linters:
+        - unused
+
+severity:
+  default-severity: error
+
+linters-settings:
+  gofumpt:
+    lang-version: "1.21"
+    # Module path which contains the source code being formatted.
+    # Default: ""
+    # Choose whether or not to use the extra rules that are disabled
+    # by default
+    extra-rules: false

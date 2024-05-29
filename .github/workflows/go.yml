@@ -1,0 +1,64 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go CI
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Go CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+
+      - name: Set up Go
+        uses: actions/setup-go@v3.4.0
+        with:
+          go-version: 1.21.2
+          cache: true
+          cache-dependency-path: go.sum
+
+      # Check if running "go mod tidy" changes anything. If so, the commit is dirty and needs fixed.
+      - name: Tidy Check
+        run: |
+          go mod tidy
+          git diff --exit-code -- go.mod go.sum
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test
+        run: |
+          go test -v -short ./... -coverprofile coverage.out
+          go tool cover -html=coverage.out -o coverage.html
+
+      # save to artifact
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: GolangCoverage
+          path: coverage.html
+          retention-days: 21
+
+      # https://github.com/lluuiissoo/go-testcoverage
+      - name: Check Coverage Threshold
+        env:
+          COVERAGE_THRESHOLD_PERCENT: 1
+        run: |
+          echo "Quality Gate: checking test coverage is above threshold ..."
+            echo "Threshold             : $COVERAGE_THRESHOLD_PERCENT %"
+            totalCoverage=`go tool cover -func=coverage.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
+            echo "Current test coverage : $totalCoverage %"
+            if (( $(echo "$totalCoverage $COVERAGE_THRESHOLD_PERCENT" | awk '{print ($1 >= $2)}') )); then
+                echo "OK"
+            else
+                echo "Current test coverage is below threshold. Please add more unit tests or adjust threshold to a lower value."
+                echo "Failed"
+                exit 1
+            fi
