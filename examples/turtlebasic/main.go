@@ -10,6 +10,9 @@ import (
 	"github.com/gary23b/turtle/turtleutil"
 )
 
+// Draws some basic shapes with 5 different turtles.
+// Part of what this shows is how each turtle can run at the same time.
+// They also can be programmed completely independently.
 func main() {
 	params := ebitencanvas.CanvasParams{Width: 1000, Height: 1000, ShowFPS: true}
 	ebitencanvas.StartEbitenTurtleCanvas(params, drawFunc)

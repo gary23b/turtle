@@ -9,6 +9,7 @@ import (
 	"github.com/gary23b/turtle/turtleutil"
 )
 
+// Paints the screen green, then starts randomly selecting pixels and either painting them blue or black.
 func main() {
 	params := ebitencanvas.CanvasParams{Width: 1000, Height: 1000, ShowFPS: true}
 	ebitencanvas.StartEbitenTurtleCanvas(params, drawFunc)
@@ -35,12 +36,11 @@ func drawFunc(can models.Canvas) {
 			can.SetPixel(w, h, c)
 		}
 		time.Sleep(time.Second / 75)
-		// userIn := can.GetUserInput()
 		// et := time.Now()
 		// deltaTime := et.Sub(st)
 		// refreshRate := 1.0 / deltaTime.Seconds()
 		// st = et
-		// fmt.Printf("%5.2f mouse x,y=%d,%d\n", refreshRate, userIn.MouseX, userIn.MouseY)
+		// fmt.Printf("%5.2f\n", refreshRate)
 	}
 
 }

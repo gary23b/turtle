@@ -180,7 +180,7 @@ func (s *SavedControlState) GetUserInput() *models.UserInput {
 	s.keysDown = inpututil.AppendPressedKeys(s.keysDown[:0])
 	s.keysJustPressed = inpututil.AppendJustPressedKeys(s.keysJustPressed[:0])
 	fillKeyStruct(s.keysDown, &controls.KeysDown)
-	fillKeyStruct(s.keysJustPressed, &controls.KeysJustPressed)
+	// fillKeyStruct(s.keysJustPressed, &controls.KeysJustPressed)
 
 	cursorX, cursorY := ebiten.CursorPosition()
 	_, yScroll := ebiten.Wheel()
@@ -191,9 +191,9 @@ func (s *SavedControlState) GetUserInput() *models.UserInput {
 	controls.MouseDown.Left = ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
 	controls.MouseDown.Center = ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle)
 	controls.MouseDown.Right = ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)
-	controls.MouseJustPressed.Left = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
-	controls.MouseJustPressed.Center = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
-	controls.MouseJustPressed.Right = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight)
+	// controls.MouseJustPressed.Left = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
+	// controls.MouseJustPressed.Center = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
+	// controls.MouseJustPressed.Right = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight)
 
 	return &controls
 }

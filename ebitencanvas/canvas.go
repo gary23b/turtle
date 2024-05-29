@@ -69,5 +69,11 @@ func (s *ebitenTurtleCanvas) GetHeight() int {
 }
 
 func (s *ebitenTurtleCanvas) GetUserInput() models.UserInput {
-	return s.g.getUserInput()
+	ret := s.g.getUserInput()
+
+	// translate game space to turtle space
+	ret.MouseX -= s.width / 2
+	ret.MouseY = -ret.MouseY + s.height/2
+
+	return ret
 }

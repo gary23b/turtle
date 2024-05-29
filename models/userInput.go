@@ -92,12 +92,12 @@ type MouseButtons struct {
 }
 
 type UserInput struct {
-	KeysDown        Keys
-	KeysJustPressed Keys
+	KeysDown Keys
+	// KeysJustPressed Keys // Doesn't work like desired because we aren't getting the user input each time the game loop runs...
 
-	MouseDown        MouseButtons
-	MouseJustPressed MouseButtons
-	MouseX           int
-	MouseY           int
-	MouseScroll      float64
+	MouseDown MouseButtons
+	// MouseJustPressed MouseButtons
+	MouseX      int
+	MouseY      int
+	MouseScroll float64
 }
