@@ -1,5 +1,7 @@
 package ebitencanvas
 
+// Fails to start these tests inside GitHub Actions....
+
 import (
 	"testing"
 
