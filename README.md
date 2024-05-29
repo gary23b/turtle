@@ -1,5 +1,7 @@
 # Turtle
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/gary23b/turtle.svg)](https://pkg.go.dev/github.com/gary23b/turtle)
+
 ## A Turtle Graphics System for Golang
 
 Based on the python turtle, this Go package provides an environment to learn Go programming while getting instant feedback. The screen is updated in real time using the [Ebitengine](https://ebitengine.org/).
