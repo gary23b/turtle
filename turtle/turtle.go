@@ -1,6 +1,7 @@
 package turtle
 
 import (
+	"image"
 	"image/color"
 	"log"
 	"math"
@@ -12,6 +13,8 @@ import (
 
 type turtle struct {
 	can       models.Canvas
+	sprite    models.Sprite
+	visible   bool
 	x         float64 // in pixels
 	y         float64 // in pixels
 	angle     float64 // in radians
@@ -28,6 +31,7 @@ var _ models.Turtle = &turtle{} // Force the linter to tell us if the interface 
 func NewTurtle(can models.Canvas) *turtle {
 	ret := &turtle{
 		can:       can,
+		sprite:    can.CreateNewSprite(),
 		penColor:  turtleutil.Black,
 		speed:     75,
 		penSize:   0,
@@ -82,6 +86,8 @@ func (s *turtle) GoTo(x, y float64) {
 	}
 	s.x = x
 	s.y = y
+
+	s.sprite.Set(s.visible, s.x, s.y, s.angle)
 }
 
 func (s *turtle) GetPos() (x, y float64) {
@@ -100,6 +106,7 @@ func (s *turtle) Left(angle float64) {
 	} else if s.angle < -2*math.Pi {
 		s.angle += 2 * math.Pi
 	}
+	s.sprite.SetRotation(s.angle)
 }
 
 func (s *turtle) L(angle float64) {
@@ -117,12 +124,14 @@ func (s *turtle) R(angle float64) {
 func (s *turtle) SetAngle(angle float64) {
 	angle = s.absoluteAngleToRad(angle)
 	s.angle = angle
+	s.sprite.SetRotation(s.angle)
 }
 
 func (s *turtle) PointToward(x, y float64) {
 	deltaX := x - s.x
 	deltaY := y - s.y
 	s.angle = math.Atan2(deltaY, deltaX)
+	s.sprite.SetRotation(s.angle)
 }
 
 func (s *turtle) GetAngle() float64 {
@@ -221,6 +230,7 @@ func (s *turtle) Circle(radius, angleAmountToDraw float64, steps int) {
 		angleAmountToDraw *= -1
 	}
 	angleStepSize := angleAmountToDraw / float64(steps)
+	endTurtleAngle := s.angle + angleAmountToDraw
 
 	// Get center of Circle
 	sin, cos := math.Sincos(s.angle + math.Pi/2.0)
@@ -234,12 +244,35 @@ func (s *turtle) Circle(radius, angleAmountToDraw float64, steps int) {
 	startAngle := math.Atan2(deltaY, deltaX)
 
 	for step := 1; step <= steps; step++ {
-		sin, cos := math.Sincos(startAngle + float64(step)*angleStepSize)
+		currentAngle := startAngle + float64(step)*angleStepSize
+		sin, cos := math.Sincos(currentAngle)
 		x := xCenter + radius*cos
 		y := yCenter + radius*sin
+		s.angle += angleStepSize
 		s.GoTo(x, y)
 	}
-	s.angle += angleAmountToDraw
+	s.angle = endTurtleAngle
+}
+
+func (s *turtle) SetVisible(isVisible bool) {
+	s.visible = isVisible
+	s.sprite.SetVisible(s.visible)
+}
+
+func (s *turtle) SetShapeAsTurtle() {
+	s.sprite.SetSpriteImageTurtle()
+}
+
+func (s *turtle) SetShapeAsArrow() {
+	s.sprite.SetSpriteImageArrow()
+}
+
+func (s *turtle) SetShapeAsImage(in image.Image) {
+	s.sprite.SetSpriteImage(in)
+}
+
+func (s *turtle) SetShapeScale(scale float64) {
+	s.sprite.SetScale(scale)
 }
 
 // //////////////////////
@@ -310,6 +343,7 @@ func (s *turtle) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
 
 		x += xStep
 		y += yStep
+		s.sprite.SetPosition(x, y)
 		tNow = tNow.Add(sleepTime)
 		time.Sleep(time.Until(tNow))
 	}

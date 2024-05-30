@@ -5,6 +5,7 @@ import (
 	"math"
 	"testing"
 
+	"github.com/gary23b/turtle/fakes"
 	"github.com/gary23b/turtle/mocks"
 	"github.com/gary23b/turtle/turtleutil"
 	"github.com/stretchr/testify/mock"
@@ -98,10 +99,13 @@ func Test_turtle_absoluteAngleToRad(t *testing.T) {
 
 func TestNewTurtleBasicTests(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
+	sprite := fakes.NewSprite()
+	canvas.On("CreateNewSprite").Return(sprite)
 	bob := NewTurtle(canvas)
 
 	require.Equal(t, &turtle{
 		can:       canvas,
+		sprite:    sprite,
 		x:         0,
 		y:         0,
 		angle:     0,
@@ -183,6 +187,7 @@ func TestNewTurtleBasicTests(t *testing.T) {
 
 func TestNewTurtleTurning(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
+	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
 	bob := NewTurtle(canvas)
 
 	require.Equal(t, 0.0, bob.GetAngle())
@@ -223,6 +228,7 @@ func TestNewTurtleTurning(t *testing.T) {
 
 func TestNewTurtleMoveWoPen(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
+	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
 	b := NewTurtle(canvas) // bob the turtle
 
 	b.F(10)
@@ -263,6 +269,7 @@ func newCanvasFake(t *testing.T) *canvasFake {
 	ret := &canvasFake{
 		Canvas: mocks.NewCanvas(t),
 	}
+	ret.Canvas.On("CreateNewSprite").Return(fakes.NewSprite())
 	return ret
 }
 
@@ -308,6 +315,7 @@ func TestNewTurtleBasicDraw(t *testing.T) {
 
 func TestNewTurtleFilledCircleDraw(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
+	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
 	canvas.On("SetCartesianPixel", mock.AnythingOfType("int"), mock.AnythingOfType("int"), mock.AnythingOfType("color.RGBA")).Return()
 	b := NewTurtle(canvas) // bob the turtle
 

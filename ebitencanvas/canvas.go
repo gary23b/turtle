@@ -38,9 +38,15 @@ func StartEbitenTurtleCanvas(params CanvasParams, drawFunc func(models.Canvas)) 
 		cmdChan: cmdChan,
 	}
 
-	go drawFunc(ret)
 	ret.g = newGame(params.Width, params.Height, params.ShowFPS, cmdChan)
+	go drawFunc(ret)
 	ret.g.runGame()
+}
+
+func (s *ebitenTurtleCanvas) CreateNewSprite() models.Sprite {
+	ret := NewSprite()
+	s.g.addSprite(ret)
+	return ret
 }
 
 // 0,0 is the center of the screen. positive X is right, positive y is up.

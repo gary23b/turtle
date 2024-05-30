@@ -2,6 +2,7 @@ package main
 
 import (
 	"image/color"
+	"time"
 
 	"github.com/gary23b/turtle/ebitencanvas"
 	"github.com/gary23b/turtle/models"
@@ -24,6 +25,8 @@ func drawFunc(can models.Canvas) {
 	White := color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
 
 	var t models.Turtle = turtle.NewTurtle(can)
+	t.SetShapeAsArrow()
+	t.SetVisible(true)
 	can.ClearScreen(White)
 	t.SetSpeed(100)
 	t.SetDegreesMode()
@@ -516,4 +519,7 @@ func drawFunc(can models.Canvas) {
 	t.PanL(3)
 	t.Fill(White)
 	t.PanR(3)
+
+	time.Sleep(time.Second)
+	t.SetVisible(false)
 }

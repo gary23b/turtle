@@ -114,5 +114,11 @@ type Turtle interface {
 	PaintDot(size float64)
 	Fill(c color.RGBA)
 	Circle(radius, angleAmountToDraw float64, steps int)
+
+	SetVisible(isVisible bool)
+	SetShapeAsTurtle()
+	SetShapeAsArrow()
+	SetShapeAsImage(in image.Image)
+	SetShapeScale(scale float64)
 }
 ```

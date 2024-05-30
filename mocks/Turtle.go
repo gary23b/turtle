@@ -3,6 +3,7 @@
 package mocks
 
 import (
+	image "image"
 	color "image/color"
 
 	mock "github.com/stretchr/testify/mock"
@@ -196,9 +197,34 @@ func (_m *Turtle) SetRadianMode() {
 	_m.Called()
 }
 
+// SetShapeAsArrow provides a mock function with given fields:
+func (_m *Turtle) SetShapeAsArrow() {
+	_m.Called()
+}
+
+// SetShapeAsImage provides a mock function with given fields: in
+func (_m *Turtle) SetShapeAsImage(in image.Image) {
+	_m.Called(in)
+}
+
+// SetShapeAsTurtle provides a mock function with given fields:
+func (_m *Turtle) SetShapeAsTurtle() {
+	_m.Called()
+}
+
+// SetShapeScale provides a mock function with given fields: scale
+func (_m *Turtle) SetShapeScale(scale float64) {
+	_m.Called(scale)
+}
+
 // SetSpeed provides a mock function with given fields: PixelsPerSecond
 func (_m *Turtle) SetSpeed(PixelsPerSecond float64) {
 	_m.Called(PixelsPerSecond)
+}
+
+// SetVisible provides a mock function with given fields: isVisible
+func (_m *Turtle) SetVisible(isVisible bool) {
+	_m.Called(isVisible)
 }
 
 type mockConstructorTestingTNewTurtle interface {

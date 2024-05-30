@@ -21,9 +21,11 @@ type game struct {
 	screenHeight int
 	showFPS      bool
 	commands     chan drawCmd
+	spritesChan  chan *spriteToDraw
 	img          *image.RGBA
 	controlState SavedControlState
 	controls     *models.UserInput
+	sprites      []*spriteToDraw
 }
 
 func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
@@ -32,7 +34,9 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 		screenHeight: height,
 		showFPS:      showFPS,
 		commands:     commands,
+		spritesChan:  make(chan *spriteToDraw, 100),
 		img:          image.NewRGBA(image.Rect(0, 0, width, height)),
+		sprites:      []*spriteToDraw{},
 	}
 
 	// ebiten.SetTPS(120)
@@ -41,6 +45,10 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 	ebiten.SetWindowSize(g.screenWidth, g.screenHeight)
 	ebiten.SetWindowTitle("Go Turtle Graphics")
 	return g
+}
+
+func (g *game) addSprite(in *spriteToDraw) {
+	g.spritesChan <- in
 }
 
 // This function will not return. It must be run on the main thread.
@@ -127,13 +135,37 @@ EatDrawCommandsLoop:
 			break EatDrawCommandsLoop
 		}
 	}
+
+EatNewSpritesLoop:
+	for {
+		select {
+		case sprite := <-g.spritesChan:
+			g.sprites = append(g.sprites, sprite)
+		default:
+			break EatNewSpritesLoop
+		}
+	}
+
 	return nil
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
-	// screen.DrawTriangles
-
 	screen.WritePixels(g.img.Pix)
+
+	for _, sprite := range g.sprites {
+		if !sprite.visible {
+			continue
+		}
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(-float64(sprite.width)/2, -float64(sprite.height)/2)
+		op.GeoM.Rotate(-sprite.angle) // This command rotates clockwise for some reason.
+		op.GeoM.Scale(sprite.scale, sprite.scale)
+		op.GeoM.Translate(float64(g.screenWidth/2), float64(g.screenHeight/2))
+		op.GeoM.Translate(sprite.x, -sprite.y)
+
+		screen.DrawImage(sprite.spriteImage, op)
+	}
+
 	if g.showFPS {
 		ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %0.2f, TPS: %0.2f", ebiten.ActualFPS(), ebiten.ActualTPS()))
 	}

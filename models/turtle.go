@@ -1,6 +1,9 @@
 package models
 
-import "image/color"
+import (
+	"image"
+	"image/color"
+)
 
 type Turtle interface {
 	Forward(distance float64)
@@ -48,4 +51,10 @@ type Turtle interface {
 	// As the circle is approximated by an inscribed regular polygon, steps determines the number of steps to use.
 	// May be used to draw regular polygons.
 	Circle(radius, angleAmountToDraw float64, steps int)
+
+	SetVisible(isVisible bool)
+	SetShapeAsTurtle()
+	SetShapeAsArrow()
+	SetShapeAsImage(in image.Image)
+	SetShapeScale(scale float64)
 }

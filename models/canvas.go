@@ -3,6 +3,7 @@ package models
 import "image/color"
 
 type Canvas interface {
+	CreateNewSprite() Sprite
 	SetCartesianPixel(x, y int, c color.RGBA)
 	SetPixel(x, y int, c color.RGBA)
 	Fill(x, y int, c color.RGBA) // Cartesian x,y

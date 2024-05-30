@@ -24,6 +24,8 @@ func drawFunc(can models.Canvas) {
 
 	go func() {
 		var t models.Turtle = turtle.NewTurtle(can)
+		t.SetShapeAsArrow()
+		t.SetVisible(true)
 		t.SetDegreesMode()
 		t.PenDown()
 		t.Forward(100)
@@ -75,6 +77,8 @@ func drawFunc(can models.Canvas) {
 
 	go func() {
 		var t models.Turtle = turtle.NewTurtle(can)
+		t.SetVisible(true)
+		t.SetShapeScale(.5)
 		t.GoTo(300, -300)
 		t.PenDown()
 		t.PenColor(turtleutil.Red)
@@ -95,6 +99,7 @@ func drawFunc(can models.Canvas) {
 
 	go func() {
 		var t models.Turtle = turtle.NewTurtle(can)
+		t.SetVisible(true)
 		t.GoTo(-400, 300)
 		t.EnableCompassAngleMode(true)
 		t.PenDown()
@@ -102,7 +107,7 @@ func drawFunc(can models.Canvas) {
 		t.PenSize(5)
 		t.SetSpeed(400)
 
-		for i := 0; i < 100; i++ {
+		for i := 0; i < 15; i++ {
 			t.Forward(250)
 			t.Right(168)
 		}

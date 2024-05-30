@@ -19,6 +19,22 @@ func (_m *Canvas) ClearScreen(c color.RGBA) {
 	_m.Called(c)
 }
 
+// CreateNewSprite provides a mock function with given fields:
+func (_m *Canvas) CreateNewSprite() models.Sprite {
+	ret := _m.Called()
+
+	var r0 models.Sprite
+	if rf, ok := ret.Get(0).(func() models.Sprite); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(models.Sprite)
+		}
+	}
+
+	return r0
+}
+
 // Fill provides a mock function with given fields: x, y, c
 func (_m *Canvas) Fill(x int, y int, c color.RGBA) {
 	_m.Called(x, y, c)
