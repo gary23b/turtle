@@ -38,4 +38,14 @@ type Turtle interface {
 	PenColor(c color.RGBA)
 	PenSize(size float64)
 	PaintDot(size float64)
+	Fill(c color.RGBA)
+
+	// Draw a circle with given radius. The center is radius units left of the turtle; angleAmountToDraw determines
+	// which part of the circle is drawn. If angleAmountToDraw is not a full circle, one
+	// endpoint of the arc is the current pen position. Draw the arc in counterclockwise direction if radius is positive,
+	// otherwise in clockwise direction. Finally the direction of the turtle is changed by the amount of angleAmountToDraw.
+	//
+	// As the circle is approximated by an inscribed regular polygon, steps determines the number of steps to use.
+	// May be used to draw regular polygons.
+	Circle(radius, angleAmountToDraw float64, steps int)
 }

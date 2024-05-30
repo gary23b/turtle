@@ -10,7 +10,8 @@ type drawCmd struct {
 	x           int
 	y           int
 	c           color.RGBA
-	clearScreen *color.RGBA // When you want to set the entire screen to a color. Only fill in this when clearing screen.
+	fill        bool // Bucket will starting from the x,y position
+	clearScreen bool // When you want to set the entire screen to a color. Only fill in this when clearing screen.
 }
 
 type ebitenTurtleCanvas struct {
@@ -56,8 +57,21 @@ func (s *ebitenTurtleCanvas) SetPixel(x, y int, c color.RGBA) {
 	s.cmdChan <- newCmd
 }
 
-func (s *ebitenTurtleCanvas) FillScreen(c color.RGBA) {
-	s.cmdChan <- drawCmd{clearScreen: &c}
+// Bucket Fill, starting from the given cartesian pixel
+func (s *ebitenTurtleCanvas) Fill(x, y int, c color.RGBA) {
+	s.cmdChan <- drawCmd{
+		x:    x + s.width/2,
+		y:    -y + s.height/2,
+		c:    c,
+		fill: true,
+	}
+}
+
+func (s *ebitenTurtleCanvas) ClearScreen(c color.RGBA) {
+	s.cmdChan <- drawCmd{
+		c:           c,
+		clearScreen: true,
+	}
 }
 
 func (s *ebitenTurtleCanvas) GetWidth() int {

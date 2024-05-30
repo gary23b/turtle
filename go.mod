@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.6.1
-	github.com/ojrac/opensimplex-go v1.0.2
 	github.com/stretchr/testify v1.8.4
 )
 

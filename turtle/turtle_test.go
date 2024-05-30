@@ -246,10 +246,13 @@ func TestNewTurtleMoveWoPen(t *testing.T) {
 }
 
 type drawCmd struct {
-	x int
-	y int
-	c color.RGBA
+	x           int
+	y           int
+	c           color.RGBA
+	fill        bool // Bucket will starting from the x,y position
+	clearScreen bool // When you want to set the entire screen to a color. Only fill in this when clearing screen.
 }
+
 type canvasFake struct {
 	*mocks.Canvas
 	calls []drawCmd
@@ -265,6 +268,10 @@ func newCanvasFake(t *testing.T) *canvasFake {
 
 func (s *canvasFake) SetCartesianPixel(x int, y int, c color.RGBA) {
 	s.calls = append(s.calls, drawCmd{x: x, y: y, c: c})
+}
+
+func (s *canvasFake) Fill(x int, y int, c color.RGBA) {
+	s.calls = append(s.calls, drawCmd{x: x, y: y, c: c, fill: true})
 }
 
 func TestNewTurtleBasicDraw(t *testing.T) {
@@ -355,4 +362,67 @@ func Test_floatPosToPixel(t *testing.T) {
 	require.Equal(t, []int{2, -1}, []int{intX, intY})
 	intX, intY = floatPosToPixel(2.4999999999, -1.4999999999)
 	require.Equal(t, []int{2, -1}, []int{intX, intY})
+}
+
+func Test_Fill(t *testing.T) {
+	canFake := newCanvasFake(t)
+	b := NewTurtle(canFake) // bob the turtle
+	b.Fill(turtleutil.Black)
+
+	require.Len(t, canFake.calls, 1)
+	require.Equal(t, drawCmd{x: 0, y: 0, c: turtleutil.Black, fill: true}, canFake.calls[0])
+}
+
+func Test_PaintDot(t *testing.T) {
+	canFake := newCanvasFake(t)
+	b := NewTurtle(canFake) // bob the turtle
+	b.GoTo(5.5, 5.5)
+	b.PaintDot(0)
+
+	require.Len(t, canFake.calls, 1)
+	require.Equal(t, drawCmd{x: 6, y: 6, c: turtleutil.Black}, canFake.calls[0])
+	canFake.calls = nil
+
+	b.PaintDot(2)
+
+	require.Len(t, canFake.calls, 4)
+	require.Equal(t, drawCmd{x: 5, y: 5, c: turtleutil.Black}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 6, y: 5, c: turtleutil.Black}, canFake.calls[1])
+	require.Equal(t, drawCmd{x: 5, y: 6, c: turtleutil.Black}, canFake.calls[2])
+	require.Equal(t, drawCmd{x: 6, y: 6, c: turtleutil.Black}, canFake.calls[3])
+	canFake.calls = nil
+}
+
+func Test_Circle(t *testing.T) {
+	canFake := newCanvasFake(t)
+	b := NewTurtle(canFake) // bob the turtle
+	b.GoTo(10, 20)
+
+	b.Circle(10, 360, 3)
+	require.InDelta(t, 10, b.x, 1e-6)
+	require.InDelta(t, 20, b.y, 1e-6)
+	require.InDelta(t, 360, b.GetAngle(), 1e-6)
+
+	b.Circle(10, 180, 3)
+	require.InDelta(t, 10, b.x, 1e-6)
+	require.InDelta(t, 40, b.y, 1e-6)
+	require.InDelta(t, 360+180, b.GetAngle(), 1e-6)
+
+	b.SetAngle(90)
+	b.Circle(-10, 400, 3)
+	require.InDelta(t, 10, b.x, 1e-6)
+	require.InDelta(t, 40, b.y, 1e-6)
+	require.InDelta(t, -360+90, b.GetAngle(), 1e-6)
+
+	b.SetAngle(90)
+	b.Circle(-10, -400, 3)
+	require.InDelta(t, 10, b.x, 1e-6)
+	require.InDelta(t, 40, b.y, 1e-6)
+	require.InDelta(t, 360+90, b.GetAngle(), 1e-6)
+
+	b.SetAngle(90)
+	b.Circle(-10, 90, 3)
+	require.InDelta(t, 20, b.x, 1e-6)
+	require.InDelta(t, 50, b.y, 1e-6)
+	require.InDelta(t, 0.0, b.GetAngle(), 1e-6)
 }

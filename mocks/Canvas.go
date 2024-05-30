@@ -14,9 +14,14 @@ type Canvas struct {
 	mock.Mock
 }
 
-// FillScreen provides a mock function with given fields: c
-func (_m *Canvas) FillScreen(c color.RGBA) {
+// ClearScreen provides a mock function with given fields: c
+func (_m *Canvas) ClearScreen(c color.RGBA) {
 	_m.Called(c)
+}
+
+// Fill provides a mock function with given fields: x, y, c
+func (_m *Canvas) Fill(x int, y int, c color.RGBA) {
+	_m.Called(x, y, c)
 }
 
 // GetHeight provides a mock function with given fields:

@@ -17,7 +17,7 @@ func main() {
 
 func drawFunc(can models.Canvas) {
 	time.Sleep(time.Second * 3)
-	can.FillScreen(turtleutil.Green)
+	can.ClearScreen(turtleutil.Green)
 
 	width, height := can.GetWidth(), can.GetHeight()
 

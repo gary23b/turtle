@@ -13,11 +13,23 @@ Ebitengine is the main dependency. [Check here the system specific instructions]
 
 ## Example
 
+### 5 Turtles At Once
+
 ```bash
 go run github.com/gary23b/turtle/examples/turtlebasic@latest
 ```
 
 ![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/turtlebasic/turtlebasic.png)
+
+### Go Gopher
+
+Converted from the python script seen in [this youtube video](https://www.youtube.com/watch?v=d8A1jqOGzNE).
+
+```bash
+go run github.com/gary23b/turtle/examples/fill@latest
+```
+
+![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/fill/GoGopher.png)
 
 ## Basic Example Program
 
@@ -100,5 +112,7 @@ type Turtle interface {
 	PenColor(c color.RGBA)
 	PenSize(size float64)
 	PaintDot(size float64)
+	Fill(c color.RGBA)
+	Circle(radius, angleAmountToDraw float64, steps int)
 }
 ```

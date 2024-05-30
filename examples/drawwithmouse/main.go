@@ -17,7 +17,7 @@ func main() {
 }
 
 func drawFunc(can models.Canvas) {
-	can.FillScreen(turtleutil.White)
+	can.ClearScreen(turtleutil.White)
 	var t models.Turtle = turtle.NewTurtle(can)
 	t.SetSpeed(1e9)
 
@@ -26,7 +26,7 @@ func drawFunc(can models.Canvas) {
 	for {
 		userIn := can.GetUserInput()
 		if userIn.KeysDown.C && !prevUserIn.KeysDown.C {
-			can.FillScreen(turtleutil.White)
+			can.ClearScreen(turtleutil.White)
 		}
 
 		if userIn.MouseDown.Left {

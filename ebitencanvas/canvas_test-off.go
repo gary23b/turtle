@@ -32,8 +32,8 @@ func TestEbitenTurtleCanvas(t *testing.T) {
 	d = <-cmdChan
 	require.Equal(t, drawCmd{x: 5, y: 1, c: turtleutil.Water}, d)
 
-	canvas.FillScreen(turtleutil.Red)
+	canvas.ClearScreen(turtleutil.Red)
 	require.NotEmpty(t, cmdChan)
 	d = <-cmdChan
-	require.Equal(t, drawCmd{clearScreen: &turtleutil.Red}, d)
+	require.Equal(t, drawCmd{c: turtleutil.Red, clearScreen: true}, d)
 }

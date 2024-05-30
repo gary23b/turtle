@@ -23,6 +23,11 @@ func (_m *Turtle) Backward(distance float64) {
 	_m.Called(distance)
 }
 
+// Circle provides a mock function with given fields: radius, angleAmountToDraw, steps
+func (_m *Turtle) Circle(radius float64, angleAmountToDraw float64, steps int) {
+	_m.Called(radius, angleAmountToDraw, steps)
+}
+
 // EnableCompassAngleMode provides a mock function with given fields: in
 func (_m *Turtle) EnableCompassAngleMode(in bool) {
 	_m.Called(in)
@@ -31,6 +36,11 @@ func (_m *Turtle) EnableCompassAngleMode(in bool) {
 // F provides a mock function with given fields: distance
 func (_m *Turtle) F(distance float64) {
 	_m.Called(distance)
+}
+
+// Fill provides a mock function with given fields: c
+func (_m *Turtle) Fill(c color.RGBA) {
+	_m.Called(c)
 }
 
 // Forward provides a mock function with given fields: distance

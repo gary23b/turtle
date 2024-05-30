@@ -201,6 +201,47 @@ func (s *turtle) PaintDot(size float64) {
 	s.drawFilledCircle(s.x, s.y, size, s.penColor)
 }
 
+func (s *turtle) Fill(c color.RGBA) {
+	x, y := floatPosToPixel(s.x, s.y)
+	s.can.Fill(x, y, c)
+}
+
+func (s *turtle) Circle(radius, angleAmountToDraw float64, steps int) {
+	// Convert to radians
+	if s.degreesEn {
+		angleAmountToDraw *= (math.Pi / 180.0)
+	}
+	if angleAmountToDraw > math.Pi*2.0 {
+		angleAmountToDraw = math.Pi * 2.0
+	}
+	if angleAmountToDraw < -math.Pi*2.0 {
+		angleAmountToDraw = -math.Pi * 2.0
+	}
+	if radius < 0 {
+		angleAmountToDraw *= -1
+	}
+	angleStepSize := angleAmountToDraw / float64(steps)
+
+	// Get center of Circle
+	sin, cos := math.Sincos(s.angle + math.Pi/2.0)
+	xCenter := s.x + radius*cos
+	yCenter := s.y + radius*sin
+	radius = math.Abs(radius)
+
+	// Get the start of the circle
+	deltaX := s.x - xCenter
+	deltaY := s.y - yCenter
+	startAngle := math.Atan2(deltaY, deltaX)
+
+	for step := 1; step <= steps; step++ {
+		sin, cos := math.Sincos(startAngle + float64(step)*angleStepSize)
+		x := xCenter + radius*cos
+		y := yCenter + radius*sin
+		s.GoTo(x, y)
+	}
+	s.angle += angleAmountToDraw
+}
+
 // //////////////////////
 func (s *turtle) absoluteAngleToRad(angle float64) float64 {
 	if s.degreesEn {

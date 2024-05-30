@@ -19,7 +19,7 @@ func main() {
 }
 
 func drawFunc(can models.Canvas) {
-	can.FillScreen(turtleutil.White)
+	can.ClearScreen(turtleutil.White)
 	time.Sleep(time.Second * 1)
 
 	go func() {
