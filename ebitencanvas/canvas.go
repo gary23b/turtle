@@ -88,12 +88,19 @@ func (s *ebitenTurtleCanvas) GetHeight() int {
 	return s.height
 }
 
-func (s *ebitenTurtleCanvas) GetUserInput() models.UserInput {
-	ret := s.g.getUserInput()
-
-	// translate game space to turtle space
-	ret.MouseX -= s.width / 2
-	ret.MouseY = -ret.MouseY + s.height/2
-
+func (s *ebitenTurtleCanvas) PressedUserInput() *models.UserInput {
+	ret := s.g.PressedUserInput()
 	return ret
+}
+
+func (s *ebitenTurtleCanvas) SubscribeToJustPressedUserInput() chan *models.UserInput {
+	return s.g.justPressedBroker.Subscribe()
+}
+
+func (s *ebitenTurtleCanvas) UnSubscribeToJustPressedUserInput(in chan *models.UserInput) {
+	s.g.justPressedBroker.Unsubscribe(in)
+}
+
+func (s *ebitenTurtleCanvas) Exit() {
+	s.g.TellGameToExit()
 }

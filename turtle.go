@@ -50,3 +50,22 @@ func Start(params Params, drawFunc func(Window)) {
 	}
 	ebitencanvas.StartEbitenTurtleCanvas(canvasParams, initCallback)
 }
+
+// This returns nil if there is no new data.
+// This will throw away all but the newest set of data available. So this should be called faster that the game update rate (60Hz),
+// otherwise sim.PressedUserInput() should be used instead.
+func GetNewestJustPressedFromChan(justPressedChan chan *models.UserInput) *models.UserInput {
+	var ret *models.UserInput
+
+ChanExtractionLoop:
+	for {
+		select {
+		case i := <-justPressedChan:
+			ret = i
+		default:
+			// receiving from chan would block
+			break ChanExtractionLoop
+		}
+	}
+	return ret
+}

@@ -77,7 +77,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: fc54fb0b86a835ca3f907efc85a1d61c
-          filename: gary23b_turtle_main.json 
+          filename: gary23b_turtle_main.json
           label: Test Coverage
           message: ${{ env.COVERAGE }}
           color: green

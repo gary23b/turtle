@@ -11,5 +11,10 @@ type Canvas interface {
 
 	GetWidth() int
 	GetHeight() int
-	GetUserInput() UserInput
+
+	PressedUserInput() *UserInput
+	SubscribeToJustPressedUserInput() chan *UserInput
+	UnSubscribeToJustPressedUserInput(in chan *UserInput)
+
+	Exit()
 }

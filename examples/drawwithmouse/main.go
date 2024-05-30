@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/gary23b/turtle"
-	"github.com/gary23b/turtle/models"
 	"github.com/gary23b/turtle/tools"
 )
 
@@ -21,23 +20,31 @@ func drawFunc(window turtle.Window) {
 	t := window.NewTurtle()
 	t.Speed(1e9)
 
+	justPressedChan := can.SubscribeToJustPressedUserInput()
+	prevUserIn := can.PressedUserInput()
 	ratio := 0.0
-	prevUserIn := &models.UserInput{}
+
 	for {
-		userIn := can.GetUserInput()
-		if userIn.KeysDown.C && !prevUserIn.KeysDown.C {
-			can.ClearScreen(turtle.White)
+		userIn := can.PressedUserInput()
+		justPressed := turtle.GetNewestJustPressedFromChan(justPressedChan)
+		if justPressed != nil {
+			if justPressed.Keys.C {
+				can.ClearScreen(turtle.White)
+			}
+			if justPressed.IsPressedByName("Q") {
+				can.Exit()
+			}
 		}
 
-		if userIn.MouseDown.Left {
+		if userIn.Mouse.Left {
 			desiredColor := tools.LerpColor(turtle.Blue, turtle.Red, ratio)
 			t.Color(desiredColor)
-			t.GoTo(float64(prevUserIn.MouseX), float64(prevUserIn.MouseY))
+			t.GoTo(float64(prevUserIn.Mouse.MouseX), float64(prevUserIn.Mouse.MouseY))
 			t.PenDown()
-			t.GoTo(float64(userIn.MouseX), float64(userIn.MouseY))
+			t.GoTo(float64(userIn.Mouse.MouseX), float64(userIn.Mouse.MouseY))
 			t.PenUp()
 		}
-		prevUserIn = &userIn
+		prevUserIn = userIn
 		ratio += .001
 		if ratio > 1 {
 			ratio = 0

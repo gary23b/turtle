@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/tools"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -23,20 +24,25 @@ type game struct {
 	commands     chan drawCmd
 	spritesChan  chan *spriteToDraw
 	img          *image.RGBA
-	controlState SavedControlState
-	controls     *models.UserInput
 	sprites      []*spriteToDraw
+	exitFlag     bool
+
+	justPressedBroker    *tools.Broker[*models.UserInput]
+	controlState         SavedControlState
+	controlsPressed      *models.UserInput
+	controlsJustPresssed *models.UserInput
 }
 
 func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 	g := &game{
-		screenWidth:  width,
-		screenHeight: height,
-		showFPS:      showFPS,
-		commands:     commands,
-		spritesChan:  make(chan *spriteToDraw, 100),
-		img:          image.NewRGBA(image.Rect(0, 0, width, height)),
-		sprites:      []*spriteToDraw{},
+		screenWidth:       width,
+		screenHeight:      height,
+		showFPS:           showFPS,
+		commands:          commands,
+		spritesChan:       make(chan *spriteToDraw, 100),
+		img:               image.NewRGBA(image.Rect(0, 0, width, height)),
+		sprites:           []*spriteToDraw{},
+		justPressedBroker: tools.NewBroker[*models.UserInput](),
 	}
 
 	white := color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}
@@ -118,7 +124,14 @@ func bucketFill(i *image.RGBA, x, y int, c color.RGBA) {
 }
 
 func (g *game) Update() error {
-	g.controls = g.controlState.GetUserInput()
+	if g.exitFlag {
+		return ebiten.Termination
+	}
+
+	g.controlsPressed, g.controlsJustPresssed = g.controlState.GetUserInput(g.screenWidth, g.screenHeight)
+	if g.controlsJustPresssed.AnyPressed {
+		g.justPressedBroker.Publish(g.controlsJustPresssed)
+	}
 
 	// Pull all the items out of the command channel until it is empty.
 EatDrawCommandsLoop:
@@ -178,10 +191,14 @@ func (g *game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return g.screenWidth, g.screenHeight
 }
 
-func (g *game) getUserInput() models.UserInput {
-	if g == nil || g.controls == nil {
-		return models.UserInput{}
+func (g *game) PressedUserInput() *models.UserInput {
+	if g == nil || g.controlsPressed == nil {
+		return &models.UserInput{}
 	}
 
-	return *g.controls
+	return g.controlsPressed
+}
+
+func (g *game) TellGameToExit() {
+	g.exitFlag = true
 }

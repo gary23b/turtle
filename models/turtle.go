@@ -56,8 +56,8 @@ type Turtle interface {
 	Fill(c color.RGBA)
 
 	// Draw a circle with given radius. The center is radius units left of the turtle; angleAmountToDraw determines
-	// which part of the circle is drawn. If angleAmountToDraw is not a full circle, one
-	// endpoint of the arc is the current pen position. Draw the arc in counterclockwise direction if radius is positive,
+	// which part of the circle is drawn. If angleAmountToDraw is not a full circle, one endpoint of the arc is
+	// the current pen position. Draw the arc in counterclockwise direction if radius is positive,
 	// otherwise in clockwise direction. Finally the direction of the turtle is changed by the amount of angleAmountToDraw.
 	//
 	// As the circle is approximated by an inscribed regular polygon, steps determines the number of steps to use.
@@ -69,5 +69,5 @@ type Turtle interface {
 	ShapeAsTurtle() // Default
 	ShapeAsArrow()
 	ShapeAsImage(in image.Image)
-	ShapeScale(scale float64)
+	ShapeScale(scale float64) // Default = 0.35
 }

@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/gary23b/turtle"
-	"github.com/gary23b/turtle/models"
 	"github.com/gary23b/turtle/tools"
 )
 
@@ -24,16 +23,22 @@ func drawFunc(window turtle.Window) {
 	t.PenDown()
 	t.Size(5)
 	speed := 300.0
+	justPressedChan := can.SubscribeToJustPressedUserInput()
+	time.Sleep(time.Second)
 
-	prevUserIn := &models.UserInput{}
 	for {
-		userIn := can.GetUserInput()
-		if userIn.KeysDown.C && !prevUserIn.KeysDown.C {
-			can.ClearScreen(turtle.White)
+		justPressed := turtle.GetNewestJustPressedFromChan(justPressedChan)
+		if justPressed != nil {
+			if justPressed.Keys.C {
+				can.ClearScreen(turtle.White)
+			}
+			if justPressed.Keys.Q {
+				can.Exit()
+			}
 		}
-
+		userIn := can.PressedUserInput()
 		tX, tY := t.GetPos()
-		mX, mY := float64(userIn.MouseX), float64(userIn.MouseY)
+		mX, mY := float64(userIn.Mouse.MouseX), float64(userIn.Mouse.MouseY)
 
 		t.PointToward(mX, mY)
 		t.Right(180)
@@ -60,7 +65,6 @@ func drawFunc(window turtle.Window) {
 			t.Forward(speed * 0.010)
 		}
 
-		prevUserIn = &userIn
 		time.Sleep(10 * time.Millisecond)
 	}
 }

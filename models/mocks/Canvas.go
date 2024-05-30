@@ -35,6 +35,11 @@ func (_m *Canvas) CreateNewSprite() models.Sprite {
 	return r0
 }
 
+// Exit provides a mock function with given fields:
+func (_m *Canvas) Exit() {
+	_m.Called()
+}
+
 // Fill provides a mock function with given fields: x, y, c
 func (_m *Canvas) Fill(x int, y int, c color.RGBA) {
 	_m.Called(x, y, c)
@@ -54,20 +59,6 @@ func (_m *Canvas) GetHeight() int {
 	return r0
 }
 
-// GetUserInput provides a mock function with given fields:
-func (_m *Canvas) GetUserInput() models.UserInput {
-	ret := _m.Called()
-
-	var r0 models.UserInput
-	if rf, ok := ret.Get(0).(func() models.UserInput); ok {
-		r0 = rf()
-	} else {
-		r0 = ret.Get(0).(models.UserInput)
-	}
-
-	return r0
-}
-
 // GetWidth provides a mock function with given fields:
 func (_m *Canvas) GetWidth() int {
 	ret := _m.Called()
@@ -82,6 +73,22 @@ func (_m *Canvas) GetWidth() int {
 	return r0
 }
 
+// PressedUserInput provides a mock function with given fields:
+func (_m *Canvas) PressedUserInput() *models.UserInput {
+	ret := _m.Called()
+
+	var r0 *models.UserInput
+	if rf, ok := ret.Get(0).(func() *models.UserInput); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*models.UserInput)
+		}
+	}
+
+	return r0
+}
+
 // SetCartesianPixel provides a mock function with given fields: x, y, c
 func (_m *Canvas) SetCartesianPixel(x int, y int, c color.RGBA) {
 	_m.Called(x, y, c)
@@ -90,6 +97,27 @@ func (_m *Canvas) SetCartesianPixel(x int, y int, c color.RGBA) {
 // SetPixel provides a mock function with given fields: x, y, c
 func (_m *Canvas) SetPixel(x int, y int, c color.RGBA) {
 	_m.Called(x, y, c)
+}
+
+// SubscribeToJustPressedUserInput provides a mock function with given fields:
+func (_m *Canvas) SubscribeToJustPressedUserInput() chan *models.UserInput {
+	ret := _m.Called()
+
+	var r0 chan *models.UserInput
+	if rf, ok := ret.Get(0).(func() chan *models.UserInput); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(chan *models.UserInput)
+		}
+	}
+
+	return r0
+}
+
+// UnSubscribeToJustPressedUserInput provides a mock function with given fields: in
+func (_m *Canvas) UnSubscribeToJustPressedUserInput(in chan *models.UserInput) {
+	_m.Called(in)
 }
 
 // NewCanvas creates a new instance of Canvas. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

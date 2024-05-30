@@ -7,164 +7,176 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-func fillKeyStruct(input []ebiten.Key, out *models.Keys) {
+func fillKeyStruct(input []ebiten.Key, out *models.UserInput) {
+	out.AnyPressed = len(input) > 0
+	keys := &out.Keys
 	for _, k := range input {
 		switch k { //nolint:exhaustive
 		case ebiten.KeyA:
-			out.A = true
+			keys.A = true
 		case ebiten.KeyB:
-			out.B = true
+			keys.B = true
 		case ebiten.KeyC:
-			out.C = true
+			keys.C = true
 		case ebiten.KeyD:
-			out.D = true
+			keys.D = true
 		case ebiten.KeyE:
-			out.E = true
+			keys.E = true
 		case ebiten.KeyF:
-			out.F = true
+			keys.F = true
 		case ebiten.KeyG:
-			out.G = true
+			keys.G = true
 		case ebiten.KeyH:
-			out.H = true
+			keys.H = true
 		case ebiten.KeyI:
-			out.I = true
+			keys.I = true
 		case ebiten.KeyJ:
-			out.J = true
+			keys.J = true
 		case ebiten.KeyK:
-			out.K = true
+			keys.K = true
 		case ebiten.KeyL:
-			out.L = true
+			keys.L = true
 		case ebiten.KeyM:
-			out.M = true
+			keys.M = true
 		case ebiten.KeyN:
-			out.N = true
+			keys.N = true
 		case ebiten.KeyO:
-			out.O = true
+			keys.O = true
 		case ebiten.KeyP:
-			out.P = true
+			keys.P = true
 		case ebiten.KeyQ:
-			out.Q = true
+			keys.Q = true
 		case ebiten.KeyR:
-			out.R = true
+			keys.R = true
 		case ebiten.KeyS:
-			out.S = true
+			keys.S = true
 		case ebiten.KeyT:
-			out.T = true
+			keys.T = true
 		case ebiten.KeyU:
-			out.U = true
+			keys.U = true
 		case ebiten.KeyV:
-			out.V = true
+			keys.V = true
 		case ebiten.KeyW:
-			out.W = true
+			keys.W = true
 		case ebiten.KeyX:
-			out.X = true
+			keys.X = true
 		case ebiten.KeyY:
-			out.Y = true
+			keys.Y = true
 		case ebiten.KeyZ:
-			out.Z = true
+			keys.Z = true
 
 		case ebiten.KeyArrowLeft:
-			out.LeftArrow = true
+			keys.LeftArrow = true
 		case ebiten.KeyArrowRight:
-			out.RightArrow = true
+			keys.RightArrow = true
 		case ebiten.KeyArrowUp:
-			out.UpArrow = true
+			keys.UpArrow = true
 		case ebiten.KeyArrowDown:
-			out.DownArrow = true
+			keys.DownArrow = true
 
 		case ebiten.KeyDigit0:
-			out.Number0 = true
+			keys.Number0 = true
 		case ebiten.KeyDigit1:
-			out.Number1 = true
+			keys.Number1 = true
 		case ebiten.KeyDigit2:
-			out.Number2 = true
+			keys.Number2 = true
 		case ebiten.KeyDigit3:
-			out.Number3 = true
+			keys.Number3 = true
 		case ebiten.KeyDigit4:
-			out.Number4 = true
+			keys.Number4 = true
 		case ebiten.KeyDigit5:
-			out.Number5 = true
+			keys.Number5 = true
 		case ebiten.KeyDigit6:
-			out.Number6 = true
+			keys.Number6 = true
 		case ebiten.KeyDigit7:
-			out.Number7 = true
+			keys.Number7 = true
 		case ebiten.KeyDigit8:
-			out.Number8 = true
+			keys.Number8 = true
 		case ebiten.KeyDigit9:
-			out.Number9 = true
+			keys.Number9 = true
 
 		case ebiten.KeyF1:
-			out.F1 = true
+			keys.F1 = true
 		case ebiten.KeyF2:
-			out.F2 = true
+			keys.F2 = true
 		case ebiten.KeyF3:
-			out.F3 = true
+			keys.F3 = true
 		case ebiten.KeyF4:
-			out.F4 = true
+			keys.F4 = true
 		case ebiten.KeyF5:
-			out.F5 = true
+			keys.F5 = true
 		case ebiten.KeyF6:
-			out.F6 = true
+			keys.F6 = true
 		case ebiten.KeyF7:
-			out.F7 = true
+			keys.F7 = true
 		case ebiten.KeyF8:
-			out.F8 = true
+			keys.F8 = true
 		case ebiten.KeyF9:
-			out.F9 = true
+			keys.F9 = true
 		case ebiten.KeyF10:
-			out.F10 = true
+			keys.F10 = true
 		case ebiten.KeyF11:
-			out.F11 = true
+			keys.F11 = true
 		case ebiten.KeyF12:
-			out.F12 = true
+			keys.F12 = true
 
 		case ebiten.KeySpace:
-			out.Space = true
+			keys.Space = true
 		case ebiten.KeyBackspace:
-			out.Backspace = true
+			keys.Backspace = true
 		case ebiten.KeyTab:
-			out.Tab = true
+			keys.Tab = true
 		case ebiten.KeyShiftRight:
-			out.RightShift = true
+			keys.RightShift = true
 		case ebiten.KeyShiftLeft:
-			out.LeftShift = true
+			keys.LeftShift = true
 		case ebiten.KeyControlLeft:
-			out.LeftCtrl = true
+			keys.LeftCtrl = true
 		case ebiten.KeyControlRight:
-			out.RightCtrl = true
+			keys.RightCtrl = true
 		case ebiten.KeyAltLeft:
-			out.LeftAlt = true
+			keys.LeftAlt = true
 		case ebiten.KeyAltRight:
-			out.RightAlt = true
-		case ebiten.KeyEnter:
-			out.Enter = true
-		case ebiten.KeyDelete:
-			out.Delete = true
+			keys.RightAlt = true
 		case ebiten.KeyEscape:
-			out.Escape = true
+			keys.Escape = true
+		case ebiten.KeyEnter:
+			keys.Enter = true
+		case ebiten.KeyInsert:
+			keys.Insert = true
+		case ebiten.KeyDelete:
+			keys.Delete = true
+		case ebiten.KeyHome:
+			keys.Home = true
+		case ebiten.KeyEnd:
+			keys.End = true
+		case ebiten.KeyPageUp:
+			keys.PageUp = true
+		case ebiten.KeyPageDown:
+			keys.PageDown = true
 
 		case ebiten.KeyBackquote:
-			out.Backquote = true
+			keys.Backquote = true
 		case ebiten.KeyMinus:
-			out.Minus = true
+			keys.Minus = true
 		case ebiten.KeyEqual:
-			out.Equal = true
+			keys.Equal = true
 		case ebiten.KeyComma:
-			out.Comma = true
+			keys.Comma = true
 		case ebiten.KeyPeriod:
-			out.Period = true
+			keys.Period = true
 		case ebiten.KeySemicolon:
-			out.SemiColon = true
+			keys.SemiColon = true
 		case ebiten.KeyQuote:
-			out.Apostrophe = true
+			keys.Apostrophe = true
 		case ebiten.KeySlash:
-			out.ForwardSlash = true
+			keys.ForwardSlash = true
 		case ebiten.KeyBackslash:
-			out.BackSlash = true
+			keys.BackSlash = true
 		case ebiten.KeyBracketLeft:
-			out.OpenSquareBracket = true
+			keys.OpenSquareBracket = true
 		case ebiten.KeyBracketRight:
-			out.CloseSquareBracket = true
+			keys.CloseSquareBracket = true
 		}
 	}
 }
@@ -174,26 +186,40 @@ type SavedControlState struct {
 	keysJustPressed []ebiten.Key
 }
 
-func (s *SavedControlState) GetUserInput() *models.UserInput {
-	controls := models.UserInput{}
-
+// Generate a new struct for pressed and just pressed. then it becomes read only to everyone else.
+func (s *SavedControlState) GetUserInput(screenWidth, screenHeight int) (pressed, justPressed *models.UserInput) {
 	s.keysDown = inpututil.AppendPressedKeys(s.keysDown[:0])
 	s.keysJustPressed = inpututil.AppendJustPressedKeys(s.keysJustPressed[:0])
-	fillKeyStruct(s.keysDown, &controls.KeysDown)
-	// fillKeyStruct(s.keysJustPressed, &controls.KeysJustPressed)
-
 	cursorX, cursorY := ebiten.CursorPosition()
 	_, yScroll := ebiten.Wheel()
-	controls.MouseX = cursorX
-	controls.MouseY = cursorY
-	controls.MouseScroll = yScroll
+	Left := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+	Center := ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle)
+	Right := ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)
+	LeftJp := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
+	CenterJp := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
+	RightJp := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight)
 
-	controls.MouseDown.Left = ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
-	controls.MouseDown.Center = ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle)
-	controls.MouseDown.Right = ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)
-	// controls.MouseJustPressed.Left = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
-	// controls.MouseJustPressed.Center = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
-	// controls.MouseJustPressed.Right = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight)
+	// Now fill out the down struct
+	pressed = &models.UserInput{}
+	fillKeyStruct(s.keysDown, pressed)
+	pressed.Mouse.MouseX = cursorX - screenWidth/2
+	pressed.Mouse.MouseY = -cursorY + screenHeight/2
+	pressed.Mouse.MouseScroll = yScroll
+	pressed.Mouse.Left = Left
+	pressed.Mouse.Center = Center
+	pressed.Mouse.Right = Right
+	pressed.AnyPressed = pressed.AnyPressed || Left || Center || Right || yScroll != 0
 
-	return &controls
+	// Now fill out the justPressed struct
+	justPressed = &models.UserInput{}
+	fillKeyStruct(s.keysJustPressed, justPressed)
+	justPressed.Mouse.MouseX = cursorX - screenWidth/2
+	justPressed.Mouse.MouseY = -cursorY + screenHeight/2
+	justPressed.Mouse.MouseScroll = yScroll
+	justPressed.Mouse.Left = LeftJp
+	justPressed.Mouse.Center = CenterJp
+	justPressed.Mouse.Right = RightJp
+	justPressed.AnyPressed = justPressed.AnyPressed || LeftJp || CenterJp || RightJp || yScroll != 0
+
+	return pressed, justPressed
 }

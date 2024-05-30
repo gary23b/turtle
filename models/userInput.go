@@ -1,6 +1,8 @@
 package models
 
-type Keys struct {
+import "strings"
+
+type KeysStruct struct {
 	LeftArrow  bool
 	RightArrow bool
 	UpArrow    bool
@@ -67,7 +69,12 @@ type Keys struct {
 	LeftAlt    bool
 	RightAlt   bool
 	Enter      bool
+	Insert     bool
 	Delete     bool
+	Home       bool
+	End        bool
+	PageUp     bool
+	PageDown   bool
 	Escape     bool
 
 	Backquote          bool
@@ -83,21 +90,214 @@ type Keys struct {
 	CloseSquareBracket bool
 }
 
-type MouseButtons struct {
+type MouseStruct struct {
 	Left   bool
 	Right  bool
 	Center bool
 	// Back    bool
 	// Forward bool
-}
 
-type UserInput struct {
-	KeysDown Keys
-	// KeysJustPressed Keys // Doesn't work like desired because we aren't getting the user input each time the game loop runs...
-
-	MouseDown MouseButtons
-	// MouseJustPressed MouseButtons
 	MouseX      int
 	MouseY      int
 	MouseScroll float64
+}
+
+type UserInput struct {
+	AnyPressed bool
+
+	Keys  KeysStruct
+	Mouse MouseStruct
+}
+
+func (s *UserInput) IsPressedByName(name string) bool {
+	if s == nil {
+		return false
+	}
+
+	k := s.Keys
+	m := s.Mouse
+
+	switch strings.ToLower(name) {
+	case "0":
+		return k.Number0
+	case "1":
+		return k.Number1
+	case "2":
+		return k.Number2
+	case "3":
+		return k.Number3
+	case "4":
+		return k.Number4
+	case "5":
+		return k.Number5
+	case "6":
+		return k.Number6
+	case "7":
+		return k.Number6
+	case "8":
+		return k.Number8
+	case "9":
+		return k.Number9
+
+	case "a":
+		return k.A
+	case "b":
+		return k.B
+	case "c":
+		return k.C
+	case "d":
+		return k.D
+	case "e":
+		return k.E
+	case "f":
+		return k.F
+	case "g":
+		return k.G
+	case "h":
+		return k.H
+	case "i":
+		return k.I
+	case "j":
+		return k.J
+	case "k":
+		return k.K
+	case "l":
+		return k.L
+	case "m":
+		return k.M
+	case "n":
+		return k.N
+	case "o":
+		return k.O
+	case "p":
+		return k.P
+	case "q":
+		return k.Q
+	case "r":
+		return k.R
+	case "s":
+		return k.S
+	case "t":
+		return k.T
+	case "u":
+		return k.U
+	case "v":
+		return k.V
+	case "w":
+		return k.W
+	case "x":
+		return k.X
+	case "y":
+		return k.Y
+	case "z":
+		return k.Z
+	case "space", " ":
+		return k.Space
+
+	case "f1":
+		return k.F1
+	case "f2":
+		return k.F2
+	case "f3":
+		return k.F3
+	case "f4":
+		return k.F4
+	case "f5":
+		return k.F5
+	case "f6":
+		return k.F6
+	case "f7":
+		return k.F7
+	case "f8":
+		return k.F8
+	case "f9":
+		return k.F9
+	case "f10":
+		return k.F10
+	case "f11":
+		return k.F11
+	case "f12":
+		return k.F12
+
+	case "arrowdown", "down":
+		return k.DownArrow
+	case "arrowleft", "left":
+		return k.LeftArrow
+	case "arrowright", "right":
+		return k.RightArrow
+	case "arrowup", "up":
+		return k.UpArrow
+
+	case "backspace":
+		return k.Backspace
+	case "enter", "\n", "\r", "\r\n":
+		return k.Enter
+	case "alt":
+		return k.LeftAlt || k.RightAlt
+	case "altleft":
+		return k.LeftAlt
+	case "altright":
+		return k.RightAlt
+	case "control", "ctrl":
+		return k.LeftCtrl || k.RightCtrl
+	case "controlleft", "ctrlleft":
+		return k.LeftCtrl
+	case "controlright", "ctrlright":
+		return k.RightCtrl
+	case "shift":
+		return k.LeftShift || k.RightShift
+	case "shiftleft":
+		return k.LeftShift
+	case "shiftright":
+		return k.RightShift
+	case "tab", "\t":
+		return k.Tab
+	case "escape":
+		return k.Escape
+	case "insert":
+		return k.Insert
+	case "delete":
+		return k.Delete
+	case "home":
+		return k.Home
+	case "end":
+		return k.End
+	case "pageup":
+		return k.PageUp
+	case "pagedown":
+		return k.PageDown
+
+	case "backquote", "`":
+		return k.Backquote
+	case "minus", "-":
+		return k.Minus
+	case "equal", "=":
+		return k.Equal
+	case "leftbracket", "[":
+		return k.OpenSquareBracket
+	case "rightbracket", "]":
+		return k.CloseSquareBracket
+	case "backslash", "\\":
+		return k.BackSlash
+	case "semicolon", ";":
+		return k.SemiColon
+	case "apostrophe", "singlequote", "quote", "'":
+		return k.Apostrophe
+	case "comma", ",":
+		return k.Comma
+	case "period", ".":
+		return k.Period
+	case "forwardslash", "slash", "/":
+		return s.Keys.ForwardSlash
+
+	// Mouse
+	case "leftmouse":
+		return m.Left
+	case "rightmouse":
+		return m.Right
+	case "centermouse":
+		return m.Center
+	}
+
+	return false
 }
