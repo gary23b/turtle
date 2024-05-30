@@ -59,6 +59,8 @@ jobs:
             echo "Threshold             : $COVERAGE_THRESHOLD_PERCENT %"
             totalCoverage=`go tool cover -func=coverage.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
             echo "Current test coverage : $totalCoverage %"
+            echo "COVERAGE=$totalCoverage" >> $GITHUB_ENV
+            echo ${{github.ref}}
             if (( $(echo "$totalCoverage $COVERAGE_THRESHOLD_PERCENT" | awk '{print ($1 >= $2)}') )); then
                 echo "OK"
             else
@@ -66,3 +68,17 @@ jobs:
                 echo "Failed"
                 exit 1
             fi
+        
+        # https://eremeev.ca/posts/golang-test-coverage-github-action/
+        # https://dev.to/thejaredwilcurt/coverage-badge-with-github-actions-finally-59fa
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Create the Badge
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: fc54fb0b86a835ca3f907efc85a1d61c
+          filename: gary23b_turtle_main.json 
+          label: Test Coverage
+          message: ${{ env.COVERAGE }}
+          color: green
+          namedLogo: jest
