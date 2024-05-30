@@ -1,0 +1,8 @@
+outpkg: mocks
+mockname: "{{.InterfaceName}}"
+
+packages:
+    github.com/gary23b/turtle/turtlemodel:
+        config:
+          dir: "turtlemodel/mocks"
+          all: true

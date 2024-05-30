@@ -16,9 +16,45 @@ type Canvas struct {
 	mock.Mock
 }
 
+type Canvas_Expecter struct {
+	mock *mock.Mock
+}
+
+func (_m *Canvas) EXPECT() *Canvas_Expecter {
+	return &Canvas_Expecter{mock: &_m.Mock}
+}
+
 // ClearScreen provides a mock function with given fields: c
 func (_m *Canvas) ClearScreen(c color.Color) {
 	_m.Called(c)
+}
+
+// Canvas_ClearScreen_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ClearScreen'
+type Canvas_ClearScreen_Call struct {
+	*mock.Call
+}
+
+// ClearScreen is a helper method to define mock.On call
+//   - c color.Color
+func (_e *Canvas_Expecter) ClearScreen(c interface{}) *Canvas_ClearScreen_Call {
+	return &Canvas_ClearScreen_Call{Call: _e.mock.On("ClearScreen", c)}
+}
+
+func (_c *Canvas_ClearScreen_Call) Run(run func(c color.Color)) *Canvas_ClearScreen_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(color.Color))
+	})
+	return _c
+}
+
+func (_c *Canvas_ClearScreen_Call) Return() *Canvas_ClearScreen_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Canvas_ClearScreen_Call) RunAndReturn(run func(color.Color)) *Canvas_ClearScreen_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // CreateNewSprite provides a mock function with given fields:
@@ -37,14 +73,98 @@ func (_m *Canvas) CreateNewSprite() turtlemodel.Sprite {
 	return r0
 }
 
+// Canvas_CreateNewSprite_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateNewSprite'
+type Canvas_CreateNewSprite_Call struct {
+	*mock.Call
+}
+
+// CreateNewSprite is a helper method to define mock.On call
+func (_e *Canvas_Expecter) CreateNewSprite() *Canvas_CreateNewSprite_Call {
+	return &Canvas_CreateNewSprite_Call{Call: _e.mock.On("CreateNewSprite")}
+}
+
+func (_c *Canvas_CreateNewSprite_Call) Run(run func()) *Canvas_CreateNewSprite_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_CreateNewSprite_Call) Return(_a0 turtlemodel.Sprite) *Canvas_CreateNewSprite_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Canvas_CreateNewSprite_Call) RunAndReturn(run func() turtlemodel.Sprite) *Canvas_CreateNewSprite_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Exit provides a mock function with given fields:
 func (_m *Canvas) Exit() {
 	_m.Called()
 }
 
+// Canvas_Exit_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Exit'
+type Canvas_Exit_Call struct {
+	*mock.Call
+}
+
+// Exit is a helper method to define mock.On call
+func (_e *Canvas_Expecter) Exit() *Canvas_Exit_Call {
+	return &Canvas_Exit_Call{Call: _e.mock.On("Exit")}
+}
+
+func (_c *Canvas_Exit_Call) Run(run func()) *Canvas_Exit_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_Exit_Call) Return() *Canvas_Exit_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Canvas_Exit_Call) RunAndReturn(run func()) *Canvas_Exit_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Fill provides a mock function with given fields: x, y, c
 func (_m *Canvas) Fill(x int, y int, c color.Color) {
 	_m.Called(x, y, c)
+}
+
+// Canvas_Fill_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Fill'
+type Canvas_Fill_Call struct {
+	*mock.Call
+}
+
+// Fill is a helper method to define mock.On call
+//   - x int
+//   - y int
+//   - c color.Color
+func (_e *Canvas_Expecter) Fill(x interface{}, y interface{}, c interface{}) *Canvas_Fill_Call {
+	return &Canvas_Fill_Call{Call: _e.mock.On("Fill", x, y, c)}
+}
+
+func (_c *Canvas_Fill_Call) Run(run func(x int, y int, c color.Color)) *Canvas_Fill_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(int), args[1].(int), args[2].(color.Color))
+	})
+	return _c
+}
+
+func (_c *Canvas_Fill_Call) Return() *Canvas_Fill_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Canvas_Fill_Call) RunAndReturn(run func(int, int, color.Color)) *Canvas_Fill_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // GetHeight provides a mock function with given fields:
@@ -59,6 +179,33 @@ func (_m *Canvas) GetHeight() int {
 	}
 
 	return r0
+}
+
+// Canvas_GetHeight_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetHeight'
+type Canvas_GetHeight_Call struct {
+	*mock.Call
+}
+
+// GetHeight is a helper method to define mock.On call
+func (_e *Canvas_Expecter) GetHeight() *Canvas_GetHeight_Call {
+	return &Canvas_GetHeight_Call{Call: _e.mock.On("GetHeight")}
+}
+
+func (_c *Canvas_GetHeight_Call) Run(run func()) *Canvas_GetHeight_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_GetHeight_Call) Return(_a0 int) *Canvas_GetHeight_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Canvas_GetHeight_Call) RunAndReturn(run func() int) *Canvas_GetHeight_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // GetScreenshot provides a mock function with given fields:
@@ -77,6 +224,33 @@ func (_m *Canvas) GetScreenshot() image.Image {
 	return r0
 }
 
+// Canvas_GetScreenshot_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetScreenshot'
+type Canvas_GetScreenshot_Call struct {
+	*mock.Call
+}
+
+// GetScreenshot is a helper method to define mock.On call
+func (_e *Canvas_Expecter) GetScreenshot() *Canvas_GetScreenshot_Call {
+	return &Canvas_GetScreenshot_Call{Call: _e.mock.On("GetScreenshot")}
+}
+
+func (_c *Canvas_GetScreenshot_Call) Run(run func()) *Canvas_GetScreenshot_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_GetScreenshot_Call) Return(_a0 image.Image) *Canvas_GetScreenshot_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Canvas_GetScreenshot_Call) RunAndReturn(run func() image.Image) *Canvas_GetScreenshot_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetWidth provides a mock function with given fields:
 func (_m *Canvas) GetWidth() int {
 	ret := _m.Called()
@@ -89,6 +263,33 @@ func (_m *Canvas) GetWidth() int {
 	}
 
 	return r0
+}
+
+// Canvas_GetWidth_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetWidth'
+type Canvas_GetWidth_Call struct {
+	*mock.Call
+}
+
+// GetWidth is a helper method to define mock.On call
+func (_e *Canvas_Expecter) GetWidth() *Canvas_GetWidth_Call {
+	return &Canvas_GetWidth_Call{Call: _e.mock.On("GetWidth")}
+}
+
+func (_c *Canvas_GetWidth_Call) Run(run func()) *Canvas_GetWidth_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_GetWidth_Call) Return(_a0 int) *Canvas_GetWidth_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Canvas_GetWidth_Call) RunAndReturn(run func() int) *Canvas_GetWidth_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // PressedUserInput provides a mock function with given fields:
@@ -107,14 +308,101 @@ func (_m *Canvas) PressedUserInput() *turtlemodel.UserInput {
 	return r0
 }
 
+// Canvas_PressedUserInput_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PressedUserInput'
+type Canvas_PressedUserInput_Call struct {
+	*mock.Call
+}
+
+// PressedUserInput is a helper method to define mock.On call
+func (_e *Canvas_Expecter) PressedUserInput() *Canvas_PressedUserInput_Call {
+	return &Canvas_PressedUserInput_Call{Call: _e.mock.On("PressedUserInput")}
+}
+
+func (_c *Canvas_PressedUserInput_Call) Run(run func()) *Canvas_PressedUserInput_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_PressedUserInput_Call) Return(_a0 *turtlemodel.UserInput) *Canvas_PressedUserInput_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Canvas_PressedUserInput_Call) RunAndReturn(run func() *turtlemodel.UserInput) *Canvas_PressedUserInput_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // SetCartesianPixel provides a mock function with given fields: x, y, c
 func (_m *Canvas) SetCartesianPixel(x int, y int, c color.Color) {
 	_m.Called(x, y, c)
 }
 
+// Canvas_SetCartesianPixel_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetCartesianPixel'
+type Canvas_SetCartesianPixel_Call struct {
+	*mock.Call
+}
+
+// SetCartesianPixel is a helper method to define mock.On call
+//   - x int
+//   - y int
+//   - c color.Color
+func (_e *Canvas_Expecter) SetCartesianPixel(x interface{}, y interface{}, c interface{}) *Canvas_SetCartesianPixel_Call {
+	return &Canvas_SetCartesianPixel_Call{Call: _e.mock.On("SetCartesianPixel", x, y, c)}
+}
+
+func (_c *Canvas_SetCartesianPixel_Call) Run(run func(x int, y int, c color.Color)) *Canvas_SetCartesianPixel_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(int), args[1].(int), args[2].(color.Color))
+	})
+	return _c
+}
+
+func (_c *Canvas_SetCartesianPixel_Call) Return() *Canvas_SetCartesianPixel_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Canvas_SetCartesianPixel_Call) RunAndReturn(run func(int, int, color.Color)) *Canvas_SetCartesianPixel_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // SetPixel provides a mock function with given fields: x, y, c
 func (_m *Canvas) SetPixel(x int, y int, c color.Color) {
 	_m.Called(x, y, c)
+}
+
+// Canvas_SetPixel_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetPixel'
+type Canvas_SetPixel_Call struct {
+	*mock.Call
+}
+
+// SetPixel is a helper method to define mock.On call
+//   - x int
+//   - y int
+//   - c color.Color
+func (_e *Canvas_Expecter) SetPixel(x interface{}, y interface{}, c interface{}) *Canvas_SetPixel_Call {
+	return &Canvas_SetPixel_Call{Call: _e.mock.On("SetPixel", x, y, c)}
+}
+
+func (_c *Canvas_SetPixel_Call) Run(run func(x int, y int, c color.Color)) *Canvas_SetPixel_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(int), args[1].(int), args[2].(color.Color))
+	})
+	return _c
+}
+
+func (_c *Canvas_SetPixel_Call) Return() *Canvas_SetPixel_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Canvas_SetPixel_Call) RunAndReturn(run func(int, int, color.Color)) *Canvas_SetPixel_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // SubscribeToJustPressedUserInput provides a mock function with given fields:
@@ -133,9 +421,64 @@ func (_m *Canvas) SubscribeToJustPressedUserInput() chan *turtlemodel.UserInput 
 	return r0
 }
 
+// Canvas_SubscribeToJustPressedUserInput_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SubscribeToJustPressedUserInput'
+type Canvas_SubscribeToJustPressedUserInput_Call struct {
+	*mock.Call
+}
+
+// SubscribeToJustPressedUserInput is a helper method to define mock.On call
+func (_e *Canvas_Expecter) SubscribeToJustPressedUserInput() *Canvas_SubscribeToJustPressedUserInput_Call {
+	return &Canvas_SubscribeToJustPressedUserInput_Call{Call: _e.mock.On("SubscribeToJustPressedUserInput")}
+}
+
+func (_c *Canvas_SubscribeToJustPressedUserInput_Call) Run(run func()) *Canvas_SubscribeToJustPressedUserInput_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Canvas_SubscribeToJustPressedUserInput_Call) Return(_a0 chan *turtlemodel.UserInput) *Canvas_SubscribeToJustPressedUserInput_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Canvas_SubscribeToJustPressedUserInput_Call) RunAndReturn(run func() chan *turtlemodel.UserInput) *Canvas_SubscribeToJustPressedUserInput_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // UnSubscribeToJustPressedUserInput provides a mock function with given fields: in
 func (_m *Canvas) UnSubscribeToJustPressedUserInput(in chan *turtlemodel.UserInput) {
 	_m.Called(in)
+}
+
+// Canvas_UnSubscribeToJustPressedUserInput_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UnSubscribeToJustPressedUserInput'
+type Canvas_UnSubscribeToJustPressedUserInput_Call struct {
+	*mock.Call
+}
+
+// UnSubscribeToJustPressedUserInput is a helper method to define mock.On call
+//   - in chan *turtlemodel.UserInput
+func (_e *Canvas_Expecter) UnSubscribeToJustPressedUserInput(in interface{}) *Canvas_UnSubscribeToJustPressedUserInput_Call {
+	return &Canvas_UnSubscribeToJustPressedUserInput_Call{Call: _e.mock.On("UnSubscribeToJustPressedUserInput", in)}
+}
+
+func (_c *Canvas_UnSubscribeToJustPressedUserInput_Call) Run(run func(in chan *turtlemodel.UserInput)) *Canvas_UnSubscribeToJustPressedUserInput_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(chan *turtlemodel.UserInput))
+	})
+	return _c
+}
+
+func (_c *Canvas_UnSubscribeToJustPressedUserInput_Call) Return() *Canvas_UnSubscribeToJustPressedUserInput_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Canvas_UnSubscribeToJustPressedUserInput_Call) RunAndReturn(run func(chan *turtlemodel.UserInput)) *Canvas_UnSubscribeToJustPressedUserInput_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // NewCanvas creates a new instance of Canvas. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

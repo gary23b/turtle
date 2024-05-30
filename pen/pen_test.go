@@ -111,7 +111,8 @@ func Test_turtle_absoluteAngleToRad(t *testing.T) {
 func TestNewTurtleBasicTests(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
 	sprite := fakes.NewSprite()
-	canvas.On("CreateNewSprite").Return(sprite)
+
+	canvas.EXPECT().CreateNewSprite().Return(sprite)
 	bob := NewPen(canvas)
 
 	require.Equal(t, &pen{
@@ -203,7 +204,7 @@ func TestNewTurtleBasicTests(t *testing.T) {
 
 func TestNewTurtleTurning(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
-	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
+	canvas.EXPECT().CreateNewSprite().Return(fakes.NewSprite())
 	bob := NewPen(canvas)
 
 	require.Equal(t, 0.0, bob.GetAngle())
@@ -244,7 +245,7 @@ func TestNewTurtleTurning(t *testing.T) {
 
 func TestNewTurtleMoveWoPen(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
-	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
+	canvas.EXPECT().CreateNewSprite().Return(fakes.NewSprite())
 	b := NewPen(canvas) // bob the turtle
 
 	b.F(10)
@@ -335,8 +336,8 @@ func TestNewTurtleBasicDraw(t *testing.T) {
 
 func TestNewTurtleFilledCircleDraw(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
-	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
-	canvas.On("SetCartesianPixel", mock.AnythingOfType("int"), mock.AnythingOfType("int"), mock.AnythingOfType("color.RGBA")).Return()
+	canvas.EXPECT().CreateNewSprite().Return(fakes.NewSprite())
+	canvas.EXPECT().SetCartesianPixel(mock.Anything, mock.Anything, mock.Anything).Return()
 	b := NewPen(canvas) // bob the turtle
 
 	b.Color(Black)

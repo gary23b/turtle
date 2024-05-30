@@ -39,7 +39,8 @@ jobs:
 
       - name: Test
         run: |
-          go test -v -short ./... -coverprofile coverage.out
+          go test -v -short ./... -coverprofile coverage_temp.out
+          grep -v "mock_.*\.go\|fake_.*\.go\|/examples/\|/cmd/" coverage_temp.out > coverage.out
           go tool cover -html=coverage.out -o coverage.html
 
       # save to artifact

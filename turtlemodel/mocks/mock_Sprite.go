@@ -14,6 +14,14 @@ type Sprite struct {
 	mock.Mock
 }
 
+type Sprite_Expecter struct {
+	mock *mock.Mock
+}
+
+func (_m *Sprite) EXPECT() *Sprite_Expecter {
+	return &Sprite_Expecter{mock: &_m.Mock}
+}
+
 // Get provides a mock function with given fields:
 func (_m *Sprite) Get() turtlemodel.SpriteInfo {
 	ret := _m.Called()
@@ -28,9 +36,67 @@ func (_m *Sprite) Get() turtlemodel.SpriteInfo {
 	return r0
 }
 
+// Sprite_Get_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Get'
+type Sprite_Get_Call struct {
+	*mock.Call
+}
+
+// Get is a helper method to define mock.On call
+func (_e *Sprite_Expecter) Get() *Sprite_Get_Call {
+	return &Sprite_Get_Call{Call: _e.mock.On("Get")}
+}
+
+func (_c *Sprite_Get_Call) Run(run func()) *Sprite_Get_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Sprite_Get_Call) Return(_a0 turtlemodel.SpriteInfo) *Sprite_Get_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Sprite_Get_Call) RunAndReturn(run func() turtlemodel.SpriteInfo) *Sprite_Get_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Set provides a mock function with given fields: visible, cartX, cartY, radianAngle
 func (_m *Sprite) Set(visible bool, cartX float64, cartY float64, radianAngle float64) {
 	_m.Called(visible, cartX, cartY, radianAngle)
+}
+
+// Sprite_Set_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Set'
+type Sprite_Set_Call struct {
+	*mock.Call
+}
+
+// Set is a helper method to define mock.On call
+//   - visible bool
+//   - cartX float64
+//   - cartY float64
+//   - radianAngle float64
+func (_e *Sprite_Expecter) Set(visible interface{}, cartX interface{}, cartY interface{}, radianAngle interface{}) *Sprite_Set_Call {
+	return &Sprite_Set_Call{Call: _e.mock.On("Set", visible, cartX, cartY, radianAngle)}
+}
+
+func (_c *Sprite_Set_Call) Run(run func(visible bool, cartX float64, cartY float64, radianAngle float64)) *Sprite_Set_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(bool), args[1].(float64), args[2].(float64), args[3].(float64))
+	})
+	return _c
+}
+
+func (_c *Sprite_Set_Call) Return() *Sprite_Set_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_Set_Call) RunAndReturn(run func(bool, float64, float64, float64)) *Sprite_Set_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // SetPosition provides a mock function with given fields: cartX, cartY
@@ -38,9 +104,66 @@ func (_m *Sprite) SetPosition(cartX float64, cartY float64) {
 	_m.Called(cartX, cartY)
 }
 
+// Sprite_SetPosition_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetPosition'
+type Sprite_SetPosition_Call struct {
+	*mock.Call
+}
+
+// SetPosition is a helper method to define mock.On call
+//   - cartX float64
+//   - cartY float64
+func (_e *Sprite_Expecter) SetPosition(cartX interface{}, cartY interface{}) *Sprite_SetPosition_Call {
+	return &Sprite_SetPosition_Call{Call: _e.mock.On("SetPosition", cartX, cartY)}
+}
+
+func (_c *Sprite_SetPosition_Call) Run(run func(cartX float64, cartY float64)) *Sprite_SetPosition_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64), args[1].(float64))
+	})
+	return _c
+}
+
+func (_c *Sprite_SetPosition_Call) Return() *Sprite_SetPosition_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetPosition_Call) RunAndReturn(run func(float64, float64)) *Sprite_SetPosition_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // SetRotation provides a mock function with given fields: radianAngle
 func (_m *Sprite) SetRotation(radianAngle float64) {
 	_m.Called(radianAngle)
+}
+
+// Sprite_SetRotation_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetRotation'
+type Sprite_SetRotation_Call struct {
+	*mock.Call
+}
+
+// SetRotation is a helper method to define mock.On call
+//   - radianAngle float64
+func (_e *Sprite_Expecter) SetRotation(radianAngle interface{}) *Sprite_SetRotation_Call {
+	return &Sprite_SetRotation_Call{Call: _e.mock.On("SetRotation", radianAngle)}
+}
+
+func (_c *Sprite_SetRotation_Call) Run(run func(radianAngle float64)) *Sprite_SetRotation_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Sprite_SetRotation_Call) Return() *Sprite_SetRotation_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetRotation_Call) RunAndReturn(run func(float64)) *Sprite_SetRotation_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // SetScale provides a mock function with given fields: scale
@@ -48,9 +171,65 @@ func (_m *Sprite) SetScale(scale float64) {
 	_m.Called(scale)
 }
 
+// Sprite_SetScale_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetScale'
+type Sprite_SetScale_Call struct {
+	*mock.Call
+}
+
+// SetScale is a helper method to define mock.On call
+//   - scale float64
+func (_e *Sprite_Expecter) SetScale(scale interface{}) *Sprite_SetScale_Call {
+	return &Sprite_SetScale_Call{Call: _e.mock.On("SetScale", scale)}
+}
+
+func (_c *Sprite_SetScale_Call) Run(run func(scale float64)) *Sprite_SetScale_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Sprite_SetScale_Call) Return() *Sprite_SetScale_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetScale_Call) RunAndReturn(run func(float64)) *Sprite_SetScale_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // SetSpriteImage provides a mock function with given fields: _a0
 func (_m *Sprite) SetSpriteImage(_a0 image.Image) {
 	_m.Called(_a0)
+}
+
+// Sprite_SetSpriteImage_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetSpriteImage'
+type Sprite_SetSpriteImage_Call struct {
+	*mock.Call
+}
+
+// SetSpriteImage is a helper method to define mock.On call
+//   - _a0 image.Image
+func (_e *Sprite_Expecter) SetSpriteImage(_a0 interface{}) *Sprite_SetSpriteImage_Call {
+	return &Sprite_SetSpriteImage_Call{Call: _e.mock.On("SetSpriteImage", _a0)}
+}
+
+func (_c *Sprite_SetSpriteImage_Call) Run(run func(_a0 image.Image)) *Sprite_SetSpriteImage_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(image.Image))
+	})
+	return _c
+}
+
+func (_c *Sprite_SetSpriteImage_Call) Return() *Sprite_SetSpriteImage_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetSpriteImage_Call) RunAndReturn(run func(image.Image)) *Sprite_SetSpriteImage_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // SetSpriteImageArrow provides a mock function with given fields:
@@ -58,14 +237,96 @@ func (_m *Sprite) SetSpriteImageArrow() {
 	_m.Called()
 }
 
+// Sprite_SetSpriteImageArrow_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetSpriteImageArrow'
+type Sprite_SetSpriteImageArrow_Call struct {
+	*mock.Call
+}
+
+// SetSpriteImageArrow is a helper method to define mock.On call
+func (_e *Sprite_Expecter) SetSpriteImageArrow() *Sprite_SetSpriteImageArrow_Call {
+	return &Sprite_SetSpriteImageArrow_Call{Call: _e.mock.On("SetSpriteImageArrow")}
+}
+
+func (_c *Sprite_SetSpriteImageArrow_Call) Run(run func()) *Sprite_SetSpriteImageArrow_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Sprite_SetSpriteImageArrow_Call) Return() *Sprite_SetSpriteImageArrow_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetSpriteImageArrow_Call) RunAndReturn(run func()) *Sprite_SetSpriteImageArrow_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // SetSpriteImageTurtle provides a mock function with given fields:
 func (_m *Sprite) SetSpriteImageTurtle() {
 	_m.Called()
 }
 
+// Sprite_SetSpriteImageTurtle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetSpriteImageTurtle'
+type Sprite_SetSpriteImageTurtle_Call struct {
+	*mock.Call
+}
+
+// SetSpriteImageTurtle is a helper method to define mock.On call
+func (_e *Sprite_Expecter) SetSpriteImageTurtle() *Sprite_SetSpriteImageTurtle_Call {
+	return &Sprite_SetSpriteImageTurtle_Call{Call: _e.mock.On("SetSpriteImageTurtle")}
+}
+
+func (_c *Sprite_SetSpriteImageTurtle_Call) Run(run func()) *Sprite_SetSpriteImageTurtle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Sprite_SetSpriteImageTurtle_Call) Return() *Sprite_SetSpriteImageTurtle_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetSpriteImageTurtle_Call) RunAndReturn(run func()) *Sprite_SetSpriteImageTurtle_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // SetVisible provides a mock function with given fields: visible
 func (_m *Sprite) SetVisible(visible bool) {
 	_m.Called(visible)
+}
+
+// Sprite_SetVisible_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetVisible'
+type Sprite_SetVisible_Call struct {
+	*mock.Call
+}
+
+// SetVisible is a helper method to define mock.On call
+//   - visible bool
+func (_e *Sprite_Expecter) SetVisible(visible interface{}) *Sprite_SetVisible_Call {
+	return &Sprite_SetVisible_Call{Call: _e.mock.On("SetVisible", visible)}
+}
+
+func (_c *Sprite_SetVisible_Call) Run(run func(visible bool)) *Sprite_SetVisible_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(bool))
+	})
+	return _c
+}
+
+func (_c *Sprite_SetVisible_Call) Return() *Sprite_SetVisible_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Sprite_SetVisible_Call) RunAndReturn(run func(bool)) *Sprite_SetVisible_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // NewSprite creates a new instance of Sprite. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

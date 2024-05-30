@@ -16,9 +16,45 @@ type Turtle struct {
 	mock.Mock
 }
 
+type Turtle_Expecter struct {
+	mock *mock.Mock
+}
+
+func (_m *Turtle) EXPECT() *Turtle_Expecter {
+	return &Turtle_Expecter{mock: &_m.Mock}
+}
+
 // Angle provides a mock function with given fields: angle
 func (_m *Turtle) Angle(angle float64) {
 	_m.Called(angle)
+}
+
+// Turtle_Angle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Angle'
+type Turtle_Angle_Call struct {
+	*mock.Call
+}
+
+// Angle is a helper method to define mock.On call
+//   - angle float64
+func (_e *Turtle_Expecter) Angle(angle interface{}) *Turtle_Angle_Call {
+	return &Turtle_Angle_Call{Call: _e.mock.On("Angle", angle)}
+}
+
+func (_c *Turtle_Angle_Call) Run(run func(angle float64)) *Turtle_Angle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Angle_Call) Return() *Turtle_Angle_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Angle_Call) RunAndReturn(run func(float64)) *Turtle_Angle_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // B provides a mock function with given fields: distance
@@ -26,14 +62,100 @@ func (_m *Turtle) B(distance float64) {
 	_m.Called(distance)
 }
 
+// Turtle_B_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'B'
+type Turtle_B_Call struct {
+	*mock.Call
+}
+
+// B is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) B(distance interface{}) *Turtle_B_Call {
+	return &Turtle_B_Call{Call: _e.mock.On("B", distance)}
+}
+
+func (_c *Turtle_B_Call) Run(run func(distance float64)) *Turtle_B_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_B_Call) Return() *Turtle_B_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_B_Call) RunAndReturn(run func(float64)) *Turtle_B_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Backward provides a mock function with given fields: distance
 func (_m *Turtle) Backward(distance float64) {
 	_m.Called(distance)
 }
 
+// Turtle_Backward_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Backward'
+type Turtle_Backward_Call struct {
+	*mock.Call
+}
+
+// Backward is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) Backward(distance interface{}) *Turtle_Backward_Call {
+	return &Turtle_Backward_Call{Call: _e.mock.On("Backward", distance)}
+}
+
+func (_c *Turtle_Backward_Call) Run(run func(distance float64)) *Turtle_Backward_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Backward_Call) Return() *Turtle_Backward_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Backward_Call) RunAndReturn(run func(float64)) *Turtle_Backward_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Circle provides a mock function with given fields: radius, angleAmountToDraw, steps
 func (_m *Turtle) Circle(radius float64, angleAmountToDraw float64, steps int) {
 	_m.Called(radius, angleAmountToDraw, steps)
+}
+
+// Turtle_Circle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Circle'
+type Turtle_Circle_Call struct {
+	*mock.Call
+}
+
+// Circle is a helper method to define mock.On call
+//   - radius float64
+//   - angleAmountToDraw float64
+//   - steps int
+func (_e *Turtle_Expecter) Circle(radius interface{}, angleAmountToDraw interface{}, steps interface{}) *Turtle_Circle_Call {
+	return &Turtle_Circle_Call{Call: _e.mock.On("Circle", radius, angleAmountToDraw, steps)}
+}
+
+func (_c *Turtle_Circle_Call) Run(run func(radius float64, angleAmountToDraw float64, steps int)) *Turtle_Circle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64), args[1].(float64), args[2].(int))
+	})
+	return _c
+}
+
+func (_c *Turtle_Circle_Call) Return() *Turtle_Circle_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Circle_Call) RunAndReturn(run func(float64, float64, int)) *Turtle_Circle_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // Clone provides a mock function with given fields:
@@ -52,9 +174,64 @@ func (_m *Turtle) Clone() turtlemodel.Turtle {
 	return r0
 }
 
+// Turtle_Clone_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Clone'
+type Turtle_Clone_Call struct {
+	*mock.Call
+}
+
+// Clone is a helper method to define mock.On call
+func (_e *Turtle_Expecter) Clone() *Turtle_Clone_Call {
+	return &Turtle_Clone_Call{Call: _e.mock.On("Clone")}
+}
+
+func (_c *Turtle_Clone_Call) Run(run func()) *Turtle_Clone_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_Clone_Call) Return(_a0 turtlemodel.Turtle) *Turtle_Clone_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_Clone_Call) RunAndReturn(run func() turtlemodel.Turtle) *Turtle_Clone_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Color provides a mock function with given fields: c
 func (_m *Turtle) Color(c color.Color) {
 	_m.Called(c)
+}
+
+// Turtle_Color_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Color'
+type Turtle_Color_Call struct {
+	*mock.Call
+}
+
+// Color is a helper method to define mock.On call
+//   - c color.Color
+func (_e *Turtle_Expecter) Color(c interface{}) *Turtle_Color_Call {
+	return &Turtle_Color_Call{Call: _e.mock.On("Color", c)}
+}
+
+func (_c *Turtle_Color_Call) Run(run func(c color.Color)) *Turtle_Color_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(color.Color))
+	})
+	return _c
+}
+
+func (_c *Turtle_Color_Call) Return() *Turtle_Color_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Color_Call) RunAndReturn(run func(color.Color)) *Turtle_Color_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // CompassMode provides a mock function with given fields:
@@ -62,9 +239,63 @@ func (_m *Turtle) CompassMode() {
 	_m.Called()
 }
 
+// Turtle_CompassMode_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CompassMode'
+type Turtle_CompassMode_Call struct {
+	*mock.Call
+}
+
+// CompassMode is a helper method to define mock.On call
+func (_e *Turtle_Expecter) CompassMode() *Turtle_CompassMode_Call {
+	return &Turtle_CompassMode_Call{Call: _e.mock.On("CompassMode")}
+}
+
+func (_c *Turtle_CompassMode_Call) Run(run func()) *Turtle_CompassMode_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_CompassMode_Call) Return() *Turtle_CompassMode_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_CompassMode_Call) RunAndReturn(run func()) *Turtle_CompassMode_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // DegreesMode provides a mock function with given fields:
 func (_m *Turtle) DegreesMode() {
 	_m.Called()
+}
+
+// Turtle_DegreesMode_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DegreesMode'
+type Turtle_DegreesMode_Call struct {
+	*mock.Call
+}
+
+// DegreesMode is a helper method to define mock.On call
+func (_e *Turtle_Expecter) DegreesMode() *Turtle_DegreesMode_Call {
+	return &Turtle_DegreesMode_Call{Call: _e.mock.On("DegreesMode")}
+}
+
+func (_c *Turtle_DegreesMode_Call) Run(run func()) *Turtle_DegreesMode_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_DegreesMode_Call) Return() *Turtle_DegreesMode_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_DegreesMode_Call) RunAndReturn(run func()) *Turtle_DegreesMode_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // Dot provides a mock function with given fields: size
@@ -72,9 +303,65 @@ func (_m *Turtle) Dot(size float64) {
 	_m.Called(size)
 }
 
+// Turtle_Dot_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Dot'
+type Turtle_Dot_Call struct {
+	*mock.Call
+}
+
+// Dot is a helper method to define mock.On call
+//   - size float64
+func (_e *Turtle_Expecter) Dot(size interface{}) *Turtle_Dot_Call {
+	return &Turtle_Dot_Call{Call: _e.mock.On("Dot", size)}
+}
+
+func (_c *Turtle_Dot_Call) Run(run func(size float64)) *Turtle_Dot_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Dot_Call) Return() *Turtle_Dot_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Dot_Call) RunAndReturn(run func(float64)) *Turtle_Dot_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // F provides a mock function with given fields: distance
 func (_m *Turtle) F(distance float64) {
 	_m.Called(distance)
+}
+
+// Turtle_F_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'F'
+type Turtle_F_Call struct {
+	*mock.Call
+}
+
+// F is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) F(distance interface{}) *Turtle_F_Call {
+	return &Turtle_F_Call{Call: _e.mock.On("F", distance)}
+}
+
+func (_c *Turtle_F_Call) Run(run func(distance float64)) *Turtle_F_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_F_Call) Return() *Turtle_F_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_F_Call) RunAndReturn(run func(float64)) *Turtle_F_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // Fill provides a mock function with given fields: c
@@ -82,9 +369,65 @@ func (_m *Turtle) Fill(c color.Color) {
 	_m.Called(c)
 }
 
+// Turtle_Fill_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Fill'
+type Turtle_Fill_Call struct {
+	*mock.Call
+}
+
+// Fill is a helper method to define mock.On call
+//   - c color.Color
+func (_e *Turtle_Expecter) Fill(c interface{}) *Turtle_Fill_Call {
+	return &Turtle_Fill_Call{Call: _e.mock.On("Fill", c)}
+}
+
+func (_c *Turtle_Fill_Call) Run(run func(c color.Color)) *Turtle_Fill_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(color.Color))
+	})
+	return _c
+}
+
+func (_c *Turtle_Fill_Call) Return() *Turtle_Fill_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Fill_Call) RunAndReturn(run func(color.Color)) *Turtle_Fill_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Forward provides a mock function with given fields: distance
 func (_m *Turtle) Forward(distance float64) {
 	_m.Called(distance)
+}
+
+// Turtle_Forward_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Forward'
+type Turtle_Forward_Call struct {
+	*mock.Call
+}
+
+// Forward is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) Forward(distance interface{}) *Turtle_Forward_Call {
+	return &Turtle_Forward_Call{Call: _e.mock.On("Forward", distance)}
+}
+
+func (_c *Turtle_Forward_Call) Run(run func(distance float64)) *Turtle_Forward_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Forward_Call) Return() *Turtle_Forward_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Forward_Call) RunAndReturn(run func(float64)) *Turtle_Forward_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // GetAngle provides a mock function with given fields:
@@ -101,6 +444,33 @@ func (_m *Turtle) GetAngle() float64 {
 	return r0
 }
 
+// Turtle_GetAngle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetAngle'
+type Turtle_GetAngle_Call struct {
+	*mock.Call
+}
+
+// GetAngle is a helper method to define mock.On call
+func (_e *Turtle_Expecter) GetAngle() *Turtle_GetAngle_Call {
+	return &Turtle_GetAngle_Call{Call: _e.mock.On("GetAngle")}
+}
+
+func (_c *Turtle_GetAngle_Call) Run(run func()) *Turtle_GetAngle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_GetAngle_Call) Return(_a0 float64) *Turtle_GetAngle_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_GetAngle_Call) RunAndReturn(run func() float64) *Turtle_GetAngle_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetAngleMode provides a mock function with given fields:
 func (_m *Turtle) GetAngleMode() turtlemodel.AngleMode {
 	ret := _m.Called()
@@ -113,6 +483,33 @@ func (_m *Turtle) GetAngleMode() turtlemodel.AngleMode {
 	}
 
 	return r0
+}
+
+// Turtle_GetAngleMode_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetAngleMode'
+type Turtle_GetAngleMode_Call struct {
+	*mock.Call
+}
+
+// GetAngleMode is a helper method to define mock.On call
+func (_e *Turtle_Expecter) GetAngleMode() *Turtle_GetAngleMode_Call {
+	return &Turtle_GetAngleMode_Call{Call: _e.mock.On("GetAngleMode")}
+}
+
+func (_c *Turtle_GetAngleMode_Call) Run(run func()) *Turtle_GetAngleMode_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_GetAngleMode_Call) Return(_a0 turtlemodel.AngleMode) *Turtle_GetAngleMode_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_GetAngleMode_Call) RunAndReturn(run func() turtlemodel.AngleMode) *Turtle_GetAngleMode_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // GetColor provides a mock function with given fields:
@@ -129,6 +526,33 @@ func (_m *Turtle) GetColor() color.Color {
 	}
 
 	return r0
+}
+
+// Turtle_GetColor_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetColor'
+type Turtle_GetColor_Call struct {
+	*mock.Call
+}
+
+// GetColor is a helper method to define mock.On call
+func (_e *Turtle_Expecter) GetColor() *Turtle_GetColor_Call {
+	return &Turtle_GetColor_Call{Call: _e.mock.On("GetColor")}
+}
+
+func (_c *Turtle_GetColor_Call) Run(run func()) *Turtle_GetColor_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_GetColor_Call) Return(_a0 color.Color) *Turtle_GetColor_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_GetColor_Call) RunAndReturn(run func() color.Color) *Turtle_GetColor_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // GetPos provides a mock function with given fields:
@@ -155,6 +579,33 @@ func (_m *Turtle) GetPos() (float64, float64) {
 	return r0, r1
 }
 
+// Turtle_GetPos_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetPos'
+type Turtle_GetPos_Call struct {
+	*mock.Call
+}
+
+// GetPos is a helper method to define mock.On call
+func (_e *Turtle_Expecter) GetPos() *Turtle_GetPos_Call {
+	return &Turtle_GetPos_Call{Call: _e.mock.On("GetPos")}
+}
+
+func (_c *Turtle_GetPos_Call) Run(run func()) *Turtle_GetPos_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_GetPos_Call) Return(x float64, y float64) *Turtle_GetPos_Call {
+	_c.Call.Return(x, y)
+	return _c
+}
+
+func (_c *Turtle_GetPos_Call) RunAndReturn(run func() (float64, float64)) *Turtle_GetPos_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetSize provides a mock function with given fields:
 func (_m *Turtle) GetSize() float64 {
 	ret := _m.Called()
@@ -167,6 +618,33 @@ func (_m *Turtle) GetSize() float64 {
 	}
 
 	return r0
+}
+
+// Turtle_GetSize_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSize'
+type Turtle_GetSize_Call struct {
+	*mock.Call
+}
+
+// GetSize is a helper method to define mock.On call
+func (_e *Turtle_Expecter) GetSize() *Turtle_GetSize_Call {
+	return &Turtle_GetSize_Call{Call: _e.mock.On("GetSize")}
+}
+
+func (_c *Turtle_GetSize_Call) Run(run func()) *Turtle_GetSize_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_GetSize_Call) Return(_a0 float64) *Turtle_GetSize_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_GetSize_Call) RunAndReturn(run func() float64) *Turtle_GetSize_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // GetSpeed provides a mock function with given fields:
@@ -183,14 +661,97 @@ func (_m *Turtle) GetSpeed() float64 {
 	return r0
 }
 
+// Turtle_GetSpeed_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetSpeed'
+type Turtle_GetSpeed_Call struct {
+	*mock.Call
+}
+
+// GetSpeed is a helper method to define mock.On call
+func (_e *Turtle_Expecter) GetSpeed() *Turtle_GetSpeed_Call {
+	return &Turtle_GetSpeed_Call{Call: _e.mock.On("GetSpeed")}
+}
+
+func (_c *Turtle_GetSpeed_Call) Run(run func()) *Turtle_GetSpeed_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_GetSpeed_Call) Return(_a0 float64) *Turtle_GetSpeed_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_GetSpeed_Call) RunAndReturn(run func() float64) *Turtle_GetSpeed_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GoTo provides a mock function with given fields: x, y
 func (_m *Turtle) GoTo(x float64, y float64) {
 	_m.Called(x, y)
 }
 
+// Turtle_GoTo_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GoTo'
+type Turtle_GoTo_Call struct {
+	*mock.Call
+}
+
+// GoTo is a helper method to define mock.On call
+//   - x float64
+//   - y float64
+func (_e *Turtle_Expecter) GoTo(x interface{}, y interface{}) *Turtle_GoTo_Call {
+	return &Turtle_GoTo_Call{Call: _e.mock.On("GoTo", x, y)}
+}
+
+func (_c *Turtle_GoTo_Call) Run(run func(x float64, y float64)) *Turtle_GoTo_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64), args[1].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_GoTo_Call) Return() *Turtle_GoTo_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_GoTo_Call) RunAndReturn(run func(float64, float64)) *Turtle_GoTo_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // HideTurtle provides a mock function with given fields:
 func (_m *Turtle) HideTurtle() {
 	_m.Called()
+}
+
+// Turtle_HideTurtle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'HideTurtle'
+type Turtle_HideTurtle_Call struct {
+	*mock.Call
+}
+
+// HideTurtle is a helper method to define mock.On call
+func (_e *Turtle_Expecter) HideTurtle() *Turtle_HideTurtle_Call {
+	return &Turtle_HideTurtle_Call{Call: _e.mock.On("HideTurtle")}
+}
+
+func (_c *Turtle_HideTurtle_Call) Run(run func()) *Turtle_HideTurtle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_HideTurtle_Call) Return() *Turtle_HideTurtle_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_HideTurtle_Call) RunAndReturn(run func()) *Turtle_HideTurtle_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // IsPenDown provides a mock function with given fields:
@@ -207,9 +768,64 @@ func (_m *Turtle) IsPenDown() bool {
 	return r0
 }
 
+// Turtle_IsPenDown_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'IsPenDown'
+type Turtle_IsPenDown_Call struct {
+	*mock.Call
+}
+
+// IsPenDown is a helper method to define mock.On call
+func (_e *Turtle_Expecter) IsPenDown() *Turtle_IsPenDown_Call {
+	return &Turtle_IsPenDown_Call{Call: _e.mock.On("IsPenDown")}
+}
+
+func (_c *Turtle_IsPenDown_Call) Run(run func()) *Turtle_IsPenDown_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_IsPenDown_Call) Return(_a0 bool) *Turtle_IsPenDown_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Turtle_IsPenDown_Call) RunAndReturn(run func() bool) *Turtle_IsPenDown_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // L provides a mock function with given fields: angle
 func (_m *Turtle) L(angle float64) {
 	_m.Called(angle)
+}
+
+// Turtle_L_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'L'
+type Turtle_L_Call struct {
+	*mock.Call
+}
+
+// L is a helper method to define mock.On call
+//   - angle float64
+func (_e *Turtle_Expecter) L(angle interface{}) *Turtle_L_Call {
+	return &Turtle_L_Call{Call: _e.mock.On("L", angle)}
+}
+
+func (_c *Turtle_L_Call) Run(run func(angle float64)) *Turtle_L_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_L_Call) Return() *Turtle_L_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_L_Call) RunAndReturn(run func(float64)) *Turtle_L_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // Left provides a mock function with given fields: angle
@@ -217,9 +833,64 @@ func (_m *Turtle) Left(angle float64) {
 	_m.Called(angle)
 }
 
+// Turtle_Left_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Left'
+type Turtle_Left_Call struct {
+	*mock.Call
+}
+
+// Left is a helper method to define mock.On call
+//   - angle float64
+func (_e *Turtle_Expecter) Left(angle interface{}) *Turtle_Left_Call {
+	return &Turtle_Left_Call{Call: _e.mock.On("Left", angle)}
+}
+
+func (_c *Turtle_Left_Call) Run(run func(angle float64)) *Turtle_Left_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Left_Call) Return() *Turtle_Left_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Left_Call) RunAndReturn(run func(float64)) *Turtle_Left_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Off provides a mock function with given fields:
 func (_m *Turtle) Off() {
 	_m.Called()
+}
+
+// Turtle_Off_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Off'
+type Turtle_Off_Call struct {
+	*mock.Call
+}
+
+// Off is a helper method to define mock.On call
+func (_e *Turtle_Expecter) Off() *Turtle_Off_Call {
+	return &Turtle_Off_Call{Call: _e.mock.On("Off")}
+}
+
+func (_c *Turtle_Off_Call) Run(run func()) *Turtle_Off_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_Off_Call) Return() *Turtle_Off_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Off_Call) RunAndReturn(run func()) *Turtle_Off_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // On provides a mock function with given fields:
@@ -227,9 +898,63 @@ func (_m *Turtle) On() {
 	_m.Called()
 }
 
+// Turtle_On_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'On'
+type Turtle_On_Call struct {
+	*mock.Call
+}
+
+// On is a helper method to define mock.On call
+func (_e *Turtle_Expecter) On() *Turtle_On_Call {
+	return &Turtle_On_Call{Call: _e.mock.On("On")}
+}
+
+func (_c *Turtle_On_Call) Run(run func()) *Turtle_On_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_On_Call) Return() *Turtle_On_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_On_Call) RunAndReturn(run func()) *Turtle_On_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // PD provides a mock function with given fields:
 func (_m *Turtle) PD() {
 	_m.Called()
+}
+
+// Turtle_PD_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PD'
+type Turtle_PD_Call struct {
+	*mock.Call
+}
+
+// PD is a helper method to define mock.On call
+func (_e *Turtle_Expecter) PD() *Turtle_PD_Call {
+	return &Turtle_PD_Call{Call: _e.mock.On("PD")}
+}
+
+func (_c *Turtle_PD_Call) Run(run func()) *Turtle_PD_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_PD_Call) Return() *Turtle_PD_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PD_Call) RunAndReturn(run func()) *Turtle_PD_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // PU provides a mock function with given fields:
@@ -237,9 +962,64 @@ func (_m *Turtle) PU() {
 	_m.Called()
 }
 
+// Turtle_PU_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PU'
+type Turtle_PU_Call struct {
+	*mock.Call
+}
+
+// PU is a helper method to define mock.On call
+func (_e *Turtle_Expecter) PU() *Turtle_PU_Call {
+	return &Turtle_PU_Call{Call: _e.mock.On("PU")}
+}
+
+func (_c *Turtle_PU_Call) Run(run func()) *Turtle_PU_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_PU_Call) Return() *Turtle_PU_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PU_Call) RunAndReturn(run func()) *Turtle_PU_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // PanL provides a mock function with given fields: distance
 func (_m *Turtle) PanL(distance float64) {
 	_m.Called(distance)
+}
+
+// Turtle_PanL_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PanL'
+type Turtle_PanL_Call struct {
+	*mock.Call
+}
+
+// PanL is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) PanL(distance interface{}) *Turtle_PanL_Call {
+	return &Turtle_PanL_Call{Call: _e.mock.On("PanL", distance)}
+}
+
+func (_c *Turtle_PanL_Call) Run(run func(distance float64)) *Turtle_PanL_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_PanL_Call) Return() *Turtle_PanL_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PanL_Call) RunAndReturn(run func(float64)) *Turtle_PanL_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // PanLeftward provides a mock function with given fields: distance
@@ -247,9 +1027,65 @@ func (_m *Turtle) PanLeftward(distance float64) {
 	_m.Called(distance)
 }
 
+// Turtle_PanLeftward_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PanLeftward'
+type Turtle_PanLeftward_Call struct {
+	*mock.Call
+}
+
+// PanLeftward is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) PanLeftward(distance interface{}) *Turtle_PanLeftward_Call {
+	return &Turtle_PanLeftward_Call{Call: _e.mock.On("PanLeftward", distance)}
+}
+
+func (_c *Turtle_PanLeftward_Call) Run(run func(distance float64)) *Turtle_PanLeftward_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_PanLeftward_Call) Return() *Turtle_PanLeftward_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PanLeftward_Call) RunAndReturn(run func(float64)) *Turtle_PanLeftward_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // PanR provides a mock function with given fields: distance
 func (_m *Turtle) PanR(distance float64) {
 	_m.Called(distance)
+}
+
+// Turtle_PanR_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PanR'
+type Turtle_PanR_Call struct {
+	*mock.Call
+}
+
+// PanR is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) PanR(distance interface{}) *Turtle_PanR_Call {
+	return &Turtle_PanR_Call{Call: _e.mock.On("PanR", distance)}
+}
+
+func (_c *Turtle_PanR_Call) Run(run func(distance float64)) *Turtle_PanR_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_PanR_Call) Return() *Turtle_PanR_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PanR_Call) RunAndReturn(run func(float64)) *Turtle_PanR_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // PanRightward provides a mock function with given fields: distance
@@ -257,9 +1093,64 @@ func (_m *Turtle) PanRightward(distance float64) {
 	_m.Called(distance)
 }
 
+// Turtle_PanRightward_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PanRightward'
+type Turtle_PanRightward_Call struct {
+	*mock.Call
+}
+
+// PanRightward is a helper method to define mock.On call
+//   - distance float64
+func (_e *Turtle_Expecter) PanRightward(distance interface{}) *Turtle_PanRightward_Call {
+	return &Turtle_PanRightward_Call{Call: _e.mock.On("PanRightward", distance)}
+}
+
+func (_c *Turtle_PanRightward_Call) Run(run func(distance float64)) *Turtle_PanRightward_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_PanRightward_Call) Return() *Turtle_PanRightward_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PanRightward_Call) RunAndReturn(run func(float64)) *Turtle_PanRightward_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // PenDown provides a mock function with given fields:
 func (_m *Turtle) PenDown() {
 	_m.Called()
+}
+
+// Turtle_PenDown_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PenDown'
+type Turtle_PenDown_Call struct {
+	*mock.Call
+}
+
+// PenDown is a helper method to define mock.On call
+func (_e *Turtle_Expecter) PenDown() *Turtle_PenDown_Call {
+	return &Turtle_PenDown_Call{Call: _e.mock.On("PenDown")}
+}
+
+func (_c *Turtle_PenDown_Call) Run(run func()) *Turtle_PenDown_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_PenDown_Call) Return() *Turtle_PenDown_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PenDown_Call) RunAndReturn(run func()) *Turtle_PenDown_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // PenUp provides a mock function with given fields:
@@ -267,9 +1158,65 @@ func (_m *Turtle) PenUp() {
 	_m.Called()
 }
 
+// Turtle_PenUp_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PenUp'
+type Turtle_PenUp_Call struct {
+	*mock.Call
+}
+
+// PenUp is a helper method to define mock.On call
+func (_e *Turtle_Expecter) PenUp() *Turtle_PenUp_Call {
+	return &Turtle_PenUp_Call{Call: _e.mock.On("PenUp")}
+}
+
+func (_c *Turtle_PenUp_Call) Run(run func()) *Turtle_PenUp_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_PenUp_Call) Return() *Turtle_PenUp_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PenUp_Call) RunAndReturn(run func()) *Turtle_PenUp_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // PointToward provides a mock function with given fields: x, y
 func (_m *Turtle) PointToward(x float64, y float64) {
 	_m.Called(x, y)
+}
+
+// Turtle_PointToward_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PointToward'
+type Turtle_PointToward_Call struct {
+	*mock.Call
+}
+
+// PointToward is a helper method to define mock.On call
+//   - x float64
+//   - y float64
+func (_e *Turtle_Expecter) PointToward(x interface{}, y interface{}) *Turtle_PointToward_Call {
+	return &Turtle_PointToward_Call{Call: _e.mock.On("PointToward", x, y)}
+}
+
+func (_c *Turtle_PointToward_Call) Run(run func(x float64, y float64)) *Turtle_PointToward_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64), args[1].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_PointToward_Call) Return() *Turtle_PointToward_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_PointToward_Call) RunAndReturn(run func(float64, float64)) *Turtle_PointToward_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // R provides a mock function with given fields: angle
@@ -277,9 +1224,64 @@ func (_m *Turtle) R(angle float64) {
 	_m.Called(angle)
 }
 
+// Turtle_R_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'R'
+type Turtle_R_Call struct {
+	*mock.Call
+}
+
+// R is a helper method to define mock.On call
+//   - angle float64
+func (_e *Turtle_Expecter) R(angle interface{}) *Turtle_R_Call {
+	return &Turtle_R_Call{Call: _e.mock.On("R", angle)}
+}
+
+func (_c *Turtle_R_Call) Run(run func(angle float64)) *Turtle_R_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_R_Call) Return() *Turtle_R_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_R_Call) RunAndReturn(run func(float64)) *Turtle_R_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // RadiansMode provides a mock function with given fields:
 func (_m *Turtle) RadiansMode() {
 	_m.Called()
+}
+
+// Turtle_RadiansMode_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'RadiansMode'
+type Turtle_RadiansMode_Call struct {
+	*mock.Call
+}
+
+// RadiansMode is a helper method to define mock.On call
+func (_e *Turtle_Expecter) RadiansMode() *Turtle_RadiansMode_Call {
+	return &Turtle_RadiansMode_Call{Call: _e.mock.On("RadiansMode")}
+}
+
+func (_c *Turtle_RadiansMode_Call) Run(run func()) *Turtle_RadiansMode_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_RadiansMode_Call) Return() *Turtle_RadiansMode_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_RadiansMode_Call) RunAndReturn(run func()) *Turtle_RadiansMode_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // Right provides a mock function with given fields: angle
@@ -287,9 +1289,64 @@ func (_m *Turtle) Right(angle float64) {
 	_m.Called(angle)
 }
 
+// Turtle_Right_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Right'
+type Turtle_Right_Call struct {
+	*mock.Call
+}
+
+// Right is a helper method to define mock.On call
+//   - angle float64
+func (_e *Turtle_Expecter) Right(angle interface{}) *Turtle_Right_Call {
+	return &Turtle_Right_Call{Call: _e.mock.On("Right", angle)}
+}
+
+func (_c *Turtle_Right_Call) Run(run func(angle float64)) *Turtle_Right_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Right_Call) Return() *Turtle_Right_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Right_Call) RunAndReturn(run func(float64)) *Turtle_Right_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // ShapeAsArrow provides a mock function with given fields:
 func (_m *Turtle) ShapeAsArrow() {
 	_m.Called()
+}
+
+// Turtle_ShapeAsArrow_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ShapeAsArrow'
+type Turtle_ShapeAsArrow_Call struct {
+	*mock.Call
+}
+
+// ShapeAsArrow is a helper method to define mock.On call
+func (_e *Turtle_Expecter) ShapeAsArrow() *Turtle_ShapeAsArrow_Call {
+	return &Turtle_ShapeAsArrow_Call{Call: _e.mock.On("ShapeAsArrow")}
+}
+
+func (_c *Turtle_ShapeAsArrow_Call) Run(run func()) *Turtle_ShapeAsArrow_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_ShapeAsArrow_Call) Return() *Turtle_ShapeAsArrow_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_ShapeAsArrow_Call) RunAndReturn(run func()) *Turtle_ShapeAsArrow_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // ShapeAsImage provides a mock function with given fields: in
@@ -297,9 +1354,64 @@ func (_m *Turtle) ShapeAsImage(in image.Image) {
 	_m.Called(in)
 }
 
+// Turtle_ShapeAsImage_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ShapeAsImage'
+type Turtle_ShapeAsImage_Call struct {
+	*mock.Call
+}
+
+// ShapeAsImage is a helper method to define mock.On call
+//   - in image.Image
+func (_e *Turtle_Expecter) ShapeAsImage(in interface{}) *Turtle_ShapeAsImage_Call {
+	return &Turtle_ShapeAsImage_Call{Call: _e.mock.On("ShapeAsImage", in)}
+}
+
+func (_c *Turtle_ShapeAsImage_Call) Run(run func(in image.Image)) *Turtle_ShapeAsImage_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(image.Image))
+	})
+	return _c
+}
+
+func (_c *Turtle_ShapeAsImage_Call) Return() *Turtle_ShapeAsImage_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_ShapeAsImage_Call) RunAndReturn(run func(image.Image)) *Turtle_ShapeAsImage_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // ShapeAsTurtle provides a mock function with given fields:
 func (_m *Turtle) ShapeAsTurtle() {
 	_m.Called()
+}
+
+// Turtle_ShapeAsTurtle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ShapeAsTurtle'
+type Turtle_ShapeAsTurtle_Call struct {
+	*mock.Call
+}
+
+// ShapeAsTurtle is a helper method to define mock.On call
+func (_e *Turtle_Expecter) ShapeAsTurtle() *Turtle_ShapeAsTurtle_Call {
+	return &Turtle_ShapeAsTurtle_Call{Call: _e.mock.On("ShapeAsTurtle")}
+}
+
+func (_c *Turtle_ShapeAsTurtle_Call) Run(run func()) *Turtle_ShapeAsTurtle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_ShapeAsTurtle_Call) Return() *Turtle_ShapeAsTurtle_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_ShapeAsTurtle_Call) RunAndReturn(run func()) *Turtle_ShapeAsTurtle_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // ShapeScale provides a mock function with given fields: scale
@@ -307,9 +1419,64 @@ func (_m *Turtle) ShapeScale(scale float64) {
 	_m.Called(scale)
 }
 
+// Turtle_ShapeScale_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ShapeScale'
+type Turtle_ShapeScale_Call struct {
+	*mock.Call
+}
+
+// ShapeScale is a helper method to define mock.On call
+//   - scale float64
+func (_e *Turtle_Expecter) ShapeScale(scale interface{}) *Turtle_ShapeScale_Call {
+	return &Turtle_ShapeScale_Call{Call: _e.mock.On("ShapeScale", scale)}
+}
+
+func (_c *Turtle_ShapeScale_Call) Run(run func(scale float64)) *Turtle_ShapeScale_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_ShapeScale_Call) Return() *Turtle_ShapeScale_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_ShapeScale_Call) RunAndReturn(run func(float64)) *Turtle_ShapeScale_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // ShowTurtle provides a mock function with given fields:
 func (_m *Turtle) ShowTurtle() {
 	_m.Called()
+}
+
+// Turtle_ShowTurtle_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ShowTurtle'
+type Turtle_ShowTurtle_Call struct {
+	*mock.Call
+}
+
+// ShowTurtle is a helper method to define mock.On call
+func (_e *Turtle_Expecter) ShowTurtle() *Turtle_ShowTurtle_Call {
+	return &Turtle_ShowTurtle_Call{Call: _e.mock.On("ShowTurtle")}
+}
+
+func (_c *Turtle_ShowTurtle_Call) Run(run func()) *Turtle_ShowTurtle_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Turtle_ShowTurtle_Call) Return() *Turtle_ShowTurtle_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_ShowTurtle_Call) RunAndReturn(run func()) *Turtle_ShowTurtle_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // Size provides a mock function with given fields: size
@@ -317,9 +1484,65 @@ func (_m *Turtle) Size(size float64) {
 	_m.Called(size)
 }
 
+// Turtle_Size_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Size'
+type Turtle_Size_Call struct {
+	*mock.Call
+}
+
+// Size is a helper method to define mock.On call
+//   - size float64
+func (_e *Turtle_Expecter) Size(size interface{}) *Turtle_Size_Call {
+	return &Turtle_Size_Call{Call: _e.mock.On("Size", size)}
+}
+
+func (_c *Turtle_Size_Call) Run(run func(size float64)) *Turtle_Size_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Size_Call) Return() *Turtle_Size_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Size_Call) RunAndReturn(run func(float64)) *Turtle_Size_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Speed provides a mock function with given fields: PixelsPerSecond
 func (_m *Turtle) Speed(PixelsPerSecond float64) {
 	_m.Called(PixelsPerSecond)
+}
+
+// Turtle_Speed_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Speed'
+type Turtle_Speed_Call struct {
+	*mock.Call
+}
+
+// Speed is a helper method to define mock.On call
+//   - PixelsPerSecond float64
+func (_e *Turtle_Expecter) Speed(PixelsPerSecond interface{}) *Turtle_Speed_Call {
+	return &Turtle_Speed_Call{Call: _e.mock.On("Speed", PixelsPerSecond)}
+}
+
+func (_c *Turtle_Speed_Call) Run(run func(PixelsPerSecond float64)) *Turtle_Speed_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(float64))
+	})
+	return _c
+}
+
+func (_c *Turtle_Speed_Call) Return() *Turtle_Speed_Call {
+	_c.Call.Return()
+	return _c
+}
+
+func (_c *Turtle_Speed_Call) RunAndReturn(run func(float64)) *Turtle_Speed_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // NewTurtle creates a new instance of Turtle. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

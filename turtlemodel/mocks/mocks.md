@@ -10,6 +10,8 @@ go install github.com/vektra/mockery/v2@v2.32.0
 
 ## Build for models directory
 
+Since I have added the config file `.mockery.yaml`, mockery can be called with no arguments.
+
 ```bash
-mockery --all --dir="./turtlemodel" --output="./turtlemodel/mocks"
+mockery
 ```
