@@ -27,10 +27,11 @@ type pen struct {
 var _ models.Turtle = &pen{} // Force the linter to tell us if the interface is implemented
 
 func NewPen(can models.Canvas) *pen {
+	black := color.RGBA{A: 0xFF}
 	ret := &pen{
 		can:       can,
 		sprite:    can.CreateNewSprite(),
-		penColor:  color.RGBA{A: 0xFF},
+		penColor:  black,
 		speed:     75,
 		penSize:   0,
 		degreesEn: true,

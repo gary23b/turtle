@@ -6,6 +6,7 @@ import (
 
 	"github.com/gary23b/turtle"
 	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/tools"
 )
 
 // Try to touch the worm. It runs away. The closer you get the faster it goes. But if you catch it, it explodes.
@@ -45,9 +46,9 @@ func drawFunc(window turtle.Window) {
 			ratio := 2.0 * (1.0 - dist/100.0)
 			switch {
 			case ratio <= 1:
-				t.Color(turtle.LerpColor(turtle.Blue, turtle.Green, ratio))
+				t.Color(tools.LerpColor(turtle.Blue, turtle.Green, ratio))
 			case ratio > 1:
-				t.Color(turtle.LerpColor(turtle.Green, turtle.Red, ratio-1.0))
+				t.Color(tools.LerpColor(turtle.Green, turtle.Red, ratio-1.0))
 			}
 
 			if dist < 5 {

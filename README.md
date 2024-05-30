@@ -7,30 +7,61 @@
 
 Based on the python turtle, this Go package provides an environment to learn Go programming while getting instant feedback. The screen is updated in real time using the [Ebitengine](https://ebitengine.org/).
 
+Using Turtle is super easy and beginner-friendly. This is a good tool to use for an introduction to programming.
+
+There is very little boilerplate needed to do simple things. Below is an example to draw a triangle.
+
+```go
+func drawTriangle(window turtle.Window) {
+	t := window.NewTurtle()
+	t.ShowTurtle()
+	t.PenDown()
+
+	t.Forward(100)
+	t.Left(120)
+	t.Forward(100)
+	t.Left(120)
+	t.Forward(100)
+}
+```
+
+### Angle Modes
+
+Three angle modes are supported:
+
+- `DegreesMode`: (default). 0 is in the x direction, positive counterclockwise
+- `RadiansMode`: 0 is in the x direction, positive counterclockwise
+- `CompassMode`: 0 is North, or up, and positive clockwise
+  - Can be used for solving orienteering problems
+
+### Turtle Sprite
+
+The turtle sprite can be hidden(default) or show. Its shape can be changed to an arrow or to a user provided `image.Image`. The scale of the sprite can also be adjusted.
+
 ## Install
 
 Go 1.20 or later is required.<br>
-Ebitengine is the main dependency. [Check here the system specific instructions](https://ebitengine.org/en/documents/install.html).
+Ebitengine is the main dependency. [Check here for the system specific instructions](https://ebitengine.org/en/documents/install.html).
 
 ## Example
 
 ### 5 Turtles At Once
 
 ```bash
-go run github.com/gary23b/turtle/examples/turtlebasic@latest
+go run github.com/gary23b/turtle/examples/fiveturtles@latest
 ```
 
-![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/turtlebasic/turtlebasic.png)
+![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/fiveturtles/turtlebasic.png)
 
 ### Go Gopher
 
 Converted from the python script seen in [this youtube video](https://www.youtube.com/watch?v=d8A1jqOGzNE).
 
 ```bash
-go run github.com/gary23b/turtle/examples/fill@latest
+go run github.com/gary23b/turtle/examples/gogopher@latest
 ```
 
-![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/fill/GoGopher.png)
+![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/gogopher/GoGopher.png)
 
 ## Basic Example Program
 
