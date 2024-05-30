@@ -28,7 +28,7 @@ func drawFunc(window turtle.Window) {
 	t.Speed(100)
 	t.Size(4)
 
-	// go turtle.CreateGif(window, time.Millisecond*600, time.Millisecond*100, "./examples/gogopher/GoGopher.gif", int(60/.6))
+	// go turtle.CreateGifMostCommonColors(window, time.Millisecond*600, time.Millisecond*100, "./examples/gogopher/GoGopher.gif", int(60/.6))
 
 	t.R(57.8)
 	t.F(181.3)

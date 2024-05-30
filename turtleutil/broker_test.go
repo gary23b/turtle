@@ -10,7 +10,7 @@ import (
 )
 
 func TestBroker(t *testing.T) {
-	b := NewBroker[int]()
+	b := NewBroker[int](100)
 	wg := &sync.WaitGroup{}
 	readers := 100
 	quitters := 100
@@ -48,6 +48,7 @@ func TestBroker(t *testing.T) {
 
 	time.Sleep(time.Second * 2)
 	for i := 0; i < 200; i++ {
+		time.Sleep(time.Millisecond)
 		b.Publish(i)
 	}
 
@@ -56,7 +57,7 @@ func TestBroker(t *testing.T) {
 }
 
 func TestBroker_noSubscribers(t *testing.T) {
-	b := NewBroker[int]()
+	b := NewBroker[int](100)
 
 	for i := 0; i < 2000; i++ {
 		b.Publish(i)
@@ -67,7 +68,8 @@ func TestBroker_noSubscribers(t *testing.T) {
 }
 
 func TestBroker_subscriberDoesReadMessages(t *testing.T) {
-	b := NewBroker[int]()
+	bufferSize := 101
+	b := NewBroker[int](bufferSize)
 
 	c := b.Subscribe()
 	time.Sleep(time.Millisecond * 200)
@@ -83,7 +85,7 @@ func TestBroker_subscriberDoesReadMessages(t *testing.T) {
 	for x := range c {
 		got = append(got, x)
 	}
-	require.Equal(t, 100, len(got))
+	require.Equal(t, bufferSize, len(got))
 
 	expectedValue := 0
 	for _, x := range got {

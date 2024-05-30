@@ -6,7 +6,7 @@ require (
 	github.com/gary23b/easygif v0.0.1
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
+	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
 )
 
 require (

@@ -8,7 +8,9 @@ package turtleutil
 // Any subscriber should make sure to unsubscribe before deleting the reference.
 // An independent go routine is started to receive published messages and to distribute them to all subscribers.
 // The go routine stops once Stop() is called and all subscribers have unsubscribed.
+// Ideally this is a 1-to-n communication system. If there are multiple publishers, it would be hard to know when to call Stop.
 type Broker[T any] struct {
+	bufferSize    int
 	stopCh        chan struct{}
 	publishCh     chan T
 	subscribeCh   chan chan T
@@ -16,12 +18,13 @@ type Broker[T any] struct {
 }
 
 // Creates a new Broker of any given type and start it running.
-func NewBroker[T any]() *Broker[T] {
+func NewBroker[T any](bufferSize int) *Broker[T] {
 	ret := &Broker[T]{
+		bufferSize:    bufferSize,
 		stopCh:        make(chan struct{}),
-		publishCh:     make(chan T, 100),
-		subscribeCh:   make(chan chan T, 100),
-		unsubscribeCh: make(chan chan T, 100),
+		publishCh:     make(chan T, bufferSize),
+		subscribeCh:   make(chan chan T, bufferSize),
+		unsubscribeCh: make(chan chan T, bufferSize),
 	}
 
 	go ret.start()
@@ -80,7 +83,7 @@ func (b *Broker[T]) Stop() {
 
 // Subscribe to the data broker. Messages can be received on the returned channel.
 func (b *Broker[T]) Subscribe() chan T {
-	msgCh := make(chan T, 100)
+	msgCh := make(chan T, b.bufferSize)
 	b.subscribeCh <- msgCh
 	return msgCh
 }

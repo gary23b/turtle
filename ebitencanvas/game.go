@@ -46,7 +46,7 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 		spritesChan:       make(chan *spriteToDraw, 100),
 		img:               image.NewRGBA(image.Rect(0, 0, width, height)),
 		sprites:           []*spriteToDraw{},
-		justPressedBroker: turtleutil.NewBroker[*turtlemodel.UserInput](),
+		justPressedBroker: turtleutil.NewBroker[*turtlemodel.UserInput](60 * 5),
 	}
 
 	white := color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}

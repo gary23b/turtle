@@ -43,6 +43,7 @@ func TakeScreenshotVideo(
 }
 
 // Start this as a go routine to create a GIF of your creation.
+// The 256 most common colors will be found and used.
 // The length of the captured video will be delayBetweenScreenshots * frameCount
 // The length of the gif will be delayBetweenGifFrames * frameCount
 func CreateGif(
@@ -82,6 +83,30 @@ func CreateGifDithered(
 
 	fmt.Printf("GIF: %s: Processing images\n", outputGifFilePath)
 	err := easygif.DitheredWrite(frames, delayBetweenGifFrames, outputGifFilePath)
+	if err != nil {
+		log.Printf("Error while running easygif.EasyGifWrite(): %v\n", err)
+	}
+
+	fmt.Printf("GIF: %s: Done\n", outputGifFilePath)
+}
+
+// Start this as a go routine to create a GIF of your creation.
+// This uses the nearest color in the Plan9 palette. So it is best for images with blocks of solid colors.
+// The length of the captured video will be delayBetweenScreenshots * frameCount
+// The length of the gif will be delayBetweenGifFrames * frameCount
+func CreateGifNearestPlan9(
+	window Window,
+	delayBetweenScreenshots time.Duration,
+	delayBetweenGifFrames time.Duration,
+	outputGifFilePath string,
+	frameCount int,
+) {
+	// Collect the images
+	fmt.Printf("GIF: %s: Collecting images\n", outputGifFilePath)
+	frames := TakeScreenshotVideo(window, delayBetweenScreenshots, frameCount)
+
+	fmt.Printf("GIF: %s: Processing images\n", outputGifFilePath)
+	err := easygif.NearestWrite(frames, delayBetweenGifFrames, outputGifFilePath)
 	if err != nil {
 		log.Printf("Error while running easygif.EasyGifWrite(): %v\n", err)
 	}
