@@ -17,7 +17,7 @@ func drawFunc(window turtle.Window) {
 	// go turtle.CreateGif(window, time.Millisecond*400, time.Millisecond*150, "./examples/spiralweb/spiralweb.gif", 60)
 
 	window.GetCanvas().ClearScreen(turtle.Black)
-	t := window.NewTurtle()
+	t := window.NewTurtlePermissive()
 	t.ShowTurtle()
 	t.Speed(1000)
 	t.PenDown()
@@ -26,7 +26,7 @@ func drawFunc(window turtle.Window) {
 	for x := 1; x < 200; x++ {
 		t.Color(colors[x%6])        // setting color
 		t.Size(float64(x)/75.0 + 1) // setting width
-		t.Forward(float64(x))       // moving forward
+		t.Forward(x)                // moving forward
 		t.Left(59)                  // Turn left
 	}
 }

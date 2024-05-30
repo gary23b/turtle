@@ -10,6 +10,7 @@ import (
 type Window interface {
 	GetCanvas() turtlemodel.Canvas
 	NewTurtle() turtlemodel.Turtle
+	NewTurtlePermissive() turtlemodel.TurtlePermissive
 }
 
 type window struct {
@@ -26,6 +27,11 @@ func (s *window) GetCanvas() turtlemodel.Canvas {
 // Create a new turtle
 func (s *window) NewTurtle() turtlemodel.Turtle {
 	return pen.NewPen(s.can)
+}
+
+// Create a new turtle that converts all input number from any real number type to float64.
+func (s *window) NewTurtlePermissive() turtlemodel.TurtlePermissive {
+	return pen.NewPenPermissive(s.can)
 }
 
 ///////////////////////////////////////////////////
