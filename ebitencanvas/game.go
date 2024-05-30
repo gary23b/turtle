@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/color"
 	"log"
+	"sync"
 
 	"github.com/gary23b/turtle/models"
 	"github.com/gary23b/turtle/turtletools"
@@ -31,6 +32,9 @@ type game struct {
 	controlState        SavedControlState
 	controlsPressed     *models.UserInput
 	controlsJustPressed *models.UserInput
+
+	screenShotRequestsMutex sync.Mutex
+	screenShotRequests      []chan image.Image
 }
 
 func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
@@ -78,6 +82,12 @@ func clearImage(i *image.RGBA, c color.Color) {
 			i.SetRGBA(x, y, c1)
 		}
 	}
+}
+
+func (g *game) getScreenshot(in chan image.Image) {
+	g.screenShotRequestsMutex.Lock()
+	defer g.screenShotRequestsMutex.Unlock()
+	g.screenShotRequests = append(g.screenShotRequests, in)
 }
 
 func bucketFill(i *image.RGBA, x, y int, c color.Color) {
@@ -186,6 +196,17 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	if g.showFPS {
 		ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %0.2f, TPS: %0.2f", ebiten.ActualFPS(), ebiten.ActualTPS()))
+	}
+
+	if len(g.screenShotRequests) > 0 {
+		g.screenShotRequestsMutex.Lock()
+		defer g.screenShotRequestsMutex.Unlock()
+		screenshot := image.NewRGBA(screen.Bounds())
+		screen.ReadPixels(screenshot.Pix)
+		for i := range g.screenShotRequests {
+			g.screenShotRequests[i] <- screenshot
+		}
+		g.screenShotRequests = []chan image.Image{}
 	}
 }
 

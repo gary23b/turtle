@@ -7,13 +7,15 @@ import (
 )
 
 func main() {
-	params := turtle.Params{Width: 1000, Height: 1000}
+	params := turtle.Params{Width: 500, Height: 500}
 	turtle.Start(params, drawFunc)
 }
 
 // drawFunc is started as a goroutine.
 // https://www.geeksforgeeks.org/draw-colorful-spiral-web-using-turtle-graphics-in-python/
 func drawFunc(window turtle.Window) {
+	// go turtle.CreateGif(window, time.Millisecond*400, time.Millisecond*150, "./examples/spiralweb/spiralweb.gif", 60)
+
 	window.GetCanvas().ClearScreen(turtle.Black)
 	t := window.NewTurtle()
 	t.ShowTurtle()

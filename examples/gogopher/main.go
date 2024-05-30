@@ -11,7 +11,7 @@ import (
 // Converted from the python script seen in this youtube video: https://www.youtube.com/watch?v=d8A1jqOGzNE
 // Since this turtle system doesn't have poly-fill like python does, bucket fill is used instead.
 func main() {
-	params := turtle.Params{Width: 500, Height: 600, ShowFPS: true}
+	params := turtle.Params{Width: 500, Height: 600}
 	turtle.Start(params, drawFunc)
 }
 
@@ -27,6 +27,8 @@ func drawFunc(window turtle.Window) {
 	t.ShowTurtle()
 	t.Speed(100)
 	t.Size(4)
+
+	// go turtle.CreateGif(window, time.Millisecond*600, time.Millisecond*100, "./examples/gogopher/GoGopher.gif", int(60/.6))
 
 	t.R(57.8)
 	t.F(181.3)
@@ -518,4 +520,6 @@ func drawFunc(window turtle.Window) {
 
 	time.Sleep(time.Second)
 	t.HideTurtle()
+
+	// turtle.TakeScreenshot(window, "./examples/gogopher/GoGopher.png")
 }

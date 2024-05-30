@@ -1,6 +1,7 @@
 package ebitencanvas
 
 import (
+	"image"
 	"image/color"
 
 	"github.com/gary23b/turtle/models"
@@ -78,6 +79,13 @@ func (s *ebitenTurtleCanvas) ClearScreen(c color.Color) {
 		c:           c,
 		clearScreen: true,
 	}
+}
+
+func (s *ebitenTurtleCanvas) GetScreenshot() image.Image {
+	screenshotChan := make(chan image.Image)
+	s.g.getScreenshot(screenshotChan)
+	screenshot := <-screenshotChan
+	return screenshot
 }
 
 func (s *ebitenTurtleCanvas) GetWidth() int {

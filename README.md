@@ -42,10 +42,10 @@ The turtle sprite can be hidden(default) or show. Its shape can be changed to an
 
 ## Install
 
-Go 1.20 or later is required.<br>
+Go 1.21 or later is required.<br>
 Ebitengine is the main dependency. [Check here for the system specific instructions](https://ebitengine.org/en/documents/install.html).
 
-## Example
+## Examples
 
 ### 5 Turtles At Once
 
@@ -53,7 +53,7 @@ Ebitengine is the main dependency. [Check here for the system specific instructi
 go run github.com/gary23b/turtle/examples/fiveturtles@latest
 ```
 
-![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/fiveturtles/turtlebasic.png)
+![Golang Turtle drawing with 5 individually controlled turtles](https://github.com/gary23b/turtle/blob/main/examples/fiveturtles/turtlebasic.png)
 
 ### Go Gopher
 
@@ -63,7 +63,7 @@ Converted from the python script seen in [this youtube video](https://www.youtub
 go run github.com/gary23b/turtle/examples/gogopher@latest
 ```
 
-![Example Picture](https://github.com/gary23b/turtle/blob/main/examples/gogopher/GoGopher.png)
+![Golang Turtle drawing the go gopher](https://github.com/gary23b/turtle/blob/main/examples/gogopher/GoGopher.gif)
 
 ## Basic Example Program
 
@@ -102,6 +102,8 @@ func drawFunc(window turtle.Window) {
 	}
 }
 ```
+
+![Golang Turtle drawing spiral web](https://github.com/gary23b/turtle/blob/main/examples/spiralweb/spiralweb.gif)
 
 ## Turtle Controls
 
@@ -168,3 +170,29 @@ type Turtle interface {
 	ShapeScale(scale float64) // Default = 0.35
 }
 ```
+
+## Canvas
+
+The `pen` that implements the `Turtle` interface is able to implement all of required methods using the just the `Canvas` interface.
+
+```go
+type Canvas interface {
+	CreateNewSprite() Sprite
+	SetCartesianPixel(x, y int, c color.Color) // Cartesian (x,y). Center in the middle of the window
+	SetPixel(x, y int, c color.Color)          // Computer graphics (x,y). So x=0, y=0 is the top-left of the window, positive down-right.
+	Fill(x, y int, c color.Color)              // Cartesian (x,y). Center in the middle of the window
+	ClearScreen(c color.Color)
+	GetScreenshot() image.Image
+
+	GetWidth() int
+	GetHeight() int
+
+	PressedUserInput() *UserInput
+	SubscribeToJustPressedUserInput() chan *UserInput
+	UnSubscribeToJustPressedUserInput(in chan *UserInput)
+
+	Exit()
+}
+```
+
+A user can also create their own `Pen` if desired. Or they can interact with the canvas directly. This can be seen in the `randomblue` example.

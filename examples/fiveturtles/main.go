@@ -11,7 +11,7 @@ import (
 // Part of what this shows is how each turtle can run at the same time.
 // They also can be programmed completely independently.
 func main() {
-	params := turtle.Params{Width: 1000, Height: 1000, ShowFPS: true}
+	params := turtle.Params{Width: 1000, Height: 1000}
 	turtle.Start(params, drawFunc)
 }
 
@@ -107,4 +107,10 @@ func drawFunc(window turtle.Window) {
 			t.Right(168)
 		}
 	}()
+
+	// go turtle.CreateGif(window, time.Millisecond*100, time.Millisecond*100, "./examples/fiveturtles/turtlebasic.gif", 95)
+
+	// time.Sleep(time.Second * 10)
+	// fmt.Println("taking screenshot")
+	// turtle.TakeScreenshot(window, "./examples/fiveturtles/turtlebasic.png")
 }
