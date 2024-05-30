@@ -3,7 +3,7 @@ module github.com/gary23b/turtle
 go 1.20
 
 require (
-	github.com/hajimehoshi/ebiten/v2 v2.6.2
+	github.com/hajimehoshi/ebiten/v2 v2.6.3
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/exp v0.0.0-20231127185646-65229373498e
 )

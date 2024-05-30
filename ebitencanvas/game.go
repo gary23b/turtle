@@ -7,7 +7,7 @@ import (
 	"log"
 
 	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/tools"
+	"github.com/gary23b/turtle/turtletools"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -27,7 +27,7 @@ type game struct {
 	sprites      []*spriteToDraw
 	exitFlag     bool
 
-	justPressedBroker   *tools.Broker[*models.UserInput]
+	justPressedBroker   *turtletools.Broker[*models.UserInput]
 	controlState        SavedControlState
 	controlsPressed     *models.UserInput
 	controlsJustPressed *models.UserInput
@@ -42,7 +42,7 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 		spritesChan:       make(chan *spriteToDraw, 100),
 		img:               image.NewRGBA(image.Rect(0, 0, width, height)),
 		sprites:           []*spriteToDraw{},
-		justPressedBroker: tools.NewBroker[*models.UserInput](),
+		justPressedBroker: turtletools.NewBroker[*models.UserInput](),
 	}
 
 	white := color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}
