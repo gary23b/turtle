@@ -5,7 +5,7 @@
 ## Install Mockery
 
 ```bash
-go install github.com/vektra/v2@latest
+go install github.com/vektra/mockery/v2@v2.32.0
 ```
 
 ## Build for models directory
