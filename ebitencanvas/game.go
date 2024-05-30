@@ -39,6 +39,9 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 		sprites:      []*spriteToDraw{},
 	}
 
+	white := color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}
+	clearImage(g.img, white)
+
 	// ebiten.SetTPS(120)
 	// ebiten.SetVsyncEnabled(false) // For some reason, on Windows, there is quite a bit of lag.
 	// setting this to false clears it up, but also makes it run at 1000Hz...

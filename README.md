@@ -34,38 +34,38 @@ go run github.com/gary23b/turtle/examples/fill@latest
 
 ## Basic Example Program
 
+```bash
+go run github.com/gary23b/turtle/examples/spiralweb@latest
+```
+
 ```go
 package main
 
 import (
-	"github.com/gary23b/turtle/ebitencanvas"
-	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/turtle"
-	"github.com/gary23b/turtle/turtleutil"
+	"image/color"
+
+	"github.com/gary23b/turtle"
 )
 
 func main() {
-	// Create the Ebitengine canvas.
-	params := ebitencanvas.CanvasParams{Width: 1000, Height: 1000}
-	ebitencanvas.StartEbitenTurtleCanvas(params, drawFunc)
+	params := turtle.Params{Width: 1000, Height: 1000}
+	turtle.Start(params, drawFunc)
 }
 
 // drawFunc is started as a goroutine.
-func drawFunc(can models.Canvas) {
-	var t models.Turtle = turtle.NewTurtle(can)
-	t.Color(turtleutil.White)
+func drawFunc(window turtle.Window) {
+	window.GetCanvas().ClearScreen(turtle.Black)
+	t := window.NewTurtle()
+	t.ShowTurtle()
 	t.Speed(1000)
 	t.PenDown()
 
-	t.Left(45)
-	t.Forward(100)
-	t.Left(135)
-	t.Forward(200 * 0.707)
-	t.GoTo(0, 0)
-	t.Angle(-15)
-	for i := 0; i < 12; i++ {
-		t.Forward(100)
-		t.Right(30)
+	colors := []color.RGBA{turtle.Red, turtle.Yellow, turtle.Green, turtle.Purple, turtle.Blue, turtle.Orange}
+	for x := 1; x < 200; x++ {
+		t.Color(colors[x%6])        // setting color
+		t.Size(float64(x)/75.0 + 1) // setting width
+		t.Forward(float64(x))       // moving forward
+		t.Left(59)                  // Turt left
 	}
 }
 ```

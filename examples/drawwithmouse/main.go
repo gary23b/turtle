@@ -3,22 +3,21 @@ package main
 import (
 	"time"
 
-	"github.com/gary23b/turtle/ebitencanvas"
+	"github.com/gary23b/turtle"
 	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/turtle"
-	"github.com/gary23b/turtle/turtleutil"
 )
 
 // Drag the mouse with the left button pressed to draw on the canvas.
 // Press c to clear the screen.
 func main() {
-	params := ebitencanvas.CanvasParams{Width: 1000, Height: 1000, ShowFPS: true}
-	ebitencanvas.StartEbitenTurtleCanvas(params, drawFunc)
+	params := turtle.Params{Width: 1000, Height: 1000, ShowFPS: true}
+	turtle.Start(params, drawFunc)
 }
 
-func drawFunc(can models.Canvas) {
-	can.ClearScreen(turtleutil.White)
-	var t models.Turtle = turtle.NewTurtle(can)
+func drawFunc(window turtle.Window) {
+	can := window.GetCanvas()
+	can.ClearScreen(turtle.White)
+	t := window.NewTurtle()
 	t.Speed(1e9)
 
 	ratio := 0.0
@@ -26,11 +25,11 @@ func drawFunc(can models.Canvas) {
 	for {
 		userIn := can.GetUserInput()
 		if userIn.KeysDown.C && !prevUserIn.KeysDown.C {
-			can.ClearScreen(turtleutil.White)
+			can.ClearScreen(turtle.White)
 		}
 
 		if userIn.MouseDown.Left {
-			desiredColor := turtleutil.LerpColor(turtleutil.Blue, turtleutil.Red, ratio)
+			desiredColor := turtle.LerpColor(turtle.Blue, turtle.Red, ratio)
 			t.Color(desiredColor)
 			t.GoTo(float64(prevUserIn.MouseX), float64(prevUserIn.MouseY))
 			t.PenDown()

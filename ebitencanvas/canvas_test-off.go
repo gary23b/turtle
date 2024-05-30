@@ -3,10 +3,16 @@ package ebitencanvas
 // Fails to start these tests inside GitHub Actions....
 
 import (
+	"image/color"
 	"testing"
 
-	"github.com/gary23b/turtle/turtleutil"
 	"github.com/stretchr/testify/require"
+)
+
+var (
+	Water color.RGBA = color.RGBA{0x23, 0x89, 0xDA, 0xFF} // 2389DA
+	Black color.RGBA = color.RGBA{0x00, 0x00, 0x00, 0xFF}
+	Red   color.RGBA = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
 )
 
 func TestEbitenTurtleCanvas(t *testing.T) {
@@ -22,18 +28,18 @@ func TestEbitenTurtleCanvas(t *testing.T) {
 	intVar = canvas.GetHeight()
 	require.Equal(t, 4, intVar)
 
-	canvas.SetPixel(0, 0, turtleutil.Black)
+	canvas.SetPixel(0, 0, Black)
 	require.NotEmpty(t, cmdChan)
 	d := <-cmdChan
-	require.Equal(t, drawCmd{x: 0, y: 0, c: turtleutil.Black}, d)
+	require.Equal(t, drawCmd{x: 0, y: 0, c: Black}, d)
 
-	canvas.SetCartesianPixel(1, 1, turtleutil.Water)
+	canvas.SetCartesianPixel(1, 1, Water)
 	require.NotEmpty(t, cmdChan)
 	d = <-cmdChan
-	require.Equal(t, drawCmd{x: 5, y: 1, c: turtleutil.Water}, d)
+	require.Equal(t, drawCmd{x: 5, y: 1, c: Water}, d)
 
-	canvas.ClearScreen(turtleutil.Red)
+	canvas.ClearScreen(Red)
 	require.NotEmpty(t, cmdChan)
 	d = <-cmdChan
-	require.Equal(t, drawCmd{c: turtleutil.Red, clearScreen: true}, d)
+	require.Equal(t, drawCmd{c: Red, clearScreen: true}, d)
 }

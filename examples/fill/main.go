@@ -4,30 +4,27 @@ import (
 	"image/color"
 	"time"
 
-	"github.com/gary23b/turtle/ebitencanvas"
-	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/turtle"
+	"github.com/gary23b/turtle"
 )
 
 // Draws The Go Gopher.
 // Converted from the python script seen in this youtube video: https://www.youtube.com/watch?v=d8A1jqOGzNE
 // Since this turtle system doesn't have poly-fill like python does, bucket fill is used instead.
 func main() {
-	params := ebitencanvas.CanvasParams{Width: 500, Height: 600, ShowFPS: true}
-	ebitencanvas.StartEbitenTurtleCanvas(params, drawFunc)
+	params := turtle.Params{Width: 500, Height: 600, ShowFPS: true}
+	turtle.Start(params, drawFunc)
 }
 
-func drawFunc(can models.Canvas) {
+func drawFunc(window turtle.Window) {
 	blue := color.RGBA{0x74, 0xCE, 0xDD, 0xFF}  // #74CEDD
 	brown := color.RGBA{0xF7, 0xD3, 0xA2, 0xFF} // #F7D3A2
 	black := color.RGBA{0x00, 0x00, 0x00, 0xFF}
 	black2 := color.RGBA{1, 1, 1, 0xFF}
 	White := color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
 
-	var t models.Turtle = turtle.NewTurtle(can)
+	t := window.NewTurtle()
 	t.ShapeAsArrow()
 	t.ShowTurtle()
-	can.ClearScreen(White)
 	t.Speed(100)
 	t.Size(4)
 

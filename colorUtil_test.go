@@ -1,4 +1,4 @@
-package turtleutil
+package turtle
 
 import (
 	"image/color"

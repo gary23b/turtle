@@ -4,22 +4,21 @@ import (
 	"math"
 	"time"
 
-	"github.com/gary23b/turtle/ebitencanvas"
+	"github.com/gary23b/turtle"
 	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/turtle"
-	"github.com/gary23b/turtle/turtleutil"
 )
 
 // Try to touch the worm. It runs away. The closer you get the faster it goes. But if you catch it, it explodes.
 // Press c to clear the screen.
 func main() {
-	params := ebitencanvas.CanvasParams{Width: 1000, Height: 1000, ShowFPS: true}
-	ebitencanvas.StartEbitenTurtleCanvas(params, drawFunc)
+	params := turtle.Params{Width: 1000, Height: 1000, ShowFPS: true}
+	turtle.Start(params, drawFunc)
 }
 
-func drawFunc(can models.Canvas) {
-	can.ClearScreen(turtleutil.White)
-	var t models.Turtle = turtle.NewTurtle(can)
+func drawFunc(window turtle.Window) {
+	can := window.GetCanvas()
+	can.ClearScreen(turtle.White)
+	t := window.NewTurtle()
 	t.ShowTurtle()
 	t.PenDown()
 	t.Size(5)
@@ -29,7 +28,7 @@ func drawFunc(can models.Canvas) {
 	for {
 		userIn := can.GetUserInput()
 		if userIn.KeysDown.C && !prevUserIn.KeysDown.C {
-			can.ClearScreen(turtleutil.White)
+			can.ClearScreen(turtle.White)
 		}
 
 		tX, tY := t.GetPos()
@@ -46,9 +45,9 @@ func drawFunc(can models.Canvas) {
 			ratio := 2.0 * (1.0 - dist/100.0)
 			switch {
 			case ratio <= 1:
-				t.Color(turtleutil.LerpColor(turtleutil.Blue, turtleutil.Green, ratio))
+				t.Color(turtle.LerpColor(turtle.Blue, turtle.Green, ratio))
 			case ratio > 1:
-				t.Color(turtleutil.LerpColor(turtleutil.Green, turtleutil.Red, ratio-1.0))
+				t.Color(turtle.LerpColor(turtle.Green, turtle.Red, ratio-1.0))
 			}
 
 			if dist < 5 {

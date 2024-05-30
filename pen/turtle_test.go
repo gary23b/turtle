@@ -1,4 +1,4 @@
-package turtle
+package pen
 
 import (
 	"image/color"
@@ -7,9 +7,18 @@ import (
 
 	"github.com/gary23b/turtle/models/fakes"
 	"github.com/gary23b/turtle/models/mocks"
-	"github.com/gary23b/turtle/turtleutil"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+)
+
+var (
+	Water  color.RGBA = color.RGBA{0x23, 0x89, 0xDA, 0xFF} // 2389DA
+	Black  color.RGBA = color.RGBA{0x00, 0x00, 0x00, 0xFF}
+	White  color.RGBA = color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
+	Red    color.RGBA = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
+	Green  color.RGBA = color.RGBA{0x00, 0xFF, 0x00, 0xFF}
+	Blue   color.RGBA = color.RGBA{0x00, 0x00, 0xFF, 0xFF}
+	Purple color.RGBA = color.RGBA{0xFF, 0x00, 0xFF, 0xFF}
 )
 
 func Test_turtle_absoluteAngleToRad(t *testing.T) {
@@ -18,70 +27,70 @@ func Test_turtle_absoluteAngleToRad(t *testing.T) {
 	}
 	tests := []struct {
 		name string
-		s    *turtle
+		s    *pen
 		args args
 		want float64
 	}{
 		// TODO: Add test cases.
 		{
 			name: "North",
-			s:    &turtle{degreesEn: true, compassEn: true},
+			s:    &pen{degreesEn: true, compassEn: true},
 			args: args{angle: 0},
 			want: math.Pi / 2,
 		},
 		{
 			name: "East",
-			s:    &turtle{degreesEn: true, compassEn: true},
+			s:    &pen{degreesEn: true, compassEn: true},
 			args: args{angle: 90},
 			want: 0,
 		},
 		{
 			name: "South",
-			s:    &turtle{degreesEn: true, compassEn: true},
+			s:    &pen{degreesEn: true, compassEn: true},
 			args: args{angle: 180},
 			want: -math.Pi / 2,
 		},
 		{
 			name: "West",
-			s:    &turtle{degreesEn: true, compassEn: true},
+			s:    &pen{degreesEn: true, compassEn: true},
 			args: args{angle: 270},
 			want: -math.Pi,
 		},
 		{
 			name: "North-West",
-			s:    &turtle{degreesEn: true, compassEn: true},
+			s:    &pen{degreesEn: true, compassEn: true},
 			args: args{angle: -45},
 			want: 3.0 / 4.0 * math.Pi,
 		},
 		//
 		{
 			name: "0 degrees",
-			s:    &turtle{degreesEn: true},
+			s:    &pen{degreesEn: true},
 			args: args{angle: 0},
 			want: 0,
 		},
 		{
 			name: "45 degrees",
-			s:    &turtle{degreesEn: true},
+			s:    &pen{degreesEn: true},
 			args: args{angle: 45},
 			want: math.Pi / 4,
 		},
 		{
 			name: "-100 degrees",
-			s:    &turtle{degreesEn: true},
+			s:    &pen{degreesEn: true},
 			args: args{angle: -100},
 			want: -100.0 * math.Pi / 180.0,
 		},
 		{
 			name: "360+45 degrees",
-			s:    &turtle{degreesEn: true},
+			s:    &pen{degreesEn: true},
 			args: args{angle: 360 + 45},
 			want: (360 + 45) * math.Pi / 180.0,
 		},
 		//
 		{
 			name: "360+45 degrees",
-			s:    &turtle{},
+			s:    &pen{},
 			args: args{angle: 1234.12345},
 			want: 1234.12345,
 		},
@@ -101,9 +110,9 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
 	sprite := fakes.NewSprite()
 	canvas.On("CreateNewSprite").Return(sprite)
-	bob := NewTurtle(canvas)
+	bob := NewPen(canvas)
 
-	require.Equal(t, &turtle{
+	require.Equal(t, &pen{
 		can:       canvas,
 		sprite:    sprite,
 		x:         0,
@@ -113,7 +122,7 @@ func TestNewTurtleBasicTests(t *testing.T) {
 		compassEn: false,
 		speed:     75,
 		penDown:   false,
-		penColor:  turtleutil.Black,
+		penColor:  Black,
 		penSize:   0,
 	}, bob)
 
@@ -162,8 +171,8 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, math.Pi/2, bob.GetAngle())
 
 	// Test setting color and size
-	bob.Color(turtleutil.Green)
-	require.Equal(t, turtleutil.Green, bob.penColor)
+	bob.Color(Green)
+	require.Equal(t, Green, bob.penColor)
 	bob.Size(1000)
 	require.Equal(t, 1000.0, bob.penSize)
 	// Setting size below 0 is not allowed
@@ -185,7 +194,7 @@ func TestNewTurtleBasicTests(t *testing.T) {
 func TestNewTurtleTurning(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
 	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
-	bob := NewTurtle(canvas)
+	bob := NewPen(canvas)
 
 	require.Equal(t, 0.0, bob.GetAngle())
 
@@ -226,7 +235,7 @@ func TestNewTurtleTurning(t *testing.T) {
 func TestNewTurtleMoveWoPen(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
 	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
-	b := NewTurtle(canvas) // bob the turtle
+	b := NewPen(canvas) // bob the turtle
 
 	b.F(10)
 	require.InDeltaSlice(t, []float64{10, 0}, []float64{b.x, b.y}, 1e-6)
@@ -280,33 +289,33 @@ func (s *canvasFake) Fill(x int, y int, c color.RGBA) {
 
 func TestNewTurtleBasicDraw(t *testing.T) {
 	canFake := newCanvasFake(t)
-	b := NewTurtle(canFake) // bob the turtle
+	b := NewPen(canFake) // bob the turtle
 
 	b.GoTo(.1, .1) // move away from the pixel boundary
-	b.Color(turtleutil.Black)
+	b.Color(Black)
 	b.On()
 	b.F(1)
 	require.Len(t, canFake.calls, 2)
-	require.Equal(t, drawCmd{x: 0, y: 0, c: turtleutil.Black}, canFake.calls[0])
-	require.Equal(t, drawCmd{x: 1, y: 0, c: turtleutil.Black}, canFake.calls[1])
+	require.Equal(t, drawCmd{x: 0, y: 0, c: Black}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 1, y: 0, c: Black}, canFake.calls[1])
 	canFake.calls = nil
 
 	b.Angle(90)
 	b.F(3)
 	require.Len(t, canFake.calls, 4)
-	require.Equal(t, drawCmd{x: 1, y: 0, c: turtleutil.Black}, canFake.calls[0])
-	require.Equal(t, drawCmd{x: 1, y: 1, c: turtleutil.Black}, canFake.calls[1])
-	require.Equal(t, drawCmd{x: 1, y: 2, c: turtleutil.Black}, canFake.calls[2])
-	require.Equal(t, drawCmd{x: 1, y: 3, c: turtleutil.Black}, canFake.calls[3])
+	require.Equal(t, drawCmd{x: 1, y: 0, c: Black}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 1, y: 1, c: Black}, canFake.calls[1])
+	require.Equal(t, drawCmd{x: 1, y: 2, c: Black}, canFake.calls[2])
+	require.Equal(t, drawCmd{x: 1, y: 3, c: Black}, canFake.calls[3])
 	canFake.calls = nil
 
 	b.Angle(180)
 	b.Size(.001)
 	b.F(2)
 	require.Len(t, canFake.calls, 3)
-	require.Equal(t, drawCmd{x: 1, y: 3, c: turtleutil.Black}, canFake.calls[0])
-	require.Equal(t, drawCmd{x: 0, y: 3, c: turtleutil.Black}, canFake.calls[1])
-	require.Equal(t, drawCmd{x: -1, y: 3, c: turtleutil.Black}, canFake.calls[2])
+	require.Equal(t, drawCmd{x: 1, y: 3, c: Black}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 0, y: 3, c: Black}, canFake.calls[1])
+	require.Equal(t, drawCmd{x: -1, y: 3, c: Black}, canFake.calls[2])
 	canFake.calls = nil
 }
 
@@ -314,16 +323,16 @@ func TestNewTurtleFilledCircleDraw(t *testing.T) {
 	canvas := mocks.NewCanvas(t)
 	canvas.On("CreateNewSprite").Return(fakes.NewSprite())
 	canvas.On("SetCartesianPixel", mock.AnythingOfType("int"), mock.AnythingOfType("int"), mock.AnythingOfType("color.RGBA")).Return()
-	b := NewTurtle(canvas) // bob the turtle
+	b := NewPen(canvas) // bob the turtle
 
-	b.Color(turtleutil.Black)
-	b.drawFilledCircle(0, 0, 2.1, turtleutil.Black)
+	b.Color(Black)
+	b.drawFilledCircle(0, 0, 2.1, Black)
 	// fmt.Print(canvas.Calls)
-	canvas.AssertCalled(t, "SetCartesianPixel", 0, 0, turtleutil.Black)
-	canvas.AssertCalled(t, "SetCartesianPixel", 1, 0, turtleutil.Black)
-	canvas.AssertCalled(t, "SetCartesianPixel", -1, 0, turtleutil.Black)
-	canvas.AssertCalled(t, "SetCartesianPixel", 0, 1, turtleutil.Black)
-	canvas.AssertCalled(t, "SetCartesianPixel", 0, -1, turtleutil.Black)
+	canvas.AssertCalled(t, "SetCartesianPixel", 0, 0, Black)
+	canvas.AssertCalled(t, "SetCartesianPixel", 1, 0, Black)
+	canvas.AssertCalled(t, "SetCartesianPixel", -1, 0, Black)
+	canvas.AssertCalled(t, "SetCartesianPixel", 0, 1, Black)
+	canvas.AssertCalled(t, "SetCartesianPixel", 0, -1, Black)
 	canvas.AssertNumberOfCalls(t, "SetCartesianPixel", 5)
 }
 
@@ -371,36 +380,36 @@ func Test_floatPosToPixel(t *testing.T) {
 
 func Test_Fill(t *testing.T) {
 	canFake := newCanvasFake(t)
-	b := NewTurtle(canFake) // bob the turtle
-	b.Fill(turtleutil.Black)
+	b := NewPen(canFake) // bob the turtle
+	b.Fill(Black)
 
 	require.Len(t, canFake.calls, 1)
-	require.Equal(t, drawCmd{x: 0, y: 0, c: turtleutil.Black, fill: true}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 0, y: 0, c: Black, fill: true}, canFake.calls[0])
 }
 
 func Test_PaintDot(t *testing.T) {
 	canFake := newCanvasFake(t)
-	b := NewTurtle(canFake) // bob the turtle
+	b := NewPen(canFake) // bob the turtle
 	b.GoTo(5.5, 5.5)
 	b.Dot(0)
 
 	require.Len(t, canFake.calls, 1)
-	require.Equal(t, drawCmd{x: 6, y: 6, c: turtleutil.Black}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 6, y: 6, c: Black}, canFake.calls[0])
 	canFake.calls = nil
 
 	b.Dot(2)
 
 	require.Len(t, canFake.calls, 4)
-	require.Equal(t, drawCmd{x: 5, y: 5, c: turtleutil.Black}, canFake.calls[0])
-	require.Equal(t, drawCmd{x: 6, y: 5, c: turtleutil.Black}, canFake.calls[1])
-	require.Equal(t, drawCmd{x: 5, y: 6, c: turtleutil.Black}, canFake.calls[2])
-	require.Equal(t, drawCmd{x: 6, y: 6, c: turtleutil.Black}, canFake.calls[3])
+	require.Equal(t, drawCmd{x: 5, y: 5, c: Black}, canFake.calls[0])
+	require.Equal(t, drawCmd{x: 6, y: 5, c: Black}, canFake.calls[1])
+	require.Equal(t, drawCmd{x: 5, y: 6, c: Black}, canFake.calls[2])
+	require.Equal(t, drawCmd{x: 6, y: 6, c: Black}, canFake.calls[3])
 	canFake.calls = nil
 }
 
 func Test_Circle(t *testing.T) {
 	canFake := newCanvasFake(t)
-	b := NewTurtle(canFake) // bob the turtle
+	b := NewPen(canFake) // bob the turtle
 	b.GoTo(10, 20)
 
 	b.Circle(10, 360, 3)

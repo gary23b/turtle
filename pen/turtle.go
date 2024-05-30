@@ -1,4 +1,4 @@
-package turtle
+package pen
 
 import (
 	"image"
@@ -7,10 +7,9 @@ import (
 	"time"
 
 	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/turtleutil"
 )
 
-type turtle struct {
+type pen struct {
 	can       models.Canvas
 	sprite    models.Sprite
 	visible   bool
@@ -25,13 +24,13 @@ type turtle struct {
 	penSize   float64
 }
 
-var _ models.Turtle = &turtle{} // Force the linter to tell us if the interface is implemented
+var _ models.Turtle = &pen{} // Force the linter to tell us if the interface is implemented
 
-func NewTurtle(can models.Canvas) *turtle {
-	ret := &turtle{
+func NewPen(can models.Canvas) *pen {
+	ret := &pen{
 		can:       can,
 		sprite:    can.CreateNewSprite(),
-		penColor:  turtleutil.Black,
+		penColor:  color.RGBA{A: 0xFF},
 		speed:     75,
 		penSize:   0,
 		degreesEn: true,
@@ -40,46 +39,46 @@ func NewTurtle(can models.Canvas) *turtle {
 	return ret
 }
 
-func (s *turtle) Forward(distance float64) {
+func (s *pen) Forward(distance float64) {
 	s.goAngle(s.angle, distance)
 }
 
-func (s *turtle) F(distance float64) {
+func (s *pen) F(distance float64) {
 	s.Forward(distance)
 }
 
-func (s *turtle) Backward(distance float64) {
+func (s *pen) Backward(distance float64) {
 	s.goAngle(s.angle, -distance)
 }
 
-func (s *turtle) B(distance float64) {
+func (s *pen) B(distance float64) {
 	s.Backward(distance)
 }
 
-func (s *turtle) PanLeftward(distance float64) {
+func (s *pen) PanLeftward(distance float64) {
 	s.goAngle(s.angle+math.Pi/2.0, distance)
 }
 
-func (s *turtle) PanL(distance float64) {
+func (s *pen) PanL(distance float64) {
 	s.PanLeftward(distance)
 }
 
-func (s *turtle) PanRightward(distance float64) {
+func (s *pen) PanRightward(distance float64) {
 	s.goAngle(s.angle-math.Pi/2.0, distance)
 }
 
-func (s *turtle) PanR(distance float64) {
+func (s *pen) PanR(distance float64) {
 	s.PanRightward(distance)
 }
 
-func (s *turtle) goAngle(angle, distance float64) {
+func (s *pen) goAngle(angle, distance float64) {
 	sin, cos := math.Sincos(angle)
 	x2 := s.x + distance*cos
 	y2 := s.y + distance*sin
 	s.GoTo(x2, y2)
 }
 
-func (s *turtle) GoTo(x, y float64) {
+func (s *pen) GoTo(x, y float64) {
 	if s.penDown {
 		s.drawLine(s.x, s.y, x, y, s.penColor)
 	}
@@ -89,11 +88,11 @@ func (s *turtle) GoTo(x, y float64) {
 	s.sprite.Set(s.visible, s.x, s.y, s.angle)
 }
 
-func (s *turtle) GetPos() (x, y float64) {
+func (s *pen) GetPos() (x, y float64) {
 	return s.x, s.y
 }
 
-func (s *turtle) Left(angle float64) {
+func (s *pen) Left(angle float64) {
 	if s.degreesEn {
 		angle *= (math.Pi / 180.0)
 	}
@@ -108,52 +107,52 @@ func (s *turtle) Left(angle float64) {
 	s.sprite.SetRotation(s.angle)
 }
 
-func (s *turtle) L(angle float64) {
+func (s *pen) L(angle float64) {
 	s.Left(angle)
 }
 
-func (s *turtle) Right(angle float64) {
+func (s *pen) Right(angle float64) {
 	s.Left(-angle)
 }
 
-func (s *turtle) R(angle float64) {
+func (s *pen) R(angle float64) {
 	s.Right(angle)
 }
 
-func (s *turtle) Angle(angle float64) {
+func (s *pen) Angle(angle float64) {
 	angle = s.absoluteAngleToRad(angle)
 	s.angle = angle
 	s.sprite.SetRotation(s.angle)
 }
 
-func (s *turtle) GetAngle() float64 {
+func (s *pen) GetAngle() float64 {
 	return s.radToAbsoluteAngle(s.angle)
 }
 
-func (s *turtle) PointToward(x, y float64) {
+func (s *pen) PointToward(x, y float64) {
 	deltaX := x - s.x
 	deltaY := y - s.y
 	s.angle = math.Atan2(deltaY, deltaX)
 	s.sprite.SetRotation(s.angle)
 }
 
-func (s *turtle) DegreesMode() {
+func (s *pen) DegreesMode() {
 	s.degreesEn = true
 	s.compassEn = false
 }
 
-func (s *turtle) RadiansMode() {
+func (s *pen) RadiansMode() {
 	s.degreesEn = false
 	s.compassEn = false
 }
 
 // In compass mode, North is 0 degrees, and East is 90, West is -90. Also forces Degrees mode on.
-func (s *turtle) CompassMode() {
+func (s *pen) CompassMode() {
 	s.degreesEn = true
 	s.compassEn = true
 }
 
-func (s *turtle) GetAngleMode() models.AngleMode {
+func (s *pen) GetAngleMode() models.AngleMode {
 	switch {
 	case !s.degreesEn:
 		return models.RadiansMode
@@ -164,61 +163,61 @@ func (s *turtle) GetAngleMode() models.AngleMode {
 	}
 }
 
-func (s *turtle) Speed(pixelsPerSecond float64) {
+func (s *pen) Speed(pixelsPerSecond float64) {
 	if pixelsPerSecond < 1 {
 		return
 	}
 	s.speed = pixelsPerSecond
 }
 
-func (s *turtle) GetSpeed() float64 {
+func (s *pen) GetSpeed() float64 {
 	return s.speed
 }
 
-func (s *turtle) PenUp() {
+func (s *pen) PenUp() {
 	s.penDown = false
 }
 
-func (s *turtle) PU() {
+func (s *pen) PU() {
 	s.PenUp()
 }
 
-func (s *turtle) Off() {
+func (s *pen) Off() {
 	s.PenUp()
 }
 
-func (s *turtle) PenDown() {
+func (s *pen) PenDown() {
 	s.penDown = true
 }
 
-func (s *turtle) PD() {
+func (s *pen) PD() {
 	s.PenDown()
 }
 
-func (s *turtle) On() {
+func (s *pen) On() {
 	s.PenDown()
 }
 
-func (s *turtle) Color(c color.RGBA) {
+func (s *pen) Color(c color.RGBA) {
 	s.penColor = c
 }
 
-func (s *turtle) GetColor() color.RGBA {
+func (s *pen) GetColor() color.RGBA {
 	return s.penColor
 }
 
-func (s *turtle) Size(size float64) {
+func (s *pen) Size(size float64) {
 	if size < 0 {
 		return
 	}
 	s.penSize = size
 }
 
-func (s *turtle) GetSize() float64 {
+func (s *pen) GetSize() float64 {
 	return s.penSize
 }
 
-func (s *turtle) Dot(size float64) {
+func (s *pen) Dot(size float64) {
 	if size <= 0 {
 		s.paintPixel(s.x, s.y, s.penColor)
 		return
@@ -227,12 +226,12 @@ func (s *turtle) Dot(size float64) {
 	s.drawFilledCircle(s.x, s.y, size, s.penColor)
 }
 
-func (s *turtle) Fill(c color.RGBA) {
+func (s *pen) Fill(c color.RGBA) {
 	x, y := floatPosToPixel(s.x, s.y)
 	s.can.Fill(x, y, c)
 }
 
-func (s *turtle) Circle(radius, angleAmountToDraw float64, steps int) {
+func (s *pen) Circle(radius, angleAmountToDraw float64, steps int) {
 	// Convert to radians
 	if s.degreesEn {
 		angleAmountToDraw *= (math.Pi / 180.0)
@@ -271,34 +270,34 @@ func (s *turtle) Circle(radius, angleAmountToDraw float64, steps int) {
 	s.angle = endTurtleAngle
 }
 
-func (s *turtle) ShowTurtle() {
+func (s *pen) ShowTurtle() {
 	s.visible = true
 	s.sprite.SetVisible(true)
 }
 
-func (s *turtle) HideTurtle() {
+func (s *pen) HideTurtle() {
 	s.visible = false
 	s.sprite.SetVisible(false)
 }
 
-func (s *turtle) ShapeAsTurtle() {
+func (s *pen) ShapeAsTurtle() {
 	s.sprite.SetSpriteImageTurtle()
 }
 
-func (s *turtle) ShapeAsArrow() {
+func (s *pen) ShapeAsArrow() {
 	s.sprite.SetSpriteImageArrow()
 }
 
-func (s *turtle) ShapeAsImage(in image.Image) {
+func (s *pen) ShapeAsImage(in image.Image) {
 	s.sprite.SetSpriteImage(in)
 }
 
-func (s *turtle) ShapeScale(scale float64) {
+func (s *pen) ShapeScale(scale float64) {
 	s.sprite.SetScale(scale)
 }
 
 // //////////////////////
-func (s *turtle) absoluteAngleToRad(angle float64) float64 {
+func (s *pen) absoluteAngleToRad(angle float64) float64 {
 	if s.degreesEn {
 		angle *= (math.Pi / 180.0)
 
@@ -310,7 +309,7 @@ func (s *turtle) absoluteAngleToRad(angle float64) float64 {
 	return angle
 }
 
-func (s *turtle) radToAbsoluteAngle(angle float64) float64 {
+func (s *pen) radToAbsoluteAngle(angle float64) float64 {
 	if s.degreesEn {
 		if s.compassEn {
 			angle = -angle + math.Pi/2
@@ -330,14 +329,14 @@ func floatPosToPixel(x, y float64) (int, int) {
 	return retX, retY
 }
 
-func (s *turtle) paintPixel(x, y float64, c color.RGBA) {
+func (s *pen) paintPixel(x, y float64, c color.RGBA) {
 	pixX, pixY := floatPosToPixel(x, y)
 	s.can.SetCartesianPixel(pixX, pixY, c)
 }
 
 // The concept of this line draw function is to determine if X or Y have a larger number of pixels to cover,
 // and the larger one is chosen. Then we step
-func (s *turtle) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
+func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
 	xDelta := x2 - x1
 	yDelta := y2 - y1
 	largerDelta := math.Max(math.Abs(xDelta), math.Abs(yDelta))
@@ -371,7 +370,7 @@ func (s *turtle) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
 	}
 }
 
-func (s *turtle) drawFilledCircle(xIn, yIn, size float64, c color.RGBA) {
+func (s *pen) drawFilledCircle(xIn, yIn, size float64, c color.RGBA) {
 	halfSize := size / 2
 	halfSizeSqrd := halfSize * halfSize
 	xMax := int(math.Floor(xIn + halfSize))
