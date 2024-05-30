@@ -6,63 +6,68 @@ import (
 	"github.com/gary23b/turtle/models"
 )
 
-type spriteToDraw struct {
-	Img     image.Image
-	Width   int
-	Height  int
-	X       float64
-	Y       float64
-	Angle   float64
-	Visible bool
-	Scale   float64
+type SpriteToDraw struct {
+	Img          image.Image
+	Width        int
+	Height       int
+	X            float64
+	Y            float64
+	Angle        float64
+	Visible      bool
+	Scale        float64
+	CurrentImage string
 }
 
-var _ models.Sprite = &spriteToDraw{}
+var _ models.Sprite = &SpriteToDraw{}
 
-func NewSprite() *spriteToDraw {
-	ret := &spriteToDraw{
-		X:       0,
-		Y:       0,
-		Angle:   0,
-		Visible: false,
-		Scale:   1,
+func NewSprite() *SpriteToDraw {
+	ret := &SpriteToDraw{
+		X:            0,
+		Y:            0,
+		Angle:        0,
+		Visible:      false,
+		Scale:        1,
+		CurrentImage: "StartImage",
 	}
 
 	return ret
 }
 
-func (s *spriteToDraw) SetSpriteImage(in image.Image) {
+func (s *SpriteToDraw) SetSpriteImage(in image.Image) {
 	s.Img = in
 	bounds := in.Bounds()
 	s.Width = bounds.Max.X
 	s.Height = bounds.Max.Y
 	s.Scale = 1
+	s.CurrentImage = "custom"
 }
 
-func (s *spriteToDraw) SetSpriteImageTurtle() {
+func (s *SpriteToDraw) SetSpriteImageTurtle() {
+	s.CurrentImage = "turtle"
 }
 
-func (s *spriteToDraw) SetSpriteImageArrow() {
+func (s *SpriteToDraw) SetSpriteImageArrow() {
+	s.CurrentImage = "arrow"
 }
 
-func (s *spriteToDraw) SetRotation(radianAngle float64) {
+func (s *SpriteToDraw) SetRotation(radianAngle float64) {
 	s.Angle = radianAngle
 }
 
-func (s *spriteToDraw) SetPosition(cartX, cartY float64) {
+func (s *SpriteToDraw) SetPosition(cartX, cartY float64) {
 	s.X = cartX
 	s.Y = cartY
 }
 
-func (s *spriteToDraw) SetVisible(visible bool) {
+func (s *SpriteToDraw) SetVisible(visible bool) {
 	s.Visible = visible
 }
 
-func (s *spriteToDraw) SetScale(scale float64) {
+func (s *SpriteToDraw) SetScale(scale float64) {
 	s.Scale = scale
 }
 
-func (s *spriteToDraw) Set(visible bool, cartX, cartY, radianAngle float64) {
+func (s *SpriteToDraw) Set(visible bool, cartX, cartY, radianAngle float64) {
 	s.Visible = visible
 	s.X = cartX
 	s.Y = cartY

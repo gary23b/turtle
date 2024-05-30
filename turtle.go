@@ -34,6 +34,9 @@ type Params struct {
 	ShowFPS bool
 }
 
+// Wrap the starting of ebitencanvas inside something that implements the Window interface
+// so that most of the time a user will only need one import statement from this repo to make a turtle graphic.
+// But the actual game, drawing, and sprite implementations can still be separated nicely into packages.
 func Start(params Params, drawFunc func(Window)) {
 	canvasParams := ebitencanvas.CanvasParams{
 		Width:   params.Width,

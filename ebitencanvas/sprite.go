@@ -3,26 +3,12 @@ package ebitencanvas
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
 	"image"
-	"os"
 	"sync"
 
 	"github.com/gary23b/turtle/models"
 	"github.com/hajimehoshi/ebiten/v2"
 )
-
-func LoadSpriteFile(path string) (image.Image, error) {
-	spriteFileData, err := os.ReadFile(path)
-	if err != nil {
-		return nil, fmt.Errorf("Failed to read sprite file: %s, %w", path, err)
-	}
-	img, _, err := image.Decode(bytes.NewReader(spriteFileData))
-	if err != nil {
-		return nil, fmt.Errorf("Failed to decode image data: %s, %w", path, err)
-	}
-	return img, nil
-}
 
 type spriteToDraw struct {
 	m           *sync.Mutex

@@ -1,10 +1,12 @@
 package pen
 
 import (
+	"image"
 	"image/color"
 	"math"
 	"testing"
 
+	"github.com/gary23b/turtle/models"
 	"github.com/gary23b/turtle/models/fakes"
 	"github.com/gary23b/turtle/models/mocks"
 	"github.com/stretchr/testify/mock"
@@ -128,10 +130,10 @@ func TestNewTurtleBasicTests(t *testing.T) {
 
 	// Test speed setting
 	bob.Speed(100)
-	require.Equal(t, 100.0, bob.speed)
+	require.Equal(t, 100.0, bob.GetSpeed())
 	// Setting below 1 is not allowed
 	bob.Speed(0)
-	require.Equal(t, 100.0, bob.speed)
+	require.Equal(t, 100.0, bob.GetSpeed())
 	bob.Speed(1)
 	require.Equal(t, 1.0, bob.speed)
 
@@ -154,10 +156,12 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, false, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, 0.0, bob.GetAngle())
+	require.Equal(t, models.RadiansMode, bob.GetAngleMode())
 	bob.CompassMode()
 	require.Equal(t, true, bob.degreesEn)
 	require.Equal(t, true, bob.compassEn)
 	require.Equal(t, 90.0, bob.GetAngle())
+	require.Equal(t, models.CompassMode, bob.GetAngleMode())
 	bob.Angle(0)
 	require.Equal(t, 0.0, bob.GetAngle())
 
@@ -165,16 +169,20 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, true, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, 90.0, bob.GetAngle())
+	require.Equal(t, models.DegreesMode, bob.GetAngleMode())
 	bob.RadiansMode()
 	require.Equal(t, false, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, math.Pi/2, bob.GetAngle())
+	require.Equal(t, models.RadiansMode, bob.GetAngleMode())
 
 	// Test setting color and size
 	bob.Color(Green)
 	require.Equal(t, Green, bob.penColor)
+	require.Equal(t, Green, bob.GetColor())
 	bob.Size(1000)
 	require.Equal(t, 1000.0, bob.penSize)
+	require.Equal(t, 1000.0, bob.GetSize())
 	// Setting size below 0 is not allowed
 	bob.Size(-1)
 	require.Equal(t, 1000.0, bob.penSize)
@@ -439,4 +447,30 @@ func Test_Circle(t *testing.T) {
 	require.InDelta(t, 20, b.x, 1e-6)
 	require.InDelta(t, 50, b.y, 1e-6)
 	require.InDelta(t, 0.0, b.GetAngle(), 1e-6)
+}
+
+func Test_SpriteControl(t *testing.T) {
+	canFake := newCanvasFake(t)
+	b := NewPen(canFake) // bob the turtle
+	fakeSprite, ok := b.sprite.(*fakes.SpriteToDraw)
+	require.True(t, ok)
+
+	b.HideTurtle()
+	require.Equal(t, false, fakeSprite.Visible)
+	b.ShowTurtle()
+	require.Equal(t, true, fakeSprite.Visible)
+	b.ShapeAsArrow()
+	require.Equal(t, "arrow", fakeSprite.CurrentImage)
+	b.ShapeAsTurtle()
+	require.Equal(t, "turtle", fakeSprite.CurrentImage)
+	b.ShapeAsImage(image.NewRGBA(image.Rect(0, 0, 32, 32)))
+	require.Equal(t, "custom", fakeSprite.CurrentImage)
+
+	b.ShapeScale(100.9)
+	require.Equal(t, 100.9, fakeSprite.Scale)
+	b.GoTo(100, 150)
+	b.Angle(2)
+	require.Equal(t, 100.0, fakeSprite.X)
+	require.Equal(t, 150.0, fakeSprite.Y)
+	require.Equal(t, 2*math.Pi/180.0, fakeSprite.Angle)
 }
