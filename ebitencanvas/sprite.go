@@ -6,7 +6,7 @@ import (
 	"image"
 	"sync"
 
-	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/turtlemodel"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -22,7 +22,7 @@ type spriteToDraw struct {
 	scale       float64
 }
 
-var _ models.Sprite = &spriteToDraw{} // force the compiler to verify this implements the interface.
+var _ turtlemodel.Sprite = &spriteToDraw{} // force the compiler to verify this implements the interface.
 
 // Create a new sprite.
 // Default to the turtle image and invisible.

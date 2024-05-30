@@ -4,7 +4,7 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/turtlemodel"
 )
 
 type drawCmd struct {
@@ -22,7 +22,7 @@ type ebitenTurtleCanvas struct {
 	cmdChan chan drawCmd
 }
 
-var _ models.Canvas = &ebitenTurtleCanvas{} // Force the linter to tell us if the interface is implemented
+var _ turtlemodel.Canvas = &ebitenTurtleCanvas{} // Force the linter to tell us if the interface is implemented
 
 // Turtle Window creation parameters
 type CanvasParams struct {
@@ -33,7 +33,7 @@ type CanvasParams struct {
 
 // Start the Ebiten game.
 // The drawFunc will be started as a go routine.
-func StartEbitenTurtleCanvas(params CanvasParams, drawFunc func(models.Canvas)) {
+func StartEbitenTurtleCanvas(params CanvasParams, drawFunc func(turtlemodel.Canvas)) {
 	cmdChan := make(chan drawCmd, 10000)
 	ret := &ebitenTurtleCanvas{
 		width:   params.Width,
@@ -47,7 +47,7 @@ func StartEbitenTurtleCanvas(params CanvasParams, drawFunc func(models.Canvas)) 
 }
 
 // Add a new sprite to the game.
-func (s *ebitenTurtleCanvas) CreateNewSprite() models.Sprite {
+func (s *ebitenTurtleCanvas) CreateNewSprite() turtlemodel.Sprite {
 	ret := NewSprite()
 	s.g.addSprite(ret)
 	return ret
@@ -108,18 +108,18 @@ func (s *ebitenTurtleCanvas) GetHeight() int {
 }
 
 // Get the currently pressed user input. The returned point is read only. Do not edit it.
-func (s *ebitenTurtleCanvas) PressedUserInput() *models.UserInput {
+func (s *ebitenTurtleCanvas) PressedUserInput() *turtlemodel.UserInput {
 	ret := s.g.PressedUserInput()
 	return ret
 }
 
 // Get a channel that receives updates every time a key-press event is detected.
-func (s *ebitenTurtleCanvas) SubscribeToJustPressedUserInput() chan *models.UserInput {
+func (s *ebitenTurtleCanvas) SubscribeToJustPressedUserInput() chan *turtlemodel.UserInput {
 	return s.g.justPressedBroker.Subscribe()
 }
 
 // After calling SubscribeToJustPressedUserInput, if the events are no longer wanted, call this function to stop the updates and close the channel.
-func (s *ebitenTurtleCanvas) UnSubscribeToJustPressedUserInput(in chan *models.UserInput) {
+func (s *ebitenTurtleCanvas) UnSubscribeToJustPressedUserInput(in chan *turtlemodel.UserInput) {
 	s.g.justPressedBroker.Unsubscribe(in)
 }
 

@@ -6,9 +6,9 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/models/fakes"
-	"github.com/gary23b/turtle/models/mocks"
+	"github.com/gary23b/turtle/turtlemodel"
+	"github.com/gary23b/turtle/turtlemodel/fakes"
+	"github.com/gary23b/turtle/turtlemodel/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
@@ -156,12 +156,12 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, false, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, 0.0, bob.GetAngle())
-	require.Equal(t, models.RadiansMode, bob.GetAngleMode())
+	require.Equal(t, turtlemodel.RadiansMode, bob.GetAngleMode())
 	bob.CompassMode()
 	require.Equal(t, true, bob.degreesEn)
 	require.Equal(t, true, bob.compassEn)
 	require.Equal(t, 90.0, bob.GetAngle())
-	require.Equal(t, models.CompassMode, bob.GetAngleMode())
+	require.Equal(t, turtlemodel.CompassMode, bob.GetAngleMode())
 	bob.Angle(0)
 	require.Equal(t, 0.0, bob.GetAngle())
 
@@ -169,12 +169,12 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, true, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, 90.0, bob.GetAngle())
-	require.Equal(t, models.DegreesMode, bob.GetAngleMode())
+	require.Equal(t, turtlemodel.DegreesMode, bob.GetAngleMode())
 	bob.RadiansMode()
 	require.Equal(t, false, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, math.Pi/2, bob.GetAngle())
-	require.Equal(t, models.RadiansMode, bob.GetAngleMode())
+	require.Equal(t, turtlemodel.RadiansMode, bob.GetAngleMode())
 
 	// Test setting color and size
 	bob.Color(Green)

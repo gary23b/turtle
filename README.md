@@ -53,7 +53,7 @@ Ebitengine is the main dependency. [Check here for the system specific instructi
 go run github.com/gary23b/turtle/examples/fiveturtles@latest
 ```
 
-![Golang Turtle drawing with 5 individually controlled turtles](https://github.com/gary23b/turtle/blob/main/examples/fiveturtles/turtlebasic.png)
+![Golang Turtle drawing with 5 individually controlled turtles](https://github.com/gary23b/turtle/blob/main/examples/fiveturtles/turtlebasic.gif)
 
 ### Go Gopher
 
@@ -81,7 +81,7 @@ import (
 )
 
 func main() {
-	params := turtle.Params{Width: 1000, Height: 1000}
+	params := turtle.Params{Width: 500, Height: 500}
 	turtle.Start(params, drawFunc)
 }
 
@@ -146,6 +146,7 @@ type Turtle interface {
 	PenDown()
 	PD() // Pen Down alias
 	On() // Pen Down alias
+	IsPenDown() bool
 	Color(c color.Color)
 	GetColor() color.Color
 	Size(size float64)

@@ -7,8 +7,8 @@ import (
 	"log"
 	"sync"
 
-	"github.com/gary23b/turtle/models"
-	"github.com/gary23b/turtle/turtletools"
+	"github.com/gary23b/turtle/turtlemodel"
+	"github.com/gary23b/turtle/turtleutil"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -28,10 +28,10 @@ type game struct {
 	sprites      []*spriteToDraw
 	exitFlag     bool
 
-	justPressedBroker   *turtletools.Broker[*models.UserInput]
+	justPressedBroker   *turtleutil.Broker[*turtlemodel.UserInput]
 	controlState        SavedControlState
-	controlsPressed     *models.UserInput
-	controlsJustPressed *models.UserInput
+	controlsPressed     *turtlemodel.UserInput
+	controlsJustPressed *turtlemodel.UserInput
 
 	screenShotRequestsMutex sync.Mutex
 	screenShotRequests      []chan image.Image
@@ -46,7 +46,7 @@ func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
 		spritesChan:       make(chan *spriteToDraw, 100),
 		img:               image.NewRGBA(image.Rect(0, 0, width, height)),
 		sprites:           []*spriteToDraw{},
-		justPressedBroker: turtletools.NewBroker[*models.UserInput](),
+		justPressedBroker: turtleutil.NewBroker[*turtlemodel.UserInput](),
 	}
 
 	white := color.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}
@@ -225,9 +225,9 @@ func (g *game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 // Get the currently pressed user input. The returned point is read only. Do not edit it.
-func (g *game) PressedUserInput() *models.UserInput {
+func (g *game) PressedUserInput() *turtlemodel.UserInput {
 	if g == nil || g.controlsPressed == nil {
-		return &models.UserInput{}
+		return &turtlemodel.UserInput{}
 	}
 
 	return g.controlsPressed

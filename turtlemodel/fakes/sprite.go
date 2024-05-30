@@ -3,7 +3,7 @@ package fakes
 import (
 	"image"
 
-	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/turtlemodel"
 )
 
 type SpriteToDraw struct {
@@ -18,7 +18,7 @@ type SpriteToDraw struct {
 	CurrentImage string
 }
 
-var _ models.Sprite = &SpriteToDraw{}
+var _ turtlemodel.Sprite = &SpriteToDraw{}
 
 func NewSprite() *SpriteToDraw {
 	ret := &SpriteToDraw{

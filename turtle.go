@@ -2,29 +2,29 @@ package turtle
 
 import (
 	"github.com/gary23b/turtle/ebitencanvas"
-	"github.com/gary23b/turtle/models"
 	"github.com/gary23b/turtle/pen"
+	"github.com/gary23b/turtle/turtlemodel"
 )
 
 // Top level interface that most users of the turtle package will exclusively use.
 type Window interface {
-	GetCanvas() models.Canvas
-	NewTurtle() models.Turtle
+	GetCanvas() turtlemodel.Canvas
+	NewTurtle() turtlemodel.Turtle
 }
 
 type window struct {
-	can models.Canvas
+	can turtlemodel.Canvas
 }
 
 var _ Window = &window{}
 
 // Get the canvas interface
-func (s *window) GetCanvas() models.Canvas {
+func (s *window) GetCanvas() turtlemodel.Canvas {
 	return s.can
 }
 
 // Create a new turtle
-func (s *window) NewTurtle() models.Turtle {
+func (s *window) NewTurtle() turtlemodel.Turtle {
 	return pen.NewPen(s.can)
 }
 
@@ -49,7 +49,7 @@ func Start(params Params, drawFunc func(Window)) {
 	}
 
 	// Create a callback that translates the models.Canvas into a Window
-	initCallback := func(can models.Canvas) {
+	initCallback := func(can turtlemodel.Canvas) {
 		drawFunc(&window{can: can})
 	}
 	ebitencanvas.StartEbitenTurtleCanvas(canvasParams, initCallback)
@@ -59,8 +59,8 @@ func Start(params Params, drawFunc func(Window)) {
 // This returns nil if there is no new data.
 // This will throw away all but the newest set of data available. So this should be called faster that the game update rate (60Hz),
 // otherwise sim.PressedUserInput() should be used instead.
-func GetNewestJustPressedFromChan(justPressedChan chan *models.UserInput) *models.UserInput {
-	var ret *models.UserInput
+func GetNewestJustPressedFromChan(justPressedChan chan *turtlemodel.UserInput) *turtlemodel.UserInput {
+	var ret *turtlemodel.UserInput
 
 ChanExtractionLoop:
 	for {

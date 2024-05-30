@@ -1,13 +1,13 @@
 package ebitencanvas
 
 import (
-	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/turtlemodel"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-func fillKeyStruct(input []ebiten.Key, out *models.UserInput) {
+func fillKeyStruct(input []ebiten.Key, out *turtlemodel.UserInput) {
 	out.AnyPressed = len(input) > 0
 	keys := &out.Keys
 	for _, k := range input {
@@ -188,7 +188,7 @@ type SavedControlState struct {
 }
 
 // Generate a new struct for pressed and just pressed. It should be read only to everyone else.
-func (s *SavedControlState) GetUserInput(screenWidth, screenHeight int) (pressed, justPressed *models.UserInput) {
+func (s *SavedControlState) GetUserInput(screenWidth, screenHeight int) (pressed, justPressed *turtlemodel.UserInput) {
 	s.keysDown = inpututil.AppendPressedKeys(s.keysDown[:0])
 	s.keysJustPressed = inpututil.AppendJustPressedKeys(s.keysJustPressed[:0])
 	cursorX, cursorY := ebiten.CursorPosition()
@@ -201,7 +201,7 @@ func (s *SavedControlState) GetUserInput(screenWidth, screenHeight int) (pressed
 	RightJp := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight)
 
 	// Now fill out the down struct
-	pressed = &models.UserInput{}
+	pressed = &turtlemodel.UserInput{}
 	fillKeyStruct(s.keysDown, pressed)
 	pressed.Mouse.MouseX = cursorX - screenWidth/2
 	pressed.Mouse.MouseY = -cursorY + screenHeight/2
@@ -212,7 +212,7 @@ func (s *SavedControlState) GetUserInput(screenWidth, screenHeight int) (pressed
 	pressed.AnyPressed = pressed.AnyPressed || Left || Center || Right || yScroll != 0
 
 	// Now fill out the justPressed struct
-	justPressed = &models.UserInput{}
+	justPressed = &turtlemodel.UserInput{}
 	fillKeyStruct(s.keysJustPressed, justPressed)
 	justPressed.Mouse.MouseX = cursorX - screenWidth/2
 	justPressed.Mouse.MouseY = -cursorY + screenHeight/2

@@ -1,3 +1,7 @@
+// Tell the compile that this file should only be compiled for Windows, Linux, Mac.
+//go:build linux || windows || darwin
+// +build linux windows darwin
+
 package turtle
 
 import (

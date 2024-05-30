@@ -6,12 +6,12 @@ import (
 	"math"
 	"time"
 
-	"github.com/gary23b/turtle/models"
+	"github.com/gary23b/turtle/turtlemodel"
 )
 
 type pen struct {
-	can       models.Canvas
-	sprite    models.Sprite
+	can       turtlemodel.Canvas
+	sprite    turtlemodel.Sprite
 	visible   bool
 	x         float64 // in pixels
 	y         float64 // in pixels
@@ -24,10 +24,10 @@ type pen struct {
 	penSize   float64
 }
 
-var _ models.Turtle = &pen{} // Force the linter to tell us if the interface is implemented
+var _ turtlemodel.Turtle = &pen{} // Force the linter to tell us if the interface is implemented
 
 // Create a new pen that implements the turtle interface.
-func NewPen(can models.Canvas) *pen {
+func NewPen(can turtlemodel.Canvas) *pen {
 	black := color.RGBA{A: 0xFF}
 	ret := &pen{
 		can:       can,
@@ -180,14 +180,14 @@ func (s *pen) CompassMode() {
 }
 
 // Returns the pen's current angle mode
-func (s *pen) GetAngleMode() models.AngleMode {
+func (s *pen) GetAngleMode() turtlemodel.AngleMode {
 	switch {
 	case !s.degreesEn:
-		return models.RadiansMode
+		return turtlemodel.RadiansMode
 	case s.compassEn:
-		return models.CompassMode
+		return turtlemodel.CompassMode
 	default:
-		return models.DegreesMode
+		return turtlemodel.DegreesMode
 	}
 }
 
@@ -427,7 +427,7 @@ func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.Color) {
 		x += xStep
 		y += yStep
 		s.sprite.SetPosition(x, y)
-		if s.speed < models.MaxSpeed {
+		if s.speed < turtlemodel.MaxSpeed {
 			tNow = tNow.Add(sleepTime)
 			time.Sleep(time.Until(tNow))
 		}
