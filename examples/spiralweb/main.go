@@ -25,6 +25,6 @@ func drawFunc(window turtle.Window) {
 		t.Color(colors[x%6])        // setting color
 		t.Size(float64(x)/75.0 + 1) // setting width
 		t.Forward(float64(x))       // moving forward
-		t.Left(59)                  // Turt left
+		t.Left(59)                  // Turn left
 	}
 }

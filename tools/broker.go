@@ -4,19 +4,19 @@ package tools
 // https://stackoverflow.com/questions/36417199/how-to-broadcast-message-using-channel
 // https://stackoverflow.com/a/49877632
 type Broker[T any] struct {
-	stopCh    chan struct{}
-	publishCh chan T
-	subCh     chan chan T
-	unsubCh   chan chan T
+	stopCh        chan struct{}
+	publishCh     chan T
+	subscribeCh   chan chan T
+	unsubscribeCh chan chan T
 }
 
 // Creates a new Broker and start it running
 func NewBroker[T any]() *Broker[T] {
 	ret := &Broker[T]{
-		stopCh:    make(chan struct{}),
-		publishCh: make(chan T, 100),
-		subCh:     make(chan chan T, 100),
-		unsubCh:   make(chan chan T, 100),
+		stopCh:        make(chan struct{}),
+		publishCh:     make(chan T, 100),
+		subscribeCh:   make(chan chan T, 100),
+		unsubscribeCh: make(chan chan T, 100),
 	}
 
 	go ret.start()
@@ -37,9 +37,9 @@ func (b *Broker[T]) start() {
 				}
 			}
 			return
-		case msgCh := <-b.subCh:
+		case msgCh := <-b.subscribeCh:
 			subs[msgCh] = struct{}{}
-		case msgCh := <-b.unsubCh:
+		case msgCh := <-b.unsubscribeCh:
 			// drain the messages
 			close(msgCh)
 			for range msgCh {
@@ -64,12 +64,12 @@ func (b *Broker[T]) Stop() {
 
 func (b *Broker[T]) Subscribe() chan T {
 	msgCh := make(chan T, 100)
-	b.subCh <- msgCh
+	b.subscribeCh <- msgCh
 	return msgCh
 }
 
 func (b *Broker[T]) Unsubscribe(msgCh chan T) {
-	b.unsubCh <- msgCh
+	b.unsubscribeCh <- msgCh
 }
 
 func (b *Broker[T]) Publish(msg T) {

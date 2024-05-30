@@ -322,7 +322,7 @@ func (s *pen) radToAbsoluteAngle(angle float64) float64 {
 }
 
 // This is what splits cartesian space into discrete pixels.
-// This includes moveing (0,0) be be centered in the middle of the (0,0) pixel. The center of the (0,0) pixel is at (.5, .5)
+// This includes moving (0,0) be be centered in the middle of the (0,0) pixel. The center of the (0,0) pixel is at (.5, .5)
 func floatPosToPixel(x, y float64) (int, int) {
 	retX := int(math.Floor(x + .5))
 	retY := int(math.Floor(y + .5))
@@ -373,7 +373,7 @@ func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
 
 func (s *pen) drawFilledCircle(xIn, yIn, size float64, c color.RGBA) {
 	halfSize := size / 2
-	halfSizeSqrd := halfSize * halfSize
+	halfSizeSquared := halfSize * halfSize
 	xMax := int(math.Floor(xIn + halfSize))
 	xMin := int(math.Floor(xIn - halfSize))
 	yMax := int(math.Floor(yIn + halfSize))
@@ -383,8 +383,8 @@ func (s *pen) drawFilledCircle(xIn, yIn, size float64, c color.RGBA) {
 		for xInt := xMin; xInt <= xMax; xInt++ {
 			deltaX := (float64(xInt) - xIn)
 			deltaY := (float64(yInt) - yIn)
-			distanceSqrd := deltaX*deltaX + deltaY*deltaY
-			if distanceSqrd <= halfSizeSqrd {
+			distanceSquared := deltaX*deltaX + deltaY*deltaY
+			if distanceSquared <= halfSizeSquared {
 				s.can.SetCartesianPixel(xInt, yInt, c)
 			}
 		}

@@ -41,5 +41,4 @@ func drawFunc(window turtle.Window) {
 		// st = et
 		// fmt.Printf("%5.2f\n", refreshRate)
 	}
-
 }

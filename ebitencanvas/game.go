@@ -27,10 +27,10 @@ type game struct {
 	sprites      []*spriteToDraw
 	exitFlag     bool
 
-	justPressedBroker    *tools.Broker[*models.UserInput]
-	controlState         SavedControlState
-	controlsPressed      *models.UserInput
-	controlsJustPresssed *models.UserInput
+	justPressedBroker   *tools.Broker[*models.UserInput]
+	controlState        SavedControlState
+	controlsPressed     *models.UserInput
+	controlsJustPressed *models.UserInput
 }
 
 func newGame(width, height int, showFPS bool, commands chan drawCmd) *game {
@@ -128,9 +128,9 @@ func (g *game) Update() error {
 		return ebiten.Termination
 	}
 
-	g.controlsPressed, g.controlsJustPresssed = g.controlState.GetUserInput(g.screenWidth, g.screenHeight)
-	if g.controlsJustPresssed.AnyPressed {
-		g.justPressedBroker.Publish(g.controlsJustPresssed)
+	g.controlsPressed, g.controlsJustPressed = g.controlState.GetUserInput(g.screenWidth, g.screenHeight)
+	if g.controlsJustPressed.AnyPressed {
+		g.justPressedBroker.Publish(g.controlsJustPressed)
 	}
 
 	// Pull all the items out of the command channel until it is empty.

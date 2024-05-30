@@ -25,7 +25,7 @@ func TestLerp(t *testing.T) {
 		{name: "ratio 0", args: args{a: 100, b: -100, ratio: 0}, want: 100},
 		{name: "ratio .5", args: args{a: 100, b: -100, ratio: .5}, want: 0},
 		{name: "ratio 1", args: args{a: 100, b: -100, ratio: 1}, want: -100},
-		// Now test out of bounds behaviour
+		// Now test out of bounds behavior
 		{name: "ratio 3", args: args{a: 0, b: 100, ratio: 3}, want: 100},
 		{name: "ratio -1", args: args{a: 0, b: 100, ratio: -1}, want: 0},
 	}
@@ -56,7 +56,7 @@ func TestLerpUint8(t *testing.T) {
 		{name: "ratio 0", args: args{a: 255, b: 128, ratio: 0}, want: 255},
 		{name: "ratio 0", args: args{a: 255, b: 128, ratio: .5}, want: 191},
 		{name: "ratio 0", args: args{a: 255, b: 128, ratio: 1}, want: 128},
-		// Now test out of bounds behaviour
+		// Now test out of bounds behavior
 		{name: "ratio 0", args: args{a: 0, b: 255, ratio: 2.5}, want: 255},
 		{name: "ratio 0", args: args{a: 0, b: 255, ratio: -1}, want: 0},
 	}

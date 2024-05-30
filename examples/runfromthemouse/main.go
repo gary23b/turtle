@@ -43,9 +43,9 @@ func drawFunc(window turtle.Window) {
 		t.PointToward(mX, mY)
 		t.Right(180)
 
-		detlaX := tX - mX
+		deltaX := tX - mX
 		deltaY := tY - mY
-		dist := math.Sqrt(detlaX*detlaX + deltaY*deltaY)
+		dist := math.Sqrt(deltaX*deltaX + deltaY*deltaY)
 
 		if dist < 300 {
 			ratio := 2.0 * (1.0 - dist/100.0)
