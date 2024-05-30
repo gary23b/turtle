@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+// Load an image file and covert it to an image.Image.
+// For decode to work on file type, it must be registered by including the codec specific package.
 func LoadSpriteFile(path string) (image.Image, error) {
 	spriteFileData, err := os.ReadFile(path)
 	if err != nil {

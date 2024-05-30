@@ -71,6 +71,7 @@ func (g *game) runGame() {
 	}
 }
 
+// Set an entire image to the given color
 func clearImage(i *image.RGBA, c color.Color) {
 	xMin := i.Rect.Min.X
 	yMin := i.Rect.Min.Y
@@ -84,12 +85,17 @@ func clearImage(i *image.RGBA, c color.Color) {
 	}
 }
 
+// Get a screenshot on the next frame update and push it out on the given channel.
+// This should only get 1 screenshot, and the channel will be closed.
 func (g *game) getScreenshot(in chan image.Image) {
 	g.screenShotRequestsMutex.Lock()
 	defer g.screenShotRequestsMutex.Unlock()
 	g.screenShotRequests = append(g.screenShotRequests, in)
 }
 
+// For a given image, perform a fill. Recursively find all pixels that match the given location's color and are left/right/up/down.
+// This function is implemented with a stack instead of using recursion.
+// In the case that the provided location is already the correct color, this function returns.
 func bucketFill(i *image.RGBA, x, y int, c color.Color) {
 	colorMatches := func(a, b color.RGBA) bool {
 		return a.R == b.R && a.G == b.G && a.B == b.B && a.A == b.A
@@ -135,6 +141,7 @@ func bucketFill(i *image.RGBA, x, y int, c color.Color) {
 	}
 }
 
+// Required Update method for Ebiten. All the coloring on the canvas and the moving of the sprites should happen in here.
 func (g *game) Update() error {
 	if g.exitFlag {
 		return ebiten.Termination
@@ -177,6 +184,7 @@ EatNewSpritesLoop:
 	return nil
 }
 
+// Required Draw method for Ebiten. The canvas and sprites will be drawn with the Ebiten draw commands
 func (g *game) Draw(screen *ebiten.Image) {
 	screen.WritePixels(g.img.Pix)
 
@@ -205,15 +213,18 @@ func (g *game) Draw(screen *ebiten.Image) {
 		screen.ReadPixels(screenshot.Pix)
 		for i := range g.screenShotRequests {
 			g.screenShotRequests[i] <- screenshot
+			close(g.screenShotRequests[i])
 		}
 		g.screenShotRequests = []chan image.Image{}
 	}
 }
 
+// Required Layout method for Ebiten. Return the current screen size.
 func (g *game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return g.screenWidth, g.screenHeight
 }
 
+// Get the currently pressed user input. The returned point is read only. Do not edit it.
 func (g *game) PressedUserInput() *models.UserInput {
 	if g == nil || g.controlsPressed == nil {
 		return &models.UserInput{}
@@ -222,6 +233,7 @@ func (g *game) PressedUserInput() *models.UserInput {
 	return g.controlsPressed
 }
 
+// Request that Ebiten exits on the next frame.
 func (g *game) TellGameToExit() {
 	g.exitFlag = true
 }

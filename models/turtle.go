@@ -5,14 +5,27 @@ import (
 	"image/color"
 )
 
+// Type for the current turtle angle mode.
 type AngleMode string
 
 const (
+	// Degrees mode. East is 0, North is 90, West is 180, South is 270
 	DegreesMode AngleMode = "Degrees Angle Mode"
+
+	// Radians mode. East is 0, North is pi/2, West is pi, South is 3/2*pi
 	RadiansMode AngleMode = "Radians Angle Mode"
+
+	// Compass mode. North is 0 degrees, and East is 90, South is 180, West is 270.
 	CompassMode AngleMode = "Compass Angle Mode"
+
+	// The max pen speed. No delay will be used.
+	MaxSpeed float64 = 1.0e12
 )
 
+// The turtle interface.
+// Every turtle created for the user of this package can do this exact list of actions.
+// This mirrors the python turtle graphics command set.
+// Each turtle is completely independent, and can be commanded in the same go routine or in different go routines.
 type Turtle interface {
 	Forward(distance float64)
 	F(distance float64) // Forward alias
@@ -48,6 +61,7 @@ type Turtle interface {
 	PenDown()
 	PD() // Pen Down alias
 	On() // Pen Down alias
+	IsPenDown() bool
 	Color(c color.Color)
 	GetColor() color.Color
 	Size(size float64)

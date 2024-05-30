@@ -2,6 +2,7 @@ package models
 
 import "image"
 
+// A sprite is a image that can be place on the screen. The x/y location, rotation, size, and visibility are all controllable.
 type Sprite interface {
 	SetSpriteImage(image.Image)
 	SetSpriteImageTurtle()

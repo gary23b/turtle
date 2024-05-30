@@ -181,12 +181,13 @@ func fillKeyStruct(input []ebiten.Key, out *models.UserInput) {
 	}
 }
 
+// Struct to hold ebiten key state information. It is used every frame during the update.
 type SavedControlState struct {
 	keysDown        []ebiten.Key
 	keysJustPressed []ebiten.Key
 }
 
-// Generate a new struct for pressed and just pressed. then it becomes read only to everyone else.
+// Generate a new struct for pressed and just pressed. It should be read only to everyone else.
 func (s *SavedControlState) GetUserInput(screenWidth, screenHeight int) (pressed, justPressed *models.UserInput) {
 	s.keysDown = inpututil.AppendPressedKeys(s.keysDown[:0])
 	s.keysJustPressed = inpututil.AppendJustPressedKeys(s.keysJustPressed[:0])

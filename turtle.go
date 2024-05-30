@@ -6,6 +6,7 @@ import (
 	"github.com/gary23b/turtle/pen"
 )
 
+// Top level interface that most users of the turtle package will exclusively use.
 type Window interface {
 	GetCanvas() models.Canvas
 	NewTurtle() models.Turtle
@@ -17,10 +18,12 @@ type window struct {
 
 var _ Window = &window{}
 
+// Get the canvas interface
 func (s *window) GetCanvas() models.Canvas {
 	return s.can
 }
 
+// Create a new turtle
 func (s *window) NewTurtle() models.Turtle {
 	return pen.NewPen(s.can)
 }
@@ -28,10 +31,11 @@ func (s *window) NewTurtle() models.Turtle {
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 
+// Turtle Window creation parameters
 type Params struct {
-	Width   int
-	Height  int
-	ShowFPS bool
+	Width   int  // pixels
+	Height  int  // pixels
+	ShowFPS bool // Show frame per second and other info in the top left corner.
 }
 
 // Wrap the starting of ebitencanvas inside something that implements the Window interface
@@ -51,6 +55,7 @@ func Start(params Params, drawFunc func(Window)) {
 	ebitencanvas.StartEbitenTurtleCanvas(canvasParams, initCallback)
 }
 
+// Get the newest keyboard/mouse just pressed event from the given channel.
 // This returns nil if there is no new data.
 // This will throw away all but the newest set of data available. So this should be called faster that the game update rate (60Hz),
 // otherwise sim.PressedUserInput() should be used instead.

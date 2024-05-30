@@ -10,6 +10,7 @@ import (
 
 // Provide a pass through layer so users of this library don't have to import the tools package.
 
+// Linearly interpolate between any two numbers of the same type using a ratio.
 // The ratio is capped between 0 and 1
 func Lerp[T constraints.Integer | constraints.Float](a, b T, ratio float64) T {
 	return turtletools.Lerp(a, b, ratio)
@@ -22,6 +23,8 @@ func LerpColor(a, b color.RGBA, ratio float64) color.RGBA {
 	return turtletools.LerpColor(a, b, ratio)
 }
 
+// Load an image file and covert it to an image.Image.
+// For decode to work on file type, it must be registered by including the codec specific package.
 func LoadSpriteFile(path string) (image.Image, error) {
 	return turtletools.LoadSpriteFile(path)
 }

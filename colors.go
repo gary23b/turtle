@@ -2,7 +2,7 @@ package turtle
 
 import "image/color"
 
-// https://www.w3schools.com/colors/colors_names.asp
+// A basic set of colors based on the colors found here: https://www.w3schools.com/colors/colors_names.asp
 var (
 	// Black to white
 	Black     color.RGBA = color.RGBA{0x00, 0x00, 0x00, 0xFF} // #000000

@@ -22,8 +22,10 @@ type spriteToDraw struct {
 	scale       float64
 }
 
-var _ models.Sprite = &spriteToDraw{}
+var _ models.Sprite = &spriteToDraw{} // force the compiler to verify this implements the interface.
 
+// Create a new sprite.
+// Default to the turtle image and invisible.
 func NewSprite() *spriteToDraw {
 	ret := &spriteToDraw{
 		m:       &sync.Mutex{},
@@ -38,6 +40,7 @@ func NewSprite() *spriteToDraw {
 	return ret
 }
 
+// Set the sprite bitmap image to the provided image.
 func (s *spriteToDraw) SetSpriteImage(in image.Image) {
 	s.m.Lock()
 	defer s.m.Unlock()
@@ -48,6 +51,7 @@ func (s *spriteToDraw) SetSpriteImage(in image.Image) {
 	s.scale = 1
 }
 
+// Set the sprite bitmap image to the built in turtle.
 func (s *spriteToDraw) SetSpriteImageTurtle() {
 	fileData, err := base64.StdEncoding.DecodeString(turtleImage)
 	if err != nil {
@@ -61,6 +65,7 @@ func (s *spriteToDraw) SetSpriteImageTurtle() {
 	s.SetScale(.35)
 }
 
+// Set the sprite bitmap image to the built in arrow.
 func (s *spriteToDraw) SetSpriteImageArrow() {
 	fileData, err := base64.StdEncoding.DecodeString(arrowImage)
 	if err != nil {
@@ -74,12 +79,14 @@ func (s *spriteToDraw) SetSpriteImageArrow() {
 	s.SetScale(.5)
 }
 
+// Set the sprites current angle in radians.
 func (s *spriteToDraw) SetRotation(radianAngle float64) {
 	s.m.Lock()
 	defer s.m.Unlock()
 	s.angle = radianAngle
 }
 
+// Set the sprites current x/y location. 0,0 is the center of the screen.
 func (s *spriteToDraw) SetPosition(cartX, cartY float64) {
 	s.m.Lock()
 	defer s.m.Unlock()
@@ -87,18 +94,21 @@ func (s *spriteToDraw) SetPosition(cartX, cartY float64) {
 	s.y = cartY
 }
 
+// Make the sprite visible on the screen.
 func (s *spriteToDraw) SetVisible(visible bool) {
 	s.m.Lock()
 	defer s.m.Unlock()
 	s.visible = visible
 }
 
+// Make the sprite scaling factor.
 func (s *spriteToDraw) SetScale(scale float64) {
 	s.m.Lock()
 	defer s.m.Unlock()
 	s.scale = scale
 }
 
+// Set all the commonly updated parameters at once. visible, x, y, angle.
 func (s *spriteToDraw) Set(visible bool, cartX, cartY, radianAngle float64) {
 	s.m.Lock()
 	defer s.m.Unlock()
@@ -108,6 +118,7 @@ func (s *spriteToDraw) Set(visible bool, cartX, cartY, radianAngle float64) {
 	s.angle = radianAngle
 }
 
+// Get all the commonly updated parameters at once. visible, x, y, angle.
 // func (s *spriteToDraw) get() (visible bool, cartX, cartY, radianAngle float64) {
 // 	s.m.Lock()
 // 	defer s.m.Unlock()

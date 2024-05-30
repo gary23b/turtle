@@ -2,6 +2,7 @@ package models
 
 import "strings"
 
+// All the currently supported keys.
 type KeysStruct struct {
 	LeftArrow  bool
 	RightArrow bool
@@ -90,6 +91,7 @@ type KeysStruct struct {
 	CloseSquareBracket bool
 }
 
+// All the currently supported mouse inputs.
 type MouseStruct struct {
 	Left   bool
 	Right  bool
@@ -102,6 +104,7 @@ type MouseStruct struct {
 	MouseScroll float64
 }
 
+// Used for currently pressed and for the just pressed functionality.
 type UserInput struct {
 	AnyPressed bool
 
@@ -109,6 +112,8 @@ type UserInput struct {
 	Mouse MouseStruct
 }
 
+// Check if a key is pressed by its name.
+// Some of the keys have multiple names, such as:: case "space", " ":
 func (s *UserInput) IsPressedByName(name string) bool {
 	if s == nil {
 		return false
