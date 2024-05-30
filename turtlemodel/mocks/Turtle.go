@@ -36,6 +36,22 @@ func (_m *Turtle) Circle(radius float64, angleAmountToDraw float64, steps int) {
 	_m.Called(radius, angleAmountToDraw, steps)
 }
 
+// Clone provides a mock function with given fields:
+func (_m *Turtle) Clone() turtlemodel.Turtle {
+	ret := _m.Called()
+
+	var r0 turtlemodel.Turtle
+	if rf, ok := ret.Get(0).(func() turtlemodel.Turtle); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(turtlemodel.Turtle)
+		}
+	}
+
+	return r0
+}
+
 // Color provides a mock function with given fields: c
 func (_m *Turtle) Color(c color.Color) {
 	_m.Called(c)

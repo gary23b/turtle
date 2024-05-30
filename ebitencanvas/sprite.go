@@ -12,12 +12,13 @@ import (
 
 type spriteToDraw struct {
 	m           *sync.Mutex
-	spriteImage *ebiten.Image
+	img         image.Image
+	ImageEbiten *ebiten.Image
 	width       int
 	height      int
 	x           float64
 	y           float64
-	angle       float64
+	angle       float64 // Radians
 	visible     bool
 	scale       float64
 }
@@ -44,7 +45,8 @@ func NewSprite() *spriteToDraw {
 func (s *spriteToDraw) SetSpriteImage(in image.Image) {
 	s.m.Lock()
 	defer s.m.Unlock()
-	s.spriteImage = ebiten.NewImageFromImage(in)
+	s.img = in
+	s.ImageEbiten = ebiten.NewImageFromImage(in)
 	bounds := in.Bounds()
 	s.width = bounds.Max.X
 	s.height = bounds.Max.Y
@@ -118,9 +120,18 @@ func (s *spriteToDraw) Set(visible bool, cartX, cartY, radianAngle float64) {
 	s.angle = radianAngle
 }
 
-// Get all the commonly updated parameters at once. visible, x, y, angle.
-// func (s *spriteToDraw) get() (visible bool, cartX, cartY, radianAngle float64) {
-// 	s.m.Lock()
-// 	defer s.m.Unlock()
-// 	return s.visible, s.x, s.y, s.angle
-// }
+// Get all the commonly updated parameters at once.
+func (s *spriteToDraw) Get() turtlemodel.SpriteInfo {
+	s.m.Lock()
+	defer s.m.Unlock()
+	ret := turtlemodel.SpriteInfo{
+		X:       s.x,
+		Y:       s.y,
+		Angle:   s.angle,
+		Visible: s.visible,
+		Img:     s.img,
+		Scale:   s.scale,
+	}
+
+	return ret
+}

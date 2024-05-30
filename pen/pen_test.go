@@ -148,8 +148,10 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, false, bob.penDown)
 	bob.On()
 	require.Equal(t, true, bob.penDown)
+	require.Equal(t, true, bob.IsPenDown())
 	bob.Off()
 	require.Equal(t, false, bob.penDown)
+	require.Equal(t, false, bob.IsPenDown())
 
 	// Test enabling and disabling angle modes
 	bob.RadiansMode()
@@ -283,7 +285,7 @@ func newCanvasFake(t *testing.T) *canvasFake {
 	ret := &canvasFake{
 		Canvas: mocks.NewCanvas(t),
 	}
-	ret.Canvas.On("CreateNewSprite").Return(fakes.NewSprite())
+	// ret.Canvas.On("CreateNewSprite").Return(fakes.NewSprite())
 	return ret
 }
 
@@ -293,6 +295,10 @@ func (s *canvasFake) SetCartesianPixel(x int, y int, c color.Color) {
 
 func (s *canvasFake) Fill(x int, y int, c color.Color) {
 	s.calls = append(s.calls, drawCmd{x: x, y: y, c: c, fill: true})
+}
+
+func (s *canvasFake) CreateNewSprite() turtlemodel.Sprite {
+	return fakes.NewSprite()
 }
 
 func TestNewTurtleBasicDraw(t *testing.T) {
@@ -473,4 +479,57 @@ func Test_SpriteControl(t *testing.T) {
 	require.Equal(t, 100.0, fakeSprite.X)
 	require.Equal(t, 150.0, fakeSprite.Y)
 	require.Equal(t, 2*math.Pi/180.0, fakeSprite.Angle)
+}
+
+func Test_SpriteClone(t *testing.T) {
+	canFake := newCanvasFake(t)
+	b := NewPen(canFake) // bob the turtle
+	fakeSprite1, ok := b.sprite.(*fakes.SpriteToDraw)
+	require.True(t, ok)
+
+	b.GoTo(1, 1)
+	b.ShowTurtle()
+	b.ShapeScale(3)
+
+	require.Equal(t, 1.0, b.x)
+	require.Equal(t, 1.0, b.y)
+	require.Equal(t, true, b.visible)
+	require.Equal(t, 3.0, fakeSprite1.Scale)
+	require.Equal(t, 0.0, fakeSprite1.Angle)
+
+	b2, ok := b.Clone().(*pen)
+	require.True(t, ok)
+	fakeSprite2, ok := b2.sprite.(*fakes.SpriteToDraw)
+	require.True(t, ok)
+
+	require.Equal(t, 1.0, b.x)
+	require.Equal(t, 1.0, b.y)
+	require.Equal(t, true, b.visible)
+	require.Equal(t, 3.0, fakeSprite1.Scale)
+	require.Equal(t, 0.0, fakeSprite1.Angle)
+
+	require.Equal(t, 1.0, b2.x)
+	require.Equal(t, 1.0, b2.y)
+	require.Equal(t, true, b2.visible)
+	require.Equal(t, 3.0, fakeSprite2.Scale)
+	require.Equal(t, 0.0, fakeSprite2.Angle)
+
+	b.GoTo(0, 0)
+	b.HideTurtle()
+
+	b2.GoTo(2, 2)
+	b2.Angle(2)
+	b2.ShapeScale(4)
+
+	require.Equal(t, 0.0, b.x)
+	require.Equal(t, 0.0, b.y)
+	require.Equal(t, false, b.visible)
+	require.Equal(t, 3.0, fakeSprite1.Scale)
+	require.Equal(t, 0.0, fakeSprite1.Angle)
+
+	require.Equal(t, 2.0, b2.x)
+	require.Equal(t, 2.0, b2.y)
+	require.Equal(t, true, b2.visible)
+	require.Equal(t, 4.0, fakeSprite2.Scale)
+	require.Equal(t, 2.0*math.Pi/180, fakeSprite2.Angle)
 }

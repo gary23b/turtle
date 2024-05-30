@@ -28,6 +28,7 @@ func NewSprite() *SpriteToDraw {
 		Visible:      false,
 		Scale:        1,
 		CurrentImage: "StartImage",
+		Img:          image.NewRGBA(image.Rect(0, 0, 1, 1)),
 	}
 
 	return ret
@@ -72,4 +73,17 @@ func (s *SpriteToDraw) Set(visible bool, cartX, cartY, radianAngle float64) {
 	s.X = cartX
 	s.Y = cartY
 	s.Angle = radianAngle
+}
+
+func (s *SpriteToDraw) Get() turtlemodel.SpriteInfo {
+	ret := turtlemodel.SpriteInfo{
+		X:       s.X,
+		Y:       s.Y,
+		Angle:   s.Angle,
+		Visible: s.Visible,
+		Img:     s.Img,
+		Scale:   s.Scale,
+	}
+
+	return ret
 }

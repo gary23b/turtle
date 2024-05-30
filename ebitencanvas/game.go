@@ -199,7 +199,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		op.GeoM.Translate(float64(g.screenWidth/2), float64(g.screenHeight/2))
 		op.GeoM.Translate(sprite.x, -sprite.y)
 
-		screen.DrawImage(sprite.spriteImage, op)
+		screen.DrawImage(sprite.ImageEbiten, op)
 	}
 
 	if g.showFPS {

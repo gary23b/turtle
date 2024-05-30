@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"time"
 
@@ -23,67 +24,17 @@ const (
 func drawFunc(window turtle.Window) {
 	time.Sleep(time.Second * 1)
 
-	// go func() {
-	// 	t := window.NewTurtle()
+	fmt.Println("Creating Turtle")
+	t := window.NewTurtle()
+	t.ShapeAsArrow()
+	t.ShapeScale(.25)
+	t.DegreesMode()
+	// t.Speed(turtlemodel.MaxSpeed)
+	t.ShowTurtle()
 
-	// 	t.ShapeAsArrow()
-	// 	t.ShowTurtle()
-	// 	t.DegreesMode()
-	// 	t.PenDown()
-	// 	t.Speed(turtlemodel.MaxSpeed)
-
-	// 	// turning the turtle to face upwards
-	// 	t.Left(90)
-	// 	t.Size(TrunkWidth)
-
-	// 	recursiveTree(t, StartSize, LevelCount)
-	// }()
-
-	go RecursiveTree2(nil, window, 0, -180, 90, StartSize, LevelCount)
+	go RecursiveTree(t, 0, -180, 90, StartSize, LevelCount)
 
 	// go turtle.CreateGif(window, time.Millisecond*200, time.Millisecond*200, "./examples/fractaltree/fractaltree.gif", 75)
-}
-
-func RecursiveTree(t turtlemodel.Turtle, length float64, level int) {
-	if level <= 0 {
-		return
-	}
-	// the acute angle between
-	// the base and branch of the Y
-	angle := 30.0
-
-	// splitting the rgb range for green
-	// into equal intervals for each level
-	// setting the color according
-	// to the current level
-	ratio := dualRate(LevelCount, 1, 0, 1, float64(level))
-	c := turtle.LerpColor(turtle.SaddleBrown, turtle.Lime, ratio)
-	t.Color(c)
-
-	s := t.GetSize() * 3 / 4
-	t.Size(s)
-
-	// drawing the base
-	t.Forward(length)
-
-	t.Right(angle)
-
-	// recursive call for
-	// the right subtree
-	RecursiveTree(t, 0.8*length, level-1)
-	t.Size(s)
-	t.Color(c)
-
-	t.Left(2 * angle)
-
-	// recursive call for
-	// the left subtree
-	RecursiveTree(t, 0.8*length, level-1)
-	t.Size(s)
-	t.Color(c)
-
-	t.Right(angle)
-	t.Forward(-length)
 }
 
 func dualRate(x1, x2, y1, y2, in float64) float64 {
@@ -95,18 +46,9 @@ func dualRate(x1, x2, y1, y2, in float64) float64 {
 	return ret
 }
 
-func RecursiveTree2(t turtlemodel.Turtle, window turtle.Window, x, y, angle, length float64, level int) {
+func RecursiveTree(t turtlemodel.Turtle, x, y, angle, length float64, level int) {
 	if level <= 0 {
 		return
-	}
-
-	if t == nil {
-		t = window.NewTurtle()
-		t.ShapeAsArrow()
-		t.ShapeScale(.25)
-		t.DegreesMode()
-		// t.Speed(turtlemodel.MaxSpeed)
-		t.ShowTurtle()
 	}
 
 	t.PenUp()
@@ -131,12 +73,12 @@ func RecursiveTree2(t turtlemodel.Turtle, window turtle.Window, x, y, angle, len
 	curAngle := t.GetAngle()
 
 	if level > LevelCount-9 {
+		go RecursiveTree(t.Clone(), curX, curY, curAngle+30, 0.8*length, level-1)
+		go RecursiveTree(t.Clone(), curX, curY, curAngle-30, 0.8*length, level-1)
 		t.HideTurtle()
-		go RecursiveTree2(nil, window, curX, curY, curAngle+30, 0.8*length, level-1)
-		go RecursiveTree2(nil, window, curX, curY, curAngle-30, 0.8*length, level-1)
 	} else {
-		RecursiveTree2(t, window, curX, curY, curAngle+30, 0.8*length, level-1)
-		RecursiveTree2(t, window, curX, curY, curAngle-30, 0.8*length, level-1)
+		RecursiveTree(t, curX, curY, curAngle+30, 0.8*length, level-1)
+		RecursiveTree(t, curX, curY, curAngle-30, 0.8*length, level-1)
 	}
 
 	if level == LevelCount-9 {

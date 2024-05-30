@@ -358,6 +358,17 @@ func (s *pen) ShapeScale(scale float64) {
 	s.sprite.SetScale(scale)
 }
 
+// Clone the pen to have all the same values.
+func (s *pen) Clone() turtlemodel.Turtle {
+	var ret pen = *s
+	ret.sprite = s.can.CreateNewSprite()
+	si := s.sprite.Get()
+	ret.sprite.SetSpriteImage(si.Img)
+	ret.sprite.SetScale(si.Scale)
+	ret.sprite.Set(si.Visible, si.X, si.Y, si.Angle)
+	return &ret
+}
+
 // //////////////////////
 func (s *pen) absoluteAngleToRad(angle float64) float64 {
 	if s.degreesEn {

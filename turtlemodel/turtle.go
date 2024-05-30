@@ -84,4 +84,6 @@ type Turtle interface {
 	ShapeAsArrow()
 	ShapeAsImage(in image.Image)
 	ShapeScale(scale float64) // Default = 0.35
+
+	Clone() Turtle // Create a clone of the turtle
 }
