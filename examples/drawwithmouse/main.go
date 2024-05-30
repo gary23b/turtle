@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/gary23b/turtle"
-	"github.com/gary23b/turtle/tools"
 )
 
 // Drag the mouse with the left button pressed to draw on the canvas.
@@ -37,7 +36,7 @@ func drawFunc(window turtle.Window) {
 		}
 
 		if userIn.Mouse.Left {
-			desiredColor := tools.LerpColor(turtle.Blue, turtle.Red, ratio)
+			desiredColor := turtle.LerpColor(turtle.Blue, turtle.Red, ratio)
 			t.Color(desiredColor)
 			t.GoTo(float64(prevUserIn.Mouse.MouseX), float64(prevUserIn.Mouse.MouseY))
 			t.PenDown()

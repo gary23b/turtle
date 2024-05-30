@@ -20,7 +20,7 @@ type pen struct {
 	compassEn bool
 	speed     float64 // in pixels/second
 	penDown   bool
-	penColor  color.RGBA
+	penColor  color.Color
 	penSize   float64
 }
 
@@ -199,11 +199,11 @@ func (s *pen) On() {
 	s.PenDown()
 }
 
-func (s *pen) Color(c color.RGBA) {
+func (s *pen) Color(c color.Color) {
 	s.penColor = c
 }
 
-func (s *pen) GetColor() color.RGBA {
+func (s *pen) GetColor() color.Color {
 	return s.penColor
 }
 
@@ -227,7 +227,7 @@ func (s *pen) Dot(size float64) {
 	s.drawFilledCircle(s.x, s.y, size, s.penColor)
 }
 
-func (s *pen) Fill(c color.RGBA) {
+func (s *pen) Fill(c color.Color) {
 	x, y := floatPosToPixel(s.x, s.y)
 	s.can.Fill(x, y, c)
 }
@@ -330,14 +330,14 @@ func floatPosToPixel(x, y float64) (int, int) {
 	return retX, retY
 }
 
-func (s *pen) paintPixel(x, y float64, c color.RGBA) {
+func (s *pen) paintPixel(x, y float64, c color.Color) {
 	pixX, pixY := floatPosToPixel(x, y)
 	s.can.SetCartesianPixel(pixX, pixY, c)
 }
 
 // The concept of this line draw function is to determine if X or Y have a larger number of pixels to cover,
 // and the larger one is chosen. Then we step
-func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
+func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.Color) {
 	xDelta := x2 - x1
 	yDelta := y2 - y1
 	largerDelta := math.Max(math.Abs(xDelta), math.Abs(yDelta))
@@ -371,7 +371,7 @@ func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.RGBA) {
 	}
 }
 
-func (s *pen) drawFilledCircle(xIn, yIn, size float64, c color.RGBA) {
+func (s *pen) drawFilledCircle(xIn, yIn, size float64, c color.Color) {
 	halfSize := size / 2
 	halfSizeSquared := halfSize * halfSize
 	xMax := int(math.Floor(xIn + halfSize))

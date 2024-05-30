@@ -37,7 +37,7 @@ func (_m *Turtle) Circle(radius float64, angleAmountToDraw float64, steps int) {
 }
 
 // Color provides a mock function with given fields: c
-func (_m *Turtle) Color(c color.RGBA) {
+func (_m *Turtle) Color(c color.Color) {
 	_m.Called(c)
 }
 
@@ -62,7 +62,7 @@ func (_m *Turtle) F(distance float64) {
 }
 
 // Fill provides a mock function with given fields: c
-func (_m *Turtle) Fill(c color.RGBA) {
+func (_m *Turtle) Fill(c color.Color) {
 	_m.Called(c)
 }
 
@@ -100,14 +100,16 @@ func (_m *Turtle) GetAngleMode() models.AngleMode {
 }
 
 // GetColor provides a mock function with given fields:
-func (_m *Turtle) GetColor() color.RGBA {
+func (_m *Turtle) GetColor() color.Color {
 	ret := _m.Called()
 
-	var r0 color.RGBA
-	if rf, ok := ret.Get(0).(func() color.RGBA); ok {
+	var r0 color.Color
+	if rf, ok := ret.Get(0).(func() color.Color); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(color.RGBA)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(color.Color)
+		}
 	}
 
 	return r0

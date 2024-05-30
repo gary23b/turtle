@@ -20,7 +20,7 @@ func drawFunc(window turtle.Window) {
 	t.Speed(1000)
 	t.PenDown()
 
-	colors := []color.RGBA{turtle.Red, turtle.Yellow, turtle.Green, turtle.Purple, turtle.Blue, turtle.Orange}
+	colors := []color.Color{turtle.Red, turtle.Yellow, turtle.Green, turtle.Purple, turtle.Blue, turtle.Orange}
 	for x := 1; x < 200; x++ {
 		t.Color(colors[x%6])        // setting color
 		t.Size(float64(x)/75.0 + 1) // setting width

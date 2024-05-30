@@ -48,12 +48,12 @@ type Turtle interface {
 	PenDown()
 	PD() // Pen Down alias
 	On() // Pen Down alias
-	Color(c color.RGBA)
-	GetColor() color.RGBA
+	Color(c color.Color)
+	GetColor() color.Color
 	Size(size float64)
 	GetSize() float64
 	Dot(size float64)
-	Fill(c color.RGBA)
+	Fill(c color.Color)
 
 	// Draw a circle with given radius. The center is radius units left of the turtle; angleAmountToDraw determines
 	// which part of the circle is drawn. If angleAmountToDraw is not a full circle, one endpoint of the arc is

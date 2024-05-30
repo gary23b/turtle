@@ -67,19 +67,20 @@ func (g *game) runGame() {
 	}
 }
 
-func clearImage(i *image.RGBA, c color.RGBA) {
+func clearImage(i *image.RGBA, c color.Color) {
 	xMin := i.Rect.Min.X
 	yMin := i.Rect.Min.Y
 	xMax := i.Rect.Max.X
 	yMax := i.Rect.Max.Y
+	c1, _ := color.RGBAModel.Convert(c).(color.RGBA)
 	for y := yMin; y < yMax; y++ {
 		for x := xMin; x < xMax; x++ {
-			i.SetRGBA(x, y, c)
+			i.SetRGBA(x, y, c1)
 		}
 	}
 }
 
-func bucketFill(i *image.RGBA, x, y int, c color.RGBA) {
+func bucketFill(i *image.RGBA, x, y int, c color.Color) {
 	colorMatches := func(a, b color.RGBA) bool {
 		return a.R == b.R && a.G == b.G && a.B == b.B && a.A == b.A
 	}
@@ -94,8 +95,9 @@ func bucketFill(i *image.RGBA, x, y int, c color.RGBA) {
 	xMax := i.Rect.Max.X - 1
 	yMax := i.Rect.Max.Y - 1
 
+	c1, _ := color.RGBAModel.Convert(c).(color.RGBA)
 	srcColor := i.RGBAAt(x, y)
-	if colorMatches(srcColor, c) {
+	if colorMatches(srcColor, c1) {
 		// The selected pixes is already the correct color
 		return
 	}
@@ -107,7 +109,7 @@ func bucketFill(i *image.RGBA, x, y int, c color.RGBA) {
 		y := xy.y
 		upNextStack = upNextStack[:len(upNextStack)-1]
 
-		i.SetRGBA(x, y, c)
+		i.SetRGBA(x, y, c1)
 		if x > xMin && colorMatches(i.RGBAAt(x-1, y), srcColor) {
 			upNextStack = append(upNextStack, upNextStruct{x: x - 1, y: y})
 		}
@@ -144,7 +146,7 @@ EatDrawCommandsLoop:
 			case cmd.clearScreen:
 				clearImage(g.img, cmd.c)
 			default:
-				g.img.SetRGBA(cmd.x, cmd.y, cmd.c)
+				g.img.Set(cmd.x, cmd.y, cmd.c)
 			}
 		default:
 			// receiving from g.commands would block

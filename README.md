@@ -93,12 +93,12 @@ func drawFunc(window turtle.Window) {
 	t.Speed(1000)
 	t.PenDown()
 
-	colors := []color.RGBA{turtle.Red, turtle.Yellow, turtle.Green, turtle.Purple, turtle.Blue, turtle.Orange}
+	colors := []color.Color{turtle.Red, turtle.Yellow, turtle.Green, turtle.Purple, turtle.Blue, turtle.Orange}
 	for x := 1; x < 200; x++ {
 		t.Color(colors[x%6])        // setting color
 		t.Size(float64(x)/75.0 + 1) // setting width
 		t.Forward(float64(x))       // moving forward
-		t.Left(59)                  // Turt left
+		t.Left(59)                  // Turn left
 	}
 }
 ```
@@ -144,13 +144,20 @@ type Turtle interface {
 	PenDown()
 	PD() // Pen Down alias
 	On() // Pen Down alias
-	Color(c color.RGBA)
-	GetColor() color.RGBA
+	Color(c color.Color)
+	GetColor() color.Color
 	Size(size float64)
 	GetSize() float64
 	Dot(size float64)
-	Fill(c color.RGBA)
+	Fill(c color.Color)
 
+	// Draw a circle with given radius. The center is radius units left of the turtle; angleAmountToDraw determines
+	// which part of the circle is drawn. If angleAmountToDraw is not a full circle, one endpoint of the arc is
+	// the current pen position. Draw the arc in counterclockwise direction if radius is positive,
+	// otherwise in clockwise direction. Finally the direction of the turtle is changed by the amount of angleAmountToDraw.
+	//
+	// As the circle is approximated by an inscribed regular polygon, steps determines the number of steps to use.
+	// May be used to draw regular polygons.
 	Circle(radius, angleAmountToDraw float64, steps int)
 
 	ShowTurtle()
@@ -158,6 +165,6 @@ type Turtle interface {
 	ShapeAsTurtle() // Default
 	ShapeAsArrow()
 	ShapeAsImage(in image.Image)
-	ShapeScale(scale float64)
+	ShapeScale(scale float64) // Default = 0.35
 }
 ```

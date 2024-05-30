@@ -15,7 +15,7 @@ type Canvas struct {
 }
 
 // ClearScreen provides a mock function with given fields: c
-func (_m *Canvas) ClearScreen(c color.RGBA) {
+func (_m *Canvas) ClearScreen(c color.Color) {
 	_m.Called(c)
 }
 
@@ -41,7 +41,7 @@ func (_m *Canvas) Exit() {
 }
 
 // Fill provides a mock function with given fields: x, y, c
-func (_m *Canvas) Fill(x int, y int, c color.RGBA) {
+func (_m *Canvas) Fill(x int, y int, c color.Color) {
 	_m.Called(x, y, c)
 }
 
@@ -90,12 +90,12 @@ func (_m *Canvas) PressedUserInput() *models.UserInput {
 }
 
 // SetCartesianPixel provides a mock function with given fields: x, y, c
-func (_m *Canvas) SetCartesianPixel(x int, y int, c color.RGBA) {
+func (_m *Canvas) SetCartesianPixel(x int, y int, c color.Color) {
 	_m.Called(x, y, c)
 }
 
 // SetPixel provides a mock function with given fields: x, y, c
-func (_m *Canvas) SetPixel(x int, y int, c color.RGBA) {
+func (_m *Canvas) SetPixel(x int, y int, c color.Color) {
 	_m.Called(x, y, c)
 }
 

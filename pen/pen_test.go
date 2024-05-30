@@ -268,7 +268,7 @@ func TestNewTurtleMoveWoPen(t *testing.T) {
 type drawCmd struct {
 	x           int
 	y           int
-	c           color.RGBA
+	c           color.Color
 	fill        bool // Bucket will starting from the x,y position
 	clearScreen bool // When you want to set the entire screen to a color. Only fill in this when clearing screen.
 }
@@ -287,11 +287,11 @@ func newCanvasFake(t *testing.T) *canvasFake {
 	return ret
 }
 
-func (s *canvasFake) SetCartesianPixel(x int, y int, c color.RGBA) {
+func (s *canvasFake) SetCartesianPixel(x int, y int, c color.Color) {
 	s.calls = append(s.calls, drawCmd{x: x, y: y, c: c})
 }
 
-func (s *canvasFake) Fill(x int, y int, c color.RGBA) {
+func (s *canvasFake) Fill(x int, y int, c color.Color) {
 	s.calls = append(s.calls, drawCmd{x: x, y: y, c: c, fill: true})
 }
 

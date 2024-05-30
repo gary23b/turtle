@@ -9,7 +9,7 @@ import (
 type drawCmd struct {
 	x           int
 	y           int
-	c           color.RGBA
+	c           color.Color
 	fill        bool // Bucket will starting from the x,y position
 	clearScreen bool // When you want to set the entire screen to a color. Only fill in this when clearing screen.
 }
@@ -50,11 +50,11 @@ func (s *ebitenTurtleCanvas) CreateNewSprite() models.Sprite {
 }
 
 // 0,0 is the center of the screen. positive X is right, positive y is up.
-func (s *ebitenTurtleCanvas) SetCartesianPixel(x, y int, c color.RGBA) {
+func (s *ebitenTurtleCanvas) SetCartesianPixel(x, y int, c color.Color) {
 	s.SetPixel(x+s.width/2, -y+s.height/2, c)
 }
 
-func (s *ebitenTurtleCanvas) SetPixel(x, y int, c color.RGBA) {
+func (s *ebitenTurtleCanvas) SetPixel(x, y int, c color.Color) {
 	newCmd := drawCmd{
 		x: x,
 		y: y,
@@ -64,7 +64,7 @@ func (s *ebitenTurtleCanvas) SetPixel(x, y int, c color.RGBA) {
 }
 
 // Bucket Fill, starting from the given cartesian pixel
-func (s *ebitenTurtleCanvas) Fill(x, y int, c color.RGBA) {
+func (s *ebitenTurtleCanvas) Fill(x, y int, c color.Color) {
 	s.cmdChan <- drawCmd{
 		x:    x + s.width/2,
 		y:    -y + s.height/2,
@@ -73,7 +73,7 @@ func (s *ebitenTurtleCanvas) Fill(x, y int, c color.RGBA) {
 	}
 }
 
-func (s *ebitenTurtleCanvas) ClearScreen(c color.RGBA) {
+func (s *ebitenTurtleCanvas) ClearScreen(c color.Color) {
 	s.cmdChan <- drawCmd{
 		c:           c,
 		clearScreen: true,
