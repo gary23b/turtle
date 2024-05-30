@@ -1,3 +1,7 @@
+# Options for analysis running.
+run:
+  go: '1.22'
+
 linters:
   fast: true
   disable-all: true
@@ -55,7 +59,6 @@ severity:
 
 linters-settings:
   gofumpt:
-    lang-version: "1.21"
     # Module path which contains the source code being formatted.
     # Default: ""
     # Choose whether or not to use the extra rules that are disabled
