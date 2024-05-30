@@ -9,6 +9,7 @@ Based on the python turtle, this Go package provides an environment to learn Go 
 
 ## Install
 
+Go 1.20 or later is required.<br>
 Ebitengine is the main dependency. [Check here the system specific instructions](https://ebitengine.org/en/documents/install.html).
 
 ## Example
@@ -52,9 +53,8 @@ func main() {
 // drawFunc is started as a goroutine.
 func drawFunc(can models.Canvas) {
 	var t models.Turtle = turtle.NewTurtle(can)
-	t.SetDegreesMode()
-	t.PenColor(turtleutil.White)
-	t.SetSpeed(1000)
+	t.Color(turtleutil.White)
+	t.Speed(1000)
 	t.PenDown()
 
 	t.Left(45)
@@ -62,7 +62,7 @@ func drawFunc(can models.Canvas) {
 	t.Left(135)
 	t.Forward(200 * 0.707)
 	t.GoTo(0, 0)
-	t.SetAngle(-15)
+	t.Angle(-15)
 	for i := 0; i < 12; i++ {
 		t.Forward(100)
 		t.Right(30)
@@ -86,22 +86,24 @@ type Turtle interface {
 	PanLeftward(distance float64)
 	PanL(distance float64) // PanLeftward alias
 
-	GoTo(x, y float64)
-	GetPos() (x, y float64)
+	GoTo(x, y float64)      // Cartesian (x,y). Center in the middle of the window
+	GetPos() (x, y float64) // Cartesian (x,y). Center in the middle of the window
 
 	Left(angle float64)
 	L(angle float64) // Turn Left alias
 	Right(angle float64)
 	R(angle float64) // Turn Right alias
-	SetAngle(angle float64)
-	PointToward(x, y float64)
+	Angle(angle float64)
 	GetAngle() float64
+	PointToward(x, y float64)
 
-	SetDegreesMode() // Default is degree mode.
-	SetRadianMode()
-	EnableCompassAngleMode(in bool) // Make it so North is 0 degrees, East is 90...
+	DegreesMode() // Default is degrees mode.
+	RadiansMode()
+	CompassMode() // Make it so North is 0 degrees, East is 90...
+	GetAngleMode() AngleMode
 
-	SetSpeed(PixelsPerSecond float64)
+	Speed(PixelsPerSecond float64)
+	GetSpeed() float64
 
 	PenUp()
 	PU()  // Pen Up alias
@@ -109,16 +111,20 @@ type Turtle interface {
 	PenDown()
 	PD() // Pen Down alias
 	On() // Pen Down alias
-	PenColor(c color.RGBA)
-	PenSize(size float64)
-	PaintDot(size float64)
+	Color(c color.RGBA)
+	GetColor() color.RGBA
+	Size(size float64)
+	GetSize() float64
+	Dot(size float64)
 	Fill(c color.RGBA)
+
 	Circle(radius, angleAmountToDraw float64, steps int)
 
-	SetVisible(isVisible bool)
-	SetShapeAsTurtle()
-	SetShapeAsArrow()
-	SetShapeAsImage(in image.Image)
-	SetShapeScale(scale float64)
+	ShowTurtle()
+	HideTurtle()    // Default
+	ShapeAsTurtle() // Default
+	ShapeAsArrow()
+	ShapeAsImage(in image.Image)
+	ShapeScale(scale float64)
 }
 ```

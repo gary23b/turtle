@@ -25,17 +25,16 @@ func drawFunc(can models.Canvas) {
 	White := color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
 
 	var t models.Turtle = turtle.NewTurtle(can)
-	t.SetShapeAsArrow()
-	t.SetVisible(true)
+	t.ShapeAsArrow()
+	t.ShowTurtle()
 	can.ClearScreen(White)
-	t.SetSpeed(100)
-	t.SetDegreesMode()
-	t.PenSize(4)
+	t.Speed(100)
+	t.Size(4)
 
 	t.R(57.8)
 	t.F(181.3)
 	t.On()
-	t.PenColor(black)
+	t.Color(black)
 
 	// Right foot
 	t.L(14.7)
@@ -278,7 +277,7 @@ func drawFunc(can models.Canvas) {
 	// Body
 	t.R(129.8)
 	t.F(124.2)
-	t.PenColor(black2) // use a slightly different Black so we can use fill to get rid of parts inside
+	t.Color(black2) // use a slightly different Black so we can use fill to get rid of parts inside
 	t.On()
 	t.R(20.7)
 	t.Circle(-200.6, 19.5, 20)
@@ -309,7 +308,7 @@ func drawFunc(can models.Canvas) {
 	t.Fill(blue)
 
 	// Teeth
-	t.PenColor(black)
+	t.Color(black)
 	t.On()
 	t.R(2.9)
 	t.F(15.4)
@@ -370,7 +369,7 @@ func drawFunc(can models.Canvas) {
 
 	t.L(163.1)
 	t.F(35.3)
-	t.PenColor(black2)
+	t.Color(black2)
 	t.On()
 	t.L(36.7)
 	t.F(7.7)
@@ -405,7 +404,7 @@ func drawFunc(can models.Canvas) {
 
 	t.R(107.1)
 	t.F(12.9)
-	t.PenColor(black)
+	t.Color(black)
 	t.On()
 	t.R(49.4)
 	t.Circle(-21.7, 62.5, 20)
@@ -501,8 +500,8 @@ func drawFunc(can models.Canvas) {
 	t.R(139.8)
 	t.F(100.6)
 	t.On()
-	t.PenSize(2)
-	t.PenColor(White)
+	t.Size(2)
+	t.Color(White)
 	t.L(60.3)
 	t.Circle(3.3, 360, 40)
 	t.Off()
@@ -521,5 +520,5 @@ func drawFunc(can models.Canvas) {
 	t.PanR(3)
 
 	time.Sleep(time.Second)
-	t.SetVisible(false)
+	t.HideTurtle()
 }

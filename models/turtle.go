@@ -5,6 +5,14 @@ import (
 	"image/color"
 )
 
+type AngleMode string
+
+const (
+	DegreesMode AngleMode = "Degrees Angle Mode"
+	RadiansMode AngleMode = "Radians Angle Mode"
+	CompassMode AngleMode = "Compass Angle Mode"
+)
+
 type Turtle interface {
 	Forward(distance float64)
 	F(distance float64) // Forward alias
@@ -15,22 +23,24 @@ type Turtle interface {
 	PanLeftward(distance float64)
 	PanL(distance float64) // PanLeftward alias
 
-	GoTo(x, y float64)
-	GetPos() (x, y float64)
+	GoTo(x, y float64)      // Cartesian (x,y). Center in the middle of the window
+	GetPos() (x, y float64) // Cartesian (x,y). Center in the middle of the window
 
 	Left(angle float64)
 	L(angle float64) // Turn Left alias
 	Right(angle float64)
 	R(angle float64) // Turn Right alias
-	SetAngle(angle float64)
-	PointToward(x, y float64)
+	Angle(angle float64)
 	GetAngle() float64
+	PointToward(x, y float64)
 
-	SetDegreesMode() // Default is degree mode.
-	SetRadianMode()
-	EnableCompassAngleMode(in bool) // Make it so North is 0 degrees, East is 90...
+	DegreesMode() // Default is degrees mode.
+	RadiansMode()
+	CompassMode() // Make it so North is 0 degrees, East is 90...
+	GetAngleMode() AngleMode
 
-	SetSpeed(PixelsPerSecond float64)
+	Speed(PixelsPerSecond float64)
+	GetSpeed() float64
 
 	PenUp()
 	PU()  // Pen Up alias
@@ -38,9 +48,11 @@ type Turtle interface {
 	PenDown()
 	PD() // Pen Down alias
 	On() // Pen Down alias
-	PenColor(c color.RGBA)
-	PenSize(size float64)
-	PaintDot(size float64)
+	Color(c color.RGBA)
+	GetColor() color.RGBA
+	Size(size float64)
+	GetSize() float64
+	Dot(size float64)
 	Fill(c color.RGBA)
 
 	// Draw a circle with given radius. The center is radius units left of the turtle; angleAmountToDraw determines
@@ -52,9 +64,10 @@ type Turtle interface {
 	// May be used to draw regular polygons.
 	Circle(radius, angleAmountToDraw float64, steps int)
 
-	SetVisible(isVisible bool)
-	SetShapeAsTurtle()
-	SetShapeAsArrow()
-	SetShapeAsImage(in image.Image)
-	SetShapeScale(scale float64)
+	ShowTurtle()
+	HideTurtle()    // Default
+	ShapeAsTurtle() // Default
+	ShapeAsArrow()
+	ShapeAsImage(in image.Image)
+	ShapeScale(scale float64)
 }

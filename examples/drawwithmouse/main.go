@@ -19,7 +19,7 @@ func main() {
 func drawFunc(can models.Canvas) {
 	can.ClearScreen(turtleutil.White)
 	var t models.Turtle = turtle.NewTurtle(can)
-	t.SetSpeed(1e9)
+	t.Speed(1e9)
 
 	ratio := 0.0
 	prevUserIn := &models.UserInput{}
@@ -31,7 +31,7 @@ func drawFunc(can models.Canvas) {
 
 		if userIn.MouseDown.Left {
 			desiredColor := turtleutil.LerpColor(turtleutil.Blue, turtleutil.Red, ratio)
-			t.PenColor(desiredColor)
+			t.Color(desiredColor)
 			t.GoTo(float64(prevUserIn.MouseX), float64(prevUserIn.MouseY))
 			t.PenDown()
 			t.GoTo(float64(userIn.MouseX), float64(userIn.MouseY))

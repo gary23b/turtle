@@ -20,9 +20,9 @@ func main() {
 func drawFunc(can models.Canvas) {
 	can.ClearScreen(turtleutil.White)
 	var t models.Turtle = turtle.NewTurtle(can)
-	t.SetVisible(true)
+	t.ShowTurtle()
 	t.PenDown()
-	t.PenSize(5)
+	t.Size(5)
 	speed := 300.0
 
 	prevUserIn := &models.UserInput{}
@@ -46,16 +46,16 @@ func drawFunc(can models.Canvas) {
 			ratio := 2.0 * (1.0 - dist/100.0)
 			switch {
 			case ratio <= 1:
-				t.PenColor(turtleutil.LerpColor(turtleutil.Blue, turtleutil.Green, ratio))
+				t.Color(turtleutil.LerpColor(turtleutil.Blue, turtleutil.Green, ratio))
 			case ratio > 1:
-				t.PenColor(turtleutil.LerpColor(turtleutil.Green, turtleutil.Red, ratio-1.0))
+				t.Color(turtleutil.LerpColor(turtleutil.Green, turtleutil.Red, ratio-1.0))
 			}
 
 			if dist < 5 {
-				t.PaintDot(100)
+				t.Dot(100)
 			} else {
 				speed := 9.0 * 300.0 / dist
-				t.SetSpeed(speed)
+				t.Speed(speed)
 			}
 			t.Forward(speed * 0.010)
 		}

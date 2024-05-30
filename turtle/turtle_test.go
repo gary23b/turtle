@@ -5,8 +5,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gary23b/turtle/fakes"
-	"github.com/gary23b/turtle/mocks"
+	"github.com/gary23b/turtle/models/fakes"
+	"github.com/gary23b/turtle/models/mocks"
 	"github.com/gary23b/turtle/turtleutil"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -118,12 +118,12 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	}, bob)
 
 	// Test speed setting
-	bob.SetSpeed(100)
+	bob.Speed(100)
 	require.Equal(t, 100.0, bob.speed)
 	// Setting below 1 is not allowed
-	bob.SetSpeed(0)
+	bob.Speed(0)
 	require.Equal(t, 100.0, bob.speed)
-	bob.SetSpeed(1)
+	bob.Speed(1)
 	require.Equal(t, 1.0, bob.speed)
 
 	// Test the Pen on/off control
@@ -141,38 +141,35 @@ func TestNewTurtleBasicTests(t *testing.T) {
 	require.Equal(t, false, bob.penDown)
 
 	// Test enabling and disabling angle modes
-	bob.SetRadianMode()
+	bob.RadiansMode()
 	require.Equal(t, false, bob.degreesEn)
+	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, 0.0, bob.GetAngle())
-	bob.EnableCompassAngleMode(true)
+	bob.CompassMode()
 	require.Equal(t, true, bob.degreesEn)
 	require.Equal(t, true, bob.compassEn)
 	require.Equal(t, 90.0, bob.GetAngle())
-	bob.SetAngle(0)
+	bob.Angle(0)
 	require.Equal(t, 0.0, bob.GetAngle())
 
-	// enabling radian mode is not allowed while in compass mode.
-	bob.SetRadianMode()
-	require.Equal(t, true, bob.degreesEn)
-	require.Equal(t, true, bob.compassEn)
-	bob.EnableCompassAngleMode(false)
+	bob.DegreesMode()
 	require.Equal(t, true, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, 90.0, bob.GetAngle())
-	bob.SetRadianMode()
+	bob.RadiansMode()
 	require.Equal(t, false, bob.degreesEn)
 	require.Equal(t, false, bob.compassEn)
 	require.Equal(t, math.Pi/2, bob.GetAngle())
 
 	// Test setting color and size
-	bob.PenColor(turtleutil.Green)
+	bob.Color(turtleutil.Green)
 	require.Equal(t, turtleutil.Green, bob.penColor)
-	bob.PenSize(1000)
+	bob.Size(1000)
 	require.Equal(t, 1000.0, bob.penSize)
 	// Setting size below 0 is not allowed
-	bob.PenSize(-1)
+	bob.Size(-1)
 	require.Equal(t, 1000.0, bob.penSize)
-	bob.PenSize(0)
+	bob.Size(0)
 	require.Equal(t, 0.0, bob.penSize)
 
 	x, y := bob.GetPos()
@@ -204,7 +201,7 @@ func TestNewTurtleTurning(t *testing.T) {
 	// Case rollovers
 	bob.L(370)
 	require.InDelta(t, 10, bob.GetAngle(), 1e-6)
-	bob.SetAngle(0)
+	bob.Angle(0)
 	bob.R(370)
 	require.InDelta(t, -10.0, bob.GetAngle(), 1e-6)
 
@@ -286,7 +283,7 @@ func TestNewTurtleBasicDraw(t *testing.T) {
 	b := NewTurtle(canFake) // bob the turtle
 
 	b.GoTo(.1, .1) // move away from the pixel boundary
-	b.PenColor(turtleutil.Black)
+	b.Color(turtleutil.Black)
 	b.On()
 	b.F(1)
 	require.Len(t, canFake.calls, 2)
@@ -294,7 +291,7 @@ func TestNewTurtleBasicDraw(t *testing.T) {
 	require.Equal(t, drawCmd{x: 1, y: 0, c: turtleutil.Black}, canFake.calls[1])
 	canFake.calls = nil
 
-	b.SetAngle(90)
+	b.Angle(90)
 	b.F(3)
 	require.Len(t, canFake.calls, 4)
 	require.Equal(t, drawCmd{x: 1, y: 0, c: turtleutil.Black}, canFake.calls[0])
@@ -303,8 +300,8 @@ func TestNewTurtleBasicDraw(t *testing.T) {
 	require.Equal(t, drawCmd{x: 1, y: 3, c: turtleutil.Black}, canFake.calls[3])
 	canFake.calls = nil
 
-	b.SetAngle(180)
-	b.PenSize(.001)
+	b.Angle(180)
+	b.Size(.001)
 	b.F(2)
 	require.Len(t, canFake.calls, 3)
 	require.Equal(t, drawCmd{x: 1, y: 3, c: turtleutil.Black}, canFake.calls[0])
@@ -319,7 +316,7 @@ func TestNewTurtleFilledCircleDraw(t *testing.T) {
 	canvas.On("SetCartesianPixel", mock.AnythingOfType("int"), mock.AnythingOfType("int"), mock.AnythingOfType("color.RGBA")).Return()
 	b := NewTurtle(canvas) // bob the turtle
 
-	b.PenColor(turtleutil.Black)
+	b.Color(turtleutil.Black)
 	b.drawFilledCircle(0, 0, 2.1, turtleutil.Black)
 	// fmt.Print(canvas.Calls)
 	canvas.AssertCalled(t, "SetCartesianPixel", 0, 0, turtleutil.Black)
@@ -385,13 +382,13 @@ func Test_PaintDot(t *testing.T) {
 	canFake := newCanvasFake(t)
 	b := NewTurtle(canFake) // bob the turtle
 	b.GoTo(5.5, 5.5)
-	b.PaintDot(0)
+	b.Dot(0)
 
 	require.Len(t, canFake.calls, 1)
 	require.Equal(t, drawCmd{x: 6, y: 6, c: turtleutil.Black}, canFake.calls[0])
 	canFake.calls = nil
 
-	b.PaintDot(2)
+	b.Dot(2)
 
 	require.Len(t, canFake.calls, 4)
 	require.Equal(t, drawCmd{x: 5, y: 5, c: turtleutil.Black}, canFake.calls[0])
@@ -416,19 +413,19 @@ func Test_Circle(t *testing.T) {
 	require.InDelta(t, 40, b.y, 1e-6)
 	require.InDelta(t, 360+180, b.GetAngle(), 1e-6)
 
-	b.SetAngle(90)
+	b.Angle(90)
 	b.Circle(-10, 400, 3)
 	require.InDelta(t, 10, b.x, 1e-6)
 	require.InDelta(t, 40, b.y, 1e-6)
 	require.InDelta(t, -360+90, b.GetAngle(), 1e-6)
 
-	b.SetAngle(90)
+	b.Angle(90)
 	b.Circle(-10, -400, 3)
 	require.InDelta(t, 10, b.x, 1e-6)
 	require.InDelta(t, 40, b.y, 1e-6)
 	require.InDelta(t, 360+90, b.GetAngle(), 1e-6)
 
-	b.SetAngle(90)
+	b.Angle(90)
 	b.Circle(-10, 90, 3)
 	require.InDelta(t, 20, b.x, 1e-6)
 	require.InDelta(t, 50, b.y, 1e-6)

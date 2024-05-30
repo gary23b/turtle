@@ -24,24 +24,24 @@ func drawFunc(can models.Canvas) {
 
 	go func() {
 		var t models.Turtle = turtle.NewTurtle(can)
-		t.SetShapeAsArrow()
-		t.SetVisible(true)
-		t.SetDegreesMode()
+		t.ShapeAsArrow()
+		t.ShowTurtle()
+		t.DegreesMode()
 		t.PenDown()
 		t.Forward(100)
 		t.Left(90)
-		t.PenColor(turtleutil.Red)
+		t.Color(turtleutil.Red)
 		t.Backward(50)
 		t.PenUp()
 		t.Forward(55)
 		t.PenDown()
-		t.PenColor(turtleutil.Black)
+		t.Color(turtleutil.Black)
 		t.Forward(45)
 
 		t.Right(45)
 		t.Forward(10)
 		t.Backward(10)
-		t.PenColor(turtleutil.Blue)
+		t.Color(turtleutil.Blue)
 
 		t.PanLeftward(100)
 		t.Forward(50)
@@ -50,62 +50,61 @@ func drawFunc(can models.Canvas) {
 
 	go func() {
 		var t2 models.Turtle = turtle.NewTurtle(can)
-		t2.SetRadianMode()
+		t2.RadiansMode()
 		t2.GoTo(-200.0, 0.0)
 		t2.PenDown()
-		t2.SetAngle(math.Pi / 4)
+		t2.Angle(math.Pi / 4)
 		t2.Forward(100)
-		t2.SetAngle(-math.Pi / 2)
-		t2.SetSpeed(500)
+		t2.Angle(-math.Pi / 2)
+		t2.Speed(500)
 		t2.Forward(500)
-		t2.PaintDot(40)
+		t2.Dot(40)
 	}()
 
 	go func() {
 		var t3 models.Turtle = turtle.NewTurtle(can)
-		t3.SetDegreesMode()
-		t3.EnableCompassAngleMode(true)
+		t3.CompassMode()
 		t3.PenDown()
-		t3.PenColor(turtleutil.Green)
-		t3.PenSize(20)
-		t3.SetAngle(-45)
+		t3.Color(turtleutil.Green)
+		t3.Size(20)
+		t3.Angle(-45)
 		t3.Forward(100)
 		t3.GoTo(-100/math.Sqrt2, -100/math.Sqrt2)
-		t3.SetAngle(45)
+		t3.Angle(45)
 		t3.Forward(95)
 	}()
 
 	go func() {
 		var t models.Turtle = turtle.NewTurtle(can)
-		t.SetVisible(true)
-		t.SetShapeScale(.5)
+		t.ShowTurtle()
+		t.ShapeScale(.5)
 		t.GoTo(300, -300)
 		t.PenDown()
-		t.PenColor(turtleutil.Red)
+		t.Color(turtleutil.Red)
 		penSize := 0.1
 		panDistance := 0.5
 		speed := 50.0
-		t.SetSpeed(speed)
+		t.Speed(speed)
 		for i := 0; i < 110; i++ {
 			t.PanRightward(panDistance)
 			t.PointToward(300, -300)
 			penSize *= 1.05
-			t.PenSize(penSize)
+			t.Size(penSize)
 			panDistance *= 1.05
 			speed *= 1.02
-			t.SetSpeed(speed)
+			t.Speed(speed)
 		}
 	}()
 
 	go func() {
 		var t models.Turtle = turtle.NewTurtle(can)
-		t.SetVisible(true)
+		t.ShowTurtle()
 		t.GoTo(-400, 300)
-		t.EnableCompassAngleMode(true)
+		t.CompassMode()
 		t.PenDown()
-		t.PenColor(turtleutil.Purple)
-		t.PenSize(5)
-		t.SetSpeed(400)
+		t.Color(turtleutil.Purple)
+		t.Size(5)
+		t.Speed(400)
 
 		for i := 0; i < 15; i++ {
 			t.Forward(250)

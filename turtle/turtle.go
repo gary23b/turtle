@@ -3,7 +3,6 @@ package turtle
 import (
 	"image"
 	"image/color"
-	"log"
 	"math"
 	"time"
 
@@ -100,7 +99,7 @@ func (s *turtle) Left(angle float64) {
 	}
 	s.angle += angle
 
-	// Normaize the angle
+	// Normalize the angle
 	if s.angle > 2*math.Pi {
 		s.angle -= 2 * math.Pi
 	} else if s.angle < -2*math.Pi {
@@ -121,10 +120,14 @@ func (s *turtle) R(angle float64) {
 	s.Right(angle)
 }
 
-func (s *turtle) SetAngle(angle float64) {
+func (s *turtle) Angle(angle float64) {
 	angle = s.absoluteAngleToRad(angle)
 	s.angle = angle
 	s.sprite.SetRotation(s.angle)
+}
+
+func (s *turtle) GetAngle() float64 {
+	return s.radToAbsoluteAngle(s.angle)
 }
 
 func (s *turtle) PointToward(x, y float64) {
@@ -134,36 +137,42 @@ func (s *turtle) PointToward(x, y float64) {
 	s.sprite.SetRotation(s.angle)
 }
 
-func (s *turtle) GetAngle() float64 {
-	return s.radToAbsoluteAngle(s.angle)
-}
-
-func (s *turtle) SetDegreesMode() {
+func (s *turtle) DegreesMode() {
 	s.degreesEn = true
+	s.compassEn = false
 }
 
-func (s *turtle) SetRadianMode() {
-	if s.compassEn {
-		log.Println("ERROR: Radian mode cannot be enabled while compass mode is active.")
-		return
-	}
+func (s *turtle) RadiansMode() {
 	s.degreesEn = false
+	s.compassEn = false
 }
 
 // In compass mode, North is 0 degrees, and East is 90, West is -90. Also forces Degrees mode on.
-func (s *turtle) EnableCompassAngleMode(in bool) {
-	if in {
-		s.SetDegreesMode()
-	}
-
-	s.compassEn = in
+func (s *turtle) CompassMode() {
+	s.degreesEn = true
+	s.compassEn = true
 }
 
-func (s *turtle) SetSpeed(pixelsPerSecond float64) {
+func (s *turtle) GetAngleMode() models.AngleMode {
+	switch {
+	case !s.degreesEn:
+		return models.RadiansMode
+	case s.compassEn:
+		return models.CompassMode
+	default:
+		return models.DegreesMode
+	}
+}
+
+func (s *turtle) Speed(pixelsPerSecond float64) {
 	if pixelsPerSecond < 1 {
 		return
 	}
 	s.speed = pixelsPerSecond
+}
+
+func (s *turtle) GetSpeed() float64 {
+	return s.speed
 }
 
 func (s *turtle) PenUp() {
@@ -190,18 +199,26 @@ func (s *turtle) On() {
 	s.PenDown()
 }
 
-func (s *turtle) PenColor(c color.RGBA) {
+func (s *turtle) Color(c color.RGBA) {
 	s.penColor = c
 }
 
-func (s *turtle) PenSize(size float64) {
+func (s *turtle) GetColor() color.RGBA {
+	return s.penColor
+}
+
+func (s *turtle) Size(size float64) {
 	if size < 0 {
 		return
 	}
 	s.penSize = size
 }
 
-func (s *turtle) PaintDot(size float64) {
+func (s *turtle) GetSize() float64 {
+	return s.penSize
+}
+
+func (s *turtle) Dot(size float64) {
 	if size <= 0 {
 		s.paintPixel(s.x, s.y, s.penColor)
 		return
@@ -254,24 +271,29 @@ func (s *turtle) Circle(radius, angleAmountToDraw float64, steps int) {
 	s.angle = endTurtleAngle
 }
 
-func (s *turtle) SetVisible(isVisible bool) {
-	s.visible = isVisible
-	s.sprite.SetVisible(s.visible)
+func (s *turtle) ShowTurtle() {
+	s.visible = true
+	s.sprite.SetVisible(true)
 }
 
-func (s *turtle) SetShapeAsTurtle() {
+func (s *turtle) HideTurtle() {
+	s.visible = false
+	s.sprite.SetVisible(false)
+}
+
+func (s *turtle) ShapeAsTurtle() {
 	s.sprite.SetSpriteImageTurtle()
 }
 
-func (s *turtle) SetShapeAsArrow() {
+func (s *turtle) ShapeAsArrow() {
 	s.sprite.SetSpriteImageArrow()
 }
 
-func (s *turtle) SetShapeAsImage(in image.Image) {
+func (s *turtle) ShapeAsImage(in image.Image) {
 	s.sprite.SetSpriteImage(in)
 }
 
-func (s *turtle) SetShapeScale(scale float64) {
+func (s *turtle) ShapeScale(scale float64) {
 	s.sprite.SetScale(scale)
 }
 
@@ -279,20 +301,20 @@ func (s *turtle) SetShapeScale(scale float64) {
 func (s *turtle) absoluteAngleToRad(angle float64) float64 {
 	if s.degreesEn {
 		angle *= (math.Pi / 180.0)
-	}
-	if s.compassEn {
-		angle = -angle + math.Pi/2
+
+		if s.compassEn {
+			angle = -angle + math.Pi/2
+		}
 	}
 
 	return angle
 }
 
 func (s *turtle) radToAbsoluteAngle(angle float64) float64 {
-	if s.compassEn {
-		angle = -angle + math.Pi/2
-	}
-
 	if s.degreesEn {
+		if s.compassEn {
+			angle = -angle + math.Pi/2
+		}
 		angle *= (180.0 / math.Pi)
 	}
 
