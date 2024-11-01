@@ -45,6 +45,10 @@ The turtle sprite can be hidden(default) or show. Its shape can be changed to an
 Go 1.22 or later is required.<br>
 Ebitengine is the main dependency. [Check here for the system specific instructions](https://ebitengine.org/en/documents/install.html).
 
+```bash
+go get github.com/gary23b/turtle
+```
+
 ## Examples
 
 ### 5 Turtles At Once
