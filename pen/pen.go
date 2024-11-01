@@ -91,9 +91,8 @@ func (s *pen) goAngle(angle, distance float64) {
 
 // From the current position, go to an absolute x, y position
 func (s *pen) GoTo(x, y float64) {
-	if s.penDown {
-		s.drawLine(s.x, s.y, x, y, s.penColor)
-	}
+	s.drawLine(s.x, s.y, x, y, s.penColor)
+
 	s.x = x
 	s.y = y
 
@@ -103,6 +102,15 @@ func (s *pen) GoTo(x, y float64) {
 // Get the current pen position
 func (s *pen) GetPos() (x, y float64) {
 	return s.x, s.y
+}
+
+// From the current position, go to an absolute x, y position
+// But don't take any time to do it and don't draw a line
+func (s *pen) Teleport(x, y float64) {
+	s.x = x
+	s.y = y
+
+	s.sprite.Set(s.visible, s.x, s.y, s.angle)
 }
 
 // Turn left by a given angle.
@@ -429,10 +437,12 @@ func (s *pen) drawLine(x1, y1, x2, y2 float64, c color.Color) {
 	tNow := time.Now()
 
 	for i := 0; i <= loopSteps; i++ {
-		pixX, pixY := floatPosToPixel(x, y)
-		s.can.SetCartesianPixel(pixX, pixY, c)
-		if s.penSize > 0 {
-			s.drawFilledCircle(x, y, s.penSize, c)
+		if s.penDown {
+			pixX, pixY := floatPosToPixel(x, y)
+			s.can.SetCartesianPixel(pixX, pixY, c)
+			if s.penSize > 0 {
+				s.drawFilledCircle(x, y, s.penSize, c)
+			}
 		}
 
 		x += xStep

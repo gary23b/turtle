@@ -47,7 +47,7 @@ func drawFunc(window turtle.Window) {
 	go func() {
 		t := window.NewTurtle()
 		t.RadiansMode()
-		t.GoTo(-200.0, 0.0)
+		t.Teleport(-200.0, 0.0)
 		t.PenDown()
 		t.Angle(math.Pi / 4)
 		t.Forward(100)
@@ -74,7 +74,7 @@ func drawFunc(window turtle.Window) {
 		t := window.NewTurtle()
 		t.ShowTurtle()
 		t.ShapeScale(.5)
-		t.GoTo(300, -300)
+		t.Teleport(300, -300)
 		t.PenDown()
 		t.Color(turtle.Red)
 		penSize := 0.1
@@ -95,7 +95,7 @@ func drawFunc(window turtle.Window) {
 	go func() {
 		t := window.NewTurtle()
 		t.ShowTurtle()
-		t.GoTo(-400, 300)
+		t.Teleport(-400, 300)
 		t.CompassMode()
 		t.PenDown()
 		t.Color(turtle.Purple)

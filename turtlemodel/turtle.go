@@ -39,6 +39,10 @@ type Turtle interface {
 	GoTo(x, y float64)      // Cartesian (x,y). Center in the middle of the window
 	GetPos() (x, y float64) // Cartesian (x,y). Center in the middle of the window
 
+	// instantly move to a position.
+	// Cartesian (x,y). Center in the middle of the window
+	Teleport(x, y float64)
+
 	Left(angle float64)
 	L(angle float64) // Turn Left alias
 	Right(angle float64)
