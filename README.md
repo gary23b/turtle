@@ -73,6 +73,14 @@ go run github.com/gary23b/turtle/examples/gogopher@latest
 
 ![Golang Turtle drawing a recursive tree](https://github.com/gary23b/turtle/blob/main/examples/fractaltree/fractaltree.gif)
 
+### Random Tree
+
+![Golang Turtle drawing a random tree](https://github.com/gary23b/turtle/blob/main/examples/randomtree/randomtree.gif)
+
+### Mandelbrot
+
+![Golang Turtle drawing Mandelbrot](https://github.com/gary23b/turtle/blob/main/examples/mandelbrot/mandelbrot.png)
+
 ## Basic Example Program
 
 ```bash
