@@ -20,7 +20,7 @@ func turtleMain(window turtle.Window) {
 	canvas.ClearScreen(color.RGBA{R: 113, G: 170, B: 227, A: 255})
 	time.Sleep(time.Second * 1)
 
-	// go turtle.CreateGif(window, time.Millisecond*20, time.Millisecond*20, "./randomtree.gif", 150)
+	// go turtle.CreateGif(window, time.Millisecond*100, time.Millisecond*50, "./randomtree.gif", 20)
 
 	drawNewTree(window)
 
